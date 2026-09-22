@@ -41,8 +41,8 @@ function updateUI(){
   $('skill-banner').classList.toggle('show',bannerLife>0);
 }
 function charge(){game.reset(selected,enemy);game.aiEnabled=playMode==='solo';launchQualities=[null,null];tops=game.actors;game.phase='charging';chargingTime=0;game.charge=0;particleList=[];trail=[];shockwaves=[];floaters=[];renderLoadout();message('掌握初速','蓄勢待發。',playMode!=='solo'?'P1 空白鍵 · P2 Enter，各自鎖定亮區。':'亮區按空白鍵或發射按鈕。');beep(400);updateUI();}
-function launch(owner=mySide(),remote=false){if(playMode==='online'&&!remote){if(!RemoteRoom.connected||owner!==mySide())return;if(RemoteRoom.role==='guest'){onlineCommand('launch');return;}}if(owner!==0&&owner!==1)return;if(owner===1&&playMode==='solo')return;if(canSelect()){charge();return;}if(game.phase!=='charging'||launchQualities[owner]!==null)return;
-  const quality=clamp(1-Math.abs(game.charge-.81)/.81,.15,1);launchQualities[owner]=quality;
+function launch(owner=mySide(),remote=false,observedCharge=null){if(playMode==='online'&&!remote){if(!RemoteRoom.connected||owner!==mySide())return;if(RemoteRoom.role==='guest'){onlineCommand('launch',game.charge);return;}}if(owner!==0&&owner!==1)return;if(owner===1&&playMode==='solo')return;if(canSelect()){charge();return;}if(game.phase!=='charging'||launchQualities[owner]!==null)return;
+  const quality=clamp(1-Math.abs((observedCharge??game.charge)-.81)/.81,.15,1);launchQualities[owner]=quality;
   if(playMode!=='solo'&&launchQualities.some(q=>q===null)){message('發射已鎖定','P'+(owner+1)+' READY','等待 P'+(owner===0?2:1)+' 發射 · '+(owner===0?'Enter':'空白鍵'));updateUI();return;}
   game.quality=launchQualities[0];countdown=1.5;game.phase='countdown';message('武將就位','開戰！','陀螺自動交鋒，準備選招。');beep(740,.2);updateUI();
 }
@@ -95,13 +95,13 @@ function applyNetwork(s){
   game.actors=s.actors.map((a,i)=>({...a,c:WarData.characters[i?enemy:selected],id:i?enemy:selected,ai:!!i}));tops=game.actors;game.aiEnabled=false;launchQualities=s.launchQualities;
   trail=s.trail;particleList=s.particleList;shockwaves=s.shockwaves;floaters=s.floaters;bannerLife=s.bannerLife;$('skill-banner').textContent=s.banner;
   message(s.message.kicker,s.message.title,s.message.copy);$('center-message').hidden=s.message.hidden;
-  if(changed){renderLoadout();renderSkills();}updateUI();
+  if(changed){renderLoadout();renderSkills();}$('enemy-select').value=enemy;updateUI();
 }
 RemoteRoom.configure({
   capture:captureNetwork,snapshot:applyNetwork,
   input:(action,payload)=>{if(playMode!=='online'||RemoteRoom.role!=='host'||!payload||payload.revision!==networkRevision)return;
     if(action==='select'&&canSelect()&&Object.hasOwn(WarData.characters,payload.value)){enemy=payload.value;reset();}
-    else if(action==='launch')launch(1,true);
+    else if(action==='launch'&&Number.isFinite(payload.value)&&payload.value>=0&&payload.value<=1)launch(1,true,payload.value);
     else if(action==='skill'&&(payload.value==='signature'||Object.hasOwn(WarData.common,payload.value)))useSkill(payload.value,1,true);
     else if(action==='pause')pause(true);
   },

@@ -77,7 +77,7 @@ try:
     assert d.js('SpinArena.game.actors[0].id')=='liubei'
     c.js('SpinArena.launch()');time.sleep(.2);c.js('SpinArena.game.charge=.81;SpinArena.launch()');time.sleep(.2)
     assert d.js('SpinArena.game.phase')=='charging'
-    d.js('SpinArena.launch()');until(c,'SpinArena.game.phase==="countdown"')
+    d.js('SpinArena.game.charge=.81;SpinArena.launch()');until(c,'SpinArena.game.phase==="countdown"');assert c.js('captureNetwork().launchQualities[1]')==1
     c.js('for(let i=0;i<181;i++)SpinArena.simulate(1/120)');until(d,'SpinArena.game.phase==="battle"')
     assert not c.js('SpinArena.game.aiEnabled')
     d.js('window.dispatchEvent(new KeyboardEvent("keydown",{code:"Digit5"}))');until(c,'SpinArena.game.has(SpinArena.game.actors[1],"wall")')
@@ -87,7 +87,9 @@ try:
     time.sleep(.2);assert c.js('SpinArena.game.actors[1].mana')==d.js('SpinArena.game.actors[1].mana')
     d.js('document.getElementById("pause").click()');until(c,'SpinArena.game.phase==="paused"');until(d,'SpinArena.game.phase==="paused"')
     d.js('document.getElementById("pause").click()');until(c,'SpinArena.game.phase==="battle"');time.sleep(.2)
+    d.js('RemoteRoom.command("skill",{revision:-1,value:"storm"})');time.sleep(.2);assert not c.js('SpinArena.game.has(SpinArena.game.actors[1],"storm")')
     c.js('SpinArena.draw()');d.js('SpinArena.draw()');c.screenshot('/private/tmp/remote-host.png');d.screenshot('/private/tmp/remote-guest.png')
+    d.js('window.thirdPeer=new Peer();window.thirdRejected=false;thirdPeer.on("open",()=>{const link=thirdPeer.connect("sanguo-spin-"+RemoteRoom.code,{serialization:"json"});link.on("data",m=>{if(m.type==="reject"&&m.reason==="full")window.thirdRejected=true;});});void 0');until(d,'window.thirdRejected',20);assert c.js('RemoteRoom.connected');d.js('thirdPeer.destroy()')
     d.js('document.getElementById("room-leave").click()');until(c,'!RemoteRoom.connected');assert c.js('SpinArena.game.phase')=='paused'
     print('PASS: selection, two launch locks, P2 common/signature skills, matching mana, shared pause/resume, disconnect stop',flush=True)
     assert not c.errors,c.errors;assert not d.errors,d.errors
