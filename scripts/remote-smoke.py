@@ -66,7 +66,7 @@ try:
             time.sleep(.1)
         raise Exception('Timed out '+expr+' '+str(client.js('document.getElementById("online-status")?.textContent')))
     for client in [c,d]:
-        until(client,'Boolean(window.SpinArena)');client.js('SpinArena.setMode("online");setInterval(()=>RemoteRoom.tick(performance.now()),50)')
+        until(client,'Boolean(window.SpinArena)');client.js('window.heard=[];const originalPlay=SoundFX.play;SoundFX.play=(kind,data)=>{heard.push(kind);originalPlay(kind,data)}');client.js('SpinArena.setMode("online");setInterval(()=>RemoteRoom.tick(performance.now()),50)')
     c.js('document.getElementById("room-create").click()');until(c,'document.getElementById("online-status").textContent.includes("房間已建立")',30)
     code=c.js('RemoteRoom.code');print('ROOM CREATED',flush=True)
     d.js('document.getElementById("room-code").value='+json.dumps(code)+';document.getElementById("room-join").click()')
@@ -89,6 +89,9 @@ try:
     d.js('document.getElementById("pause").click()');until(c,'SpinArena.game.phase==="battle"');time.sleep(.2)
     d.js('RemoteRoom.command("skill",{revision:-1,value:"storm"})');time.sleep(.2);assert not c.js('SpinArena.game.has(SpinArena.game.actors[1],"storm")')
     c.js('SpinArena.draw()');d.js('SpinArena.draw()');c.screenshot('/private/tmp/remote-host.png');d.screenshot('/private/tmp/remote-guest.png')
+    assert d.js('heard.includes("charge")&&heard.includes("launch")&&heard.includes("skill")'),'Guest receives sounds independently of host mute'
+    time.sleep(.3);heard=d.js('heard.length');time.sleep(.3);assert d.js('heard.length')==heard,'Repeated snapshots must not replay sounds'
+    print('PASS: remote sound events delivered once',flush=True)
     d.js('window.thirdPeer=new Peer();window.thirdRejected=false;thirdPeer.on("open",()=>{const link=thirdPeer.connect("sanguo-spin-"+RemoteRoom.code,{serialization:"json"});link.on("data",m=>{if(m.type==="reject"&&m.reason==="full")window.thirdRejected=true;});});void 0');until(d,'window.thirdRejected',20);assert c.js('RemoteRoom.connected');d.js('thirdPeer.destroy()')
     d.js('document.getElementById("room-leave").click()');until(c,'!RemoteRoom.connected');assert c.js('SpinArena.game.phase')=='paused'
     print('PASS: selection, two launch locks, P2 common/signature skills, matching mana, shared pause/resume, disconnect stop',flush=True)

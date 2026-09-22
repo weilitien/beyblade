@@ -4,14 +4,16 @@ const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 for(const c of Object.values(WarData.characters)){const base=TopArt.skins[c.baseSkin];TopArt.skins[c.id]={...base,...GeneralArt[c.id],title:c.name+'・'+GeneralArt[c.id].name,code:c.faction+' / '+c.name,material:c.role};}
 let networkRevision=0,playMode='solo',launchQualities=[null,null];
 const p2Keys=['Z','X','C','V','B','N','M',','];
-let selected='guanyu',enemy='lubu',faction='all',width=1,height=1,scale=1,last=0,accumulator=0,sound=false,audio=null,particleList=[],trail=[],shockwaves=[],floaters=[],shake=0,lastUI=0,logKey='',bannerLife=0,countdown=0,chargingTime=0;
+let selected='guanyu',enemy='lubu',faction='all',width=1,height=1,scale=1,last=0,accumulator=0,particleList=[],trail=[],shockwaves=[],floaters=[],shake=0,lastUI=0,logKey='',bannerLife=0,countdown=0,chargingTime=0;
 const game=new WarBattle(selected,enemy);let tops=game.actors;
 const reduced=matchMedia('(prefers-reduced-motion: reduce)');
 function announce(text){$('announcement').textContent=text;}
 function message(kicker,title,copy){$('center-message').hidden=false;$('message-eyebrow').textContent=kicker;$('message-title').textContent=title;$('message-copy').textContent=copy;}
-function beep(freq,duration=.08,volume=.04,type='sine'){if(!sound)return;try{if(!audio)audio=new(window.AudioContext||window.webkitAudioContext)();if(audio.state==='suspended')audio.resume();const o=audio.createOscillator(),g=audio.createGain();o.frequency.value=freq;o.type=type;g.gain.setValueAtTime(volume,audio.currentTime);g.gain.exponentialRampToValueAtTime(.001,audio.currentTime+duration);o.connect(g);g.connect(audio.destination);o.start();o.stop(audio.currentTime+duration);}catch{sound=false;$('sound').textContent='音效不可用';}}
+let soundSequence=0,soundJournal=[],receivedSound=0,soundInitialized=false;
+function playCue(kind,data={}){if(kind==='finish')kind=data.winner===null?'draw':playMode==='local'||data.winner===mySide()?'win':'lose';SoundFX.play(kind,data);}
+function cue(kind,data={}){const event={seq:++soundSequence,kind,data,at:performance.now()};soundJournal.push(event);soundJournal=soundJournal.filter(e=>event.at-e.at<1200).slice(-32);playCue(kind,data);}
 function canSelect(){return ['ready','result'].includes(game.phase);}
-function reset(){if(playMode==='online'&&RemoteRoom.role==='guest')return;networkRevision++;game.reset(selected,enemy);game.aiEnabled=playMode==='solo';launchQualities=[null,null];tops=game.actors;particleList=[];trail=[];shockwaves=[];floaters=[];bannerLife=0;logKey='';chargingTime=0;countdown=0;renderLoadout();renderSkills();message('英雄入陣','SPIN FOR GLORY','群雄競逐，榮耀由你締造。');$('skill-feedback').textContent='陀螺自動移動；觀察對手，用技能掌握戰局。';updateUI();}
+function reset(){if(playMode==='online'&&RemoteRoom.role==='guest')return;networkRevision++;SoundFX.stop();soundJournal=[];game.reset(selected,enemy);game.aiEnabled=playMode==='solo';launchQualities=[null,null];tops=game.actors;particleList=[];trail=[];shockwaves=[];floaters=[];bannerLife=0;logKey='';chargingTime=0;countdown=0;renderLoadout();renderSkills();message('英雄入陣','SPIN FOR GLORY','群雄競逐，榮耀由你締造。');$('skill-feedback').textContent='陀螺自動移動；觀察對手，用技能掌握戰局。';updateUI();}
 function renderLoadout(){
   $('tops').replaceChildren();for(const c of Object.values(WarData.characters)){if(faction!=='all'&&c.faction!==faction)continue;const b=document.createElement('button');b.className='general-choice'+(c.id===selected?' selected':'');b.dataset.character=c.id;b.setAttribute('aria-pressed',String(c.id===selected));b.disabled=!canSelect()||(playMode==='online'&&RemoteRoom.role==='guest');b.innerHTML=`<span>${c.name}</span><small>${c.faction} · ${c.provisional?'暫定':'文件值'}</small>`;b.onclick=()=>{if(!canSelect())return;selected=c.id;reset();};$('tops').append(b);}
   const c=WarData.characters[selected],art=TopArt.skins[selected];$('showcase-title').textContent=art.title;$('inspect-title').textContent=art.title;$('showcase-material').textContent=art.blades+' 刃 · '+art.motif+' · '+c.role;$('showcase-code').textContent=c.faction+' / '+c.name;
@@ -40,21 +42,22 @@ function updateUI(){
   const key=game.log[0]?.time+'|'+game.log[0]?.text;if(key!==logKey){logKey=key;$('combat-log').replaceChildren(...game.log.slice(0,12).map(e=>{const li=document.createElement('li'),time=document.createElement('time');time.textContent=Number(e.time).toFixed(1)+'s';li.append(time,document.createTextNode(String(e.text)));return li;}));}
   $('skill-banner').classList.toggle('show',bannerLife>0);
 }
-function charge(){game.reset(selected,enemy);game.aiEnabled=playMode==='solo';launchQualities=[null,null];tops=game.actors;game.phase='charging';chargingTime=0;game.charge=0;particleList=[];trail=[];shockwaves=[];floaters=[];renderLoadout();message('掌握初速','蓄勢待發。',playMode!=='solo'?'P1 空白鍵 · P2 Enter，各自鎖定亮區。':'亮區按空白鍵或發射按鈕。');beep(400);updateUI();}
+function charge(){game.reset(selected,enemy);game.aiEnabled=playMode==='solo';launchQualities=[null,null];tops=game.actors;game.phase='charging';chargingTime=0;game.charge=0;particleList=[];trail=[];shockwaves=[];floaters=[];renderLoadout();message('掌握初速','蓄勢待發。',playMode!=='solo'?'P1 空白鍵 · P2 Enter，各自鎖定亮區。':'亮區按空白鍵或發射按鈕。');cue('charge');updateUI();}
 function launch(owner=mySide(),remote=false,observedCharge=null){if(playMode==='online'&&!remote){if(!RemoteRoom.connected||owner!==mySide())return;if(RemoteRoom.role==='guest'){onlineCommand('launch',game.charge);return;}}if(owner!==0&&owner!==1)return;if(owner===1&&playMode==='solo')return;if(canSelect()){charge();return;}if(game.phase!=='charging'||launchQualities[owner]!==null)return;
   const quality=clamp(1-Math.abs((observedCharge??game.charge)-.81)/.81,.15,1);launchQualities[owner]=quality;
   if(playMode!=='solo'&&launchQualities.some(q=>q===null)){message('發射已鎖定','P'+(owner+1)+' READY','等待 P'+(owner===0?2:1)+' 發射 · '+(owner===0?'Enter':'空白鍵'));updateUI();return;}
-  game.quality=launchQualities[0];countdown=1.5;game.phase='countdown';message('武將就位','開戰！','陀螺自動交鋒，準備選招。');beep(740,.2);updateUI();
+  game.quality=launchQualities[0];countdown=1.5;game.phase='countdown';message('武將就位','開戰！','陀螺自動交鋒，準備選招。');cue('launch');updateUI();
 }
-function pause(remote=false){if(playMode==='online'&&RemoteRoom.role==='guest'&&!remote){if(RemoteRoom.connected)onlineCommand('pause');return;}const before=game.phase;game.pause();if(game.phase==='paused')message('暫停演武','運籌帷幄。','按 P 或播放按鈕繼續。');else if(before==='paused'){if(game.phase==='battle')$('center-message').hidden=true;else message('準備發射','蓄勢待發。','按空白鍵或發射按鈕。');}updateUI();}
+function pause(remote=false){if(playMode==='online'&&RemoteRoom.role==='guest'&&!remote){if(RemoteRoom.connected)onlineCommand('pause');return;}const before=game.phase;game.pause();if(game.phase==='paused'){SoundFX.stop();message('暫停演武','運籌帷幄。','按 P 或播放按鈕繼續。');}else if(before==='paused'){if(game.phase==='battle')$('center-message').hidden=true;else message('準備發射','蓄勢待發。','按空白鍵或發射按鈕。');}updateUI();}
 function useSkill(id,owner=mySide(),remote=false){if(playMode==='online'&&!remote){if(!RemoteRoom.connected||owner!==mySide())return;if(RemoteRoom.role==='guest'){onlineCommand('skill',id);return;}}if(owner!==0&&owner!==1)return;if(owner===1&&playMode==='solo')return;const result=game.use(tops[owner],id);$(owner?'skill-feedback-p2':'skill-feedback').textContent=result.ok?'已施放「'+(id==='signature'?tops[owner].c.signature:WarData.common[id].name)+'」。':result.reason;processEvents();updateUI();}
 function sparks(x,z,color,count=16){shockwaves.push({x,z,color,life:.48,max:.48});for(let i=0;i<count;i++){const angle=Math.random()*TAU,v=1+Math.random()*3;particleList.push({x,z,y:.3,vx:Math.cos(angle)*v,vz:Math.sin(angle)*v,vy:1.5+Math.random()*2,life:.4+Math.random()*.4,color,size:1+Math.random()*2});}}
 function processEvents(){for(const e of game.drainEvents()){
-  if(e.type==='hit'){sparks(e.actor.x,e.actor.z,e.actor.color,10);floaters.push({x:e.actor.x,z:e.actor.z,text:'−'+Math.round(e.damage),color:'#ffe3bd',life:1,max:1});shake=3;beep(150,.04,.025,'triangle');}
-  if(e.type==='skill'){bannerLife=1.25;$('skill-banner').textContent=e.actor.c.name+' · '+e.name;announce($('skill-banner').textContent);sparks(e.actor.x,e.actor.z,e.actor.color,18);beep(e.actor.ai?400:680,.12);}
+  if(e.type==='hit'){sparks(e.actor.x,e.actor.z,e.actor.color,10);floaters.push({x:e.actor.x,z:e.actor.z,text:'−'+Math.round(e.damage),color:'#ffe3bd',life:1,max:1});shake=3;cue('hit',{damage:e.damage,x:e.actor.x});}
+  if(e.type==='skill'){bannerLife=1.25;$('skill-banner').textContent=e.actor.c.name+' · '+e.name;announce($('skill-banner').textContent);sparks(e.actor.x,e.actor.z,e.actor.color,18);cue('skill',{id:e.name===e.actor.c.signature?'signature':Object.keys(WarData.common).find(id=>WarData.common[id].name===e.name),character:e.actor.id,x:e.actor.x});}
+  if(['evade','interrupt','seal'].includes(e.type))cue(e.type,{x:e.actor.x});
   if(['evade','interrupt','seal','miss'].includes(e.type))floaters.push({x:e.actor.x,z:e.actor.z,text:{evade:'閃避',interrupt:'中斷',seal:'封招',miss:'未命中'}[e.type],color:'#c3dbff',life:1,max:1});
   if(e.type==='summon'){const target=e.target;for(let i=0;i<12;i++){const f=i/12;particleList.push({x:e.actor.x*(1-f)+target.x*f,z:e.actor.z*(1-f)+target.z*f,y:.3,vx:0,vz:0,vy:1,life:.6,color:'#c8f2a0',size:4});}}
-  if(e.type==='finish'){const won=e.winner===0,draw=e.winner===null;message('一戰定勝負',draw?'英雄相惜，平手。':playMode!=='solo'?'P'+(e.winner+1)+' · 勝利！':won?'此戰，大獲全勝！':'勝敗乃兵家常事。',e.kind+' · '+(draw?'再戰分高下':tops[e.winner].c.name+'獲勝'));announce($('message-title').textContent+' '+e.kind);if(!draw)sparks(tops[1-e.winner].x,tops[1-e.winner].z,tops[1-e.winner].color,36);renderLoadout();beep(won?820:230,.3);}
+  if(e.type==='finish'){const won=e.winner===0,draw=e.winner===null;message('一戰定勝負',draw?'英雄相惜，平手。':playMode!=='solo'?'P'+(e.winner+1)+' · 勝利！':won?'此戰，大獲全勝！':'勝敗乃兵家常事。',e.kind+' · '+(draw?'再戰分高下':tops[e.winner].c.name+'獲勝'));announce($('message-title').textContent+' '+e.kind);if(!draw)sparks(tops[1-e.winner].x,tops[1-e.winner].z,tops[1-e.winner].color,36);renderLoadout();cue('finish',{winner:e.winner});}
 }}
 function simulate(dt){if(playMode==='online'&&(RemoteRoom.role==='guest'||!RemoteRoom.connected))return;if(game.phase==='paused')return;if(game.phase==='charging'){chargingTime+=dt;game.charge=(Math.sin(chargingTime*3.6-Math.PI/2)+1)/2;}else if(game.phase==='countdown'){countdown-=dt;if(countdown<=0){game.start(game.quality,playMode!=='solo'?launchQualities[1]:null);tops=game.actors;$('center-message').hidden=true;renderLoadout();}}else if(game.phase==='battle'){game.tick(dt);tops=game.actors;processEvents();if(Math.random()<.35)for(const t of tops)trail.push({x:t.x,z:t.z,life:.4,color:t.color});}else if(game.phase==='ready'&&!reduced.matches)for(const t of tops)t.angle+=dt*.4;
   for(const p of particleList){p.x+=p.vx*dt;p.z+=p.vz*dt;p.y+=p.vy*dt;p.vy-=8*dt;p.life-=dt;}particleList=particleList.filter(p=>p.life>0);for(const t of trail)t.life-=dt;trail=trail.filter(t=>t.life>0);for(const w of shockwaves)w.life-=dt;shockwaves=shockwaves.filter(w=>w.life>0);for(const f of floaters)f.life-=dt;floaters=floaters.filter(f=>f.life>0);shake*=Math.exp(-dt*12);bannerLife=Math.max(0,bannerLife-dt);
@@ -66,7 +69,10 @@ function drawBattleFields(){
 function drawFloaters(){ctx.save();ctx.font='bold 13px system-ui';ctx.textAlign='center';for(const f of floaters){const p=project(f.x,.8+(1-f.life)*.7,f.z);ctx.globalAlpha=f.life;ctx.fillStyle=f.color;ctx.fillText(f.text,...p);}ctx.restore();}
 for(const c of Object.values(WarData.characters)){const o=document.createElement('option');o.value=c.id;o.textContent=c.faction+' · '+c.name+' — '+c.role;$('enemy-select').append(o);}
 $('enemy-select').onchange=e=>{if(canSelect()){if(playMode==='online'){if(RemoteRoom.role==='guest')onlineCommand('select',e.target.value);return;}enemy=e.target.value;reset();}};document.querySelectorAll('[data-faction]').forEach(b=>b.onclick=()=>{faction=b.dataset.faction;document.querySelectorAll('[data-faction]').forEach(x=>x.classList.toggle('active',x===b));renderLoadout();});
-$('play-mode').onchange=e=>setMode(e.target.value);$('launch').onclick=()=>launch(0);$('launch-p2').onclick=()=>launch(1);$('pause').onclick=()=>pause();$('restart').onclick=reset;$('signature').onclick=()=>useSkill('signature',0);$('sound').onclick=()=>{sound=!sound;$('sound').textContent=sound?'音效 開 ♫':'音效 關 ♫';$('sound').setAttribute('aria-pressed',String(sound));if(sound)beep(600);};
+$('play-mode').onchange=e=>setMode(e.target.value);$('launch').onclick=()=>launch(0);$('launch-p2').onclick=()=>launch(1);$('pause').onclick=()=>pause();$('restart').onclick=reset;$('signature').onclick=()=>useSkill('signature',0);$('sound').onclick=async()=>{try{await SoundFX.setEnabled(!SoundFX.enabled);$('sound').textContent=SoundFX.enabled?'音效 開 ♫':'音效 關 ♫';$('sound').setAttribute('aria-pressed',String(SoundFX.enabled));if(SoundFX.enabled)SoundFX.play('enabled');}catch{$('sound').textContent='音效不可用';$('sound').setAttribute('aria-pressed','false');}};
+$('sound-volume').oninput=e=>SoundFX.setVolume(Number(e.target.value)/100);
+for(const type of ['pointerdown','keydown'])document.addEventListener(type,()=>{if(SoundFX.enabled)SoundFX.unlock().catch(()=>{});},{capture:true});
+
 function openDialog(id){if(['battle','charging','countdown'].includes(game.phase))pause();$(id).showModal();}
 $('rules-open').onclick=()=>openDialog('rules-dialog');$('rules-close').onclick=()=>$('rules-dialog').close();$('inspect-open').onclick=()=>openDialog('inspect-dialog');$('inspect-close').onclick=()=>$('inspect-dialog').close();
 const skillKeys=Object.keys(WarData.common);
@@ -74,7 +80,7 @@ window.addEventListener('keydown',e=>{if(e.ctrlKey||e.metaKey||e.altKey||$('insp
   if(e.code==='Space'){e.preventDefault();launch(mySide());}else if(playMode==='local'&&(e.code==='Enter'||e.code==='NumpadEnter')){e.preventDefault();launch(1);}else if(e.code==='KeyP'){e.preventDefault();pause();}else if(e.code==='KeyQ'){e.preventDefault();useSkill('signature');}else if(/^Digit[1-8]$/.test(e.code)){e.preventDefault();useSkill(skillKeys[Number(e.code.slice(-1))-1]);}else if(playMode==='local'){const index=['KeyZ','KeyX','KeyC','KeyV','KeyB','KeyN','KeyM','Comma'].indexOf(e.code);if(index>=0){e.preventDefault();useSkill(skillKeys[index],1);}else if(e.code==='Slash'){e.preventDefault();useSkill('signature',1);}}
 });
 function setMode(mode){if(!canSelect()||!['solo','local','online'].includes(mode)||RemoteRoom.role)return;playMode=mode;reset();}
-document.addEventListener('visibilitychange',()=>{if(document.hidden&&['battle','charging','countdown'].includes(game.phase))pause();});window.addEventListener('blur',()=>{if(['battle','charging','countdown'].includes(game.phase))pause();});
+document.addEventListener('visibilitychange',()=>{if(document.hidden)SoundFX.stop();if(document.hidden&&['battle','charging','countdown'].includes(game.phase))pause();});window.addEventListener('blur',()=>{if(['battle','charging','countdown'].includes(game.phase))pause();});
 let inspectAngle=.3,inspectTilt=.68,inspectDrag=null,showcaseClock=0,lastShowcase=0;
 function fitArtCanvas(c){const r=c.getBoundingClientRect(),dpr=Math.min(devicePixelRatio||1,2);if(c.width!==Math.round(r.width*dpr)||c.height!==Math.round(r.height*dpr)){c.width=Math.round(r.width*dpr);c.height=Math.round(r.height*dpr);}const art=c.getContext('2d');art.setTransform(dpr,0,0,dpr,0,0);art.clearRect(0,0,r.width,r.height);return {art,w:r.width,h:r.height};}
 function drawShowcase(time){if(time-lastShowcase<65)return;const dt=Math.min(.1,(time-lastShowcase)/1000);lastShowcase=time;if(!reduced.matches)showcaseClock+=dt;const {art,w,h}=fitArtCanvas($('top-preview'));TopArt.render(art,{x:w/2,y:h*.45,size:Math.min(w*.39,h*.65),angle:.3+showcaseClock*.26,skin:selected,tilt:.65});if($('inspect-dialog').open){const {art,w,h}=fitArtCanvas($('inspect-canvas'));if($('inspect-spin').checked&&!inspectDrag&&!reduced.matches)inspectAngle+=dt*.3;const explode=$('inspect-explode').checked?1:0;TopArt.render(art,{x:w/2,y:h*.47,size:Math.min(w*.37,h*(explode?.46:.67)),angle:inspectAngle,tilt:inspectTilt,skin:selected,explode});}}
@@ -86,9 +92,10 @@ reset();resize();requestAnimationFrame(frame);
 
 // Both screens consume host state; only the host advances the simulation.
 const networkGameFields=['phase','time','roundElapsed','winner','finishKind','charge','quality','resumePhase','log','hazards'];
-function captureNetwork(){const fields={};for(const key of networkGameFields)fields[key]=game[key];return {revision:networkRevision,selected,enemy,fields,actors:game.actors,launchQualities,trail,particleList,shockwaves,floaters,bannerLife,banner:$('skill-banner').textContent,message:{hidden:$('center-message').hidden,kicker:$('message-eyebrow').textContent,title:$('message-title').textContent,copy:$('message-copy').textContent}};}
+function captureNetwork(){const fields={};for(const key of networkGameFields)fields[key]=game[key];return {soundSequence,sounds:soundJournal.filter(e=>performance.now()-e.at<1200),revision:networkRevision,selected,enemy,fields,actors:game.actors,launchQualities,trail,particleList,shockwaves,floaters,bannerLife,banner:$('skill-banner').textContent,message:{hidden:$('center-message').hidden,kicker:$('message-eyebrow').textContent,title:$('message-title').textContent,copy:$('message-copy').textContent}};}
 function applyNetwork(s){
   if(!s||!WarData.characters[s.selected]||!WarData.characters[s.enemy]||!Array.isArray(s.actors)||s.actors.length!==2||!s.fields||!Number.isSafeInteger(s.revision))return;
+  const previousPhase=game.phase,previousRevision=networkRevision;
   const changed=selected!==s.selected||enemy!==s.enemy||networkRevision!==s.revision||game.phase!==s.fields.phase;
   selected=s.selected;enemy=s.enemy;networkRevision=s.revision;
   for(const key of networkGameFields)game[key]=s.fields[key];
@@ -96,7 +103,10 @@ function applyNetwork(s){
   trail=s.trail;particleList=s.particleList;shockwaves=s.shockwaves;floaters=s.floaters;bannerLife=s.bannerLife;$('skill-banner').textContent=s.banner;
   message(s.message.kicker,s.message.title,s.message.copy);$('center-message').hidden=s.message.hidden;
   if(changed){renderLoadout();renderSkills();}$('enemy-select').value=enemy;updateUI();
+  if(!soundInitialized||previousRevision!==networkRevision){receivedSound=s.soundSequence||0;soundInitialized=true;SoundFX.stop();}
+  else {if(previousPhase!==game.phase&&game.phase==='paused')SoundFX.stop();for(const event of (s.sounds||[])){if(event.seq>receivedSound&&game.phase!=='paused')playCue(event.kind,event.data);}receivedSound=Math.max(receivedSound,s.soundSequence||0);}
 }
+
 RemoteRoom.configure({
   capture:captureNetwork,snapshot:applyNetwork,
   input:(action,payload)=>{if(playMode!=='online'||RemoteRoom.role!=='host'||!payload||payload.revision!==networkRevision)return;
@@ -106,7 +116,7 @@ RemoteRoom.configure({
     else if(action==='pause')pause(true);
   },
   connected:()=>{if(RemoteRoom.role==='host')reset();renderLoadout();updateUI();},
-  closed:()=>{renderLoadout();updateUI();},
+  closed:()=>{SoundFX.stop();soundInitialized=false;renderLoadout();updateUI();},
   lost:reason=>{if(['battle','charging','countdown'].includes(game.phase)){game.pause();}message('連線已中止','DUEL PAUSED',reason);updateUI();},
   status:(text,state)=>{$('online-status').textContent=text;$('online-role').textContent=state.role?'你是 '+(state.role==='host'?'P1 · 房主':'P2 · 訪客'):'尚未連線';$('room-create').disabled=!!state.role;$('room-join').disabled=!!state.role;$('room-leave').disabled=!state.role;$('room-share').hidden=state.role!=='host';if(state.role==='host')$('room-link').value=RemoteRoom.invite();renderLoadout();updateUI();}
 });

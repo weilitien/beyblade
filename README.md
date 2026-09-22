@@ -25,3 +25,7 @@ python3 -m http.server 8082
 陀螺自動移動碰撞，玩家選擇技能時機。馬超、龐德、夏侯惇、甘寧、孫策採使用者設計文件數值，其餘角色與未指定參數為暫定平衡值。這是 Canvas 投影幾何的瀏覽器原型，非官方 Beyblade 遊戲。
 
 24 秒宣傳片位於 [promo/](promo/)。PeerJS 1.5.5 的授權位於 [vendor/peerjs.LICENSE](vendor/peerjs.LICENSE)。
+
+## 音效
+
+右上開啟「音效」，可聽到分層金屬撞擊、8 招通用技及 15 招專屬技的音效；滑桿可獨立調整音量。遠端音效事件同步且不重播。詳見 [音效說明](AUDIO.md)。
