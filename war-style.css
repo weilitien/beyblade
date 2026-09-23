@@ -1,8 +1,849 @@
-:root{--cyan:#bfe5bb;--orange:#e9ae78}header .brand{font-size:18px;letter-spacing:3px}header button{margin-left:0}header #rules-open{margin-left:auto}.intro h1{font-size:40px;letter-spacing:1px}.intro h1 em{color:#bee4b9}.intro>p{font-size:11px;line-height:2.1}.battle-column{min-width:0}.game-layout{grid-template-columns:minmax(0,1fr) 300px;align-items:start}.arena-panel{height:595px;min-height:0}.scoreboard .player b{font-size:19px;letter-spacing:4px}.scoreboard .player small{font-size:9px;letter-spacing:1px}.round b{font-size:15px;color:#d6c598;font-family:monospace}.stamina{bottom:14px}.stamina label{font-size:9px}.stamina .bar{margin-top:6px}.mana-label{margin-top:10px}.bar.mana i{background:#889bef;box-shadow:0 0 9px #627adb66}.actor-status{font-size:8px;line-height:1.6;color:#a6b6c7;min-height:25px;margin:8px 0 0}.canvas-wrap,canvas{min-height:0}.arena-label{font-size:9px}.arena-status{font-size:8px}.center-message{top:24%}.center-message h2{font-size:28px;letter-spacing:2px}.center-message p{font-size:10px}.launch-panel{padding:16px 20px}.primary{background:#c3dfb7;min-width:130px;font-size:11px}.launch-info .eyebrow{font-size:8px}.launch-info p{font-size:9px}#skill-banner{position:absolute;top:40%;left:50%;transform:translate(-50%,-50%);pointer-events:none;text-align:center;font-size:23px;font-weight:700;letter-spacing:4px;color:#ffedb5;text-shadow:0 0 25px #eaaf64,0 3px 5px #07111c;opacity:0;transition:opacity .18s;white-space:nowrap}#skill-banner.show{opacity:1}.skill-panel{margin-top:17px;padding:20px;border:1px solid #3f4c59;background:linear-gradient(140deg,#202d35,#17212c);border-radius:10px}.skill-panel-heading{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;gap:15px}.skill-panel-heading .eyebrow{font-size:8px;margin-bottom:8px}.skill-panel-heading h2{font-size:18px;font-weight:500;margin:0;letter-spacing:1px}.skill-panel-heading>span{font-size:9px;color:#8399aa}.signature-button{display:flex;justify-content:space-between;align-items:center;gap:20px;width:100%;background:linear-gradient(100deg,#4b593a,#223c3e);border:1px solid #aeb9797a;border-radius:7px;padding:15px 17px;color:#e4eace;text-align:left}.signature-button strong{display:block;font-size:17px;letter-spacing:2px}.signature-button small{font-size:9px;line-height:1.8;display:block;color:#b7c7b3;margin-top:5px}.signature-button>span:last-child{white-space:nowrap;color:#e7d99a;font-size:11px}.skill-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin-top:12px}.skill-button{position:relative;text-align:left;display:flex;flex-direction:column;gap:7px;padding:12px 10px;min-height:110px;background:#202e3b;border:1px solid #415064;border-radius:6px;color:#d4e2e8;overflow:hidden}.skill-button:enabled:hover{border-color:#c5c989;background:#32414a}.skill-button>strong{font-size:12px;font-weight:500;letter-spacing:1px}.skill-button>small{font-size:8px;line-height:1.8;color:#99adbd;flex:1}.skill-meta{display:flex;justify-content:space-between;font-size:8px;color:#9dabd9}.skill-button>em{font-style:normal;font-size:8px;color:#ebc37b}.skill-button:disabled,.signature-button:disabled{opacity:.46}#skill-feedback{font-size:10px;line-height:1.8;color:#b4c4aa;margin:14px 0 0;min-height:18px}.loadout{padding:18px}.loadout>.section-head{margin-bottom:15px}.showcase{height:170px}.showcase-name>b{font-size:16px;line-height:1.7;letter-spacing:1px}.showcase-name>span{font-size:10px}.faction-tabs{display:flex;gap:4px;margin-bottom:10px}.faction-tabs button{flex:1;border:1px solid #34495b;background:#192a38;color:#8b9aaa;padding:7px 3px;border-radius:4px;font-size:10px}.faction-tabs button.active{color:#e5e5b9;border-color:#88956d;background:#35423d}#tops{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;max-height:208px;overflow:auto;padding-right:3px}.general-choice{padding:9px 4px;background:#1c2b3a;color:#afbfd2;border:1px solid #35485e;border-radius:5px;min-width:0}.general-choice.selected{border-color:#b9cc8e;background:#394c44;color:#e1ebd0}.general-choice span{display:block;font-size:13px;letter-spacing:1px}.general-choice small{font-size:8px;color:#8ca2b7;display:block;margin-top:6px}.general-choice:disabled{opacity:.45}.war-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:13px 8px;padding:17px 0 0}.war-stats span{display:block;font-size:8px;color:#8b9aab}.war-stats b{display:block;font-size:14px;font-family:monospace;font-weight:400;margin-top:5px;color:#d4dfd2}#stat-provenance{font-size:9px;line-height:1.8;color:#c4b883;border-bottom:1px solid #38465b;padding-bottom:12px}.enemy-select{font-size:10px;color:#aebccd}.enemy-select select{display:block;width:100%;margin-top:8px;padding:9px;background:#1b2938;color:#cfdbdd;border:1px solid #4b5a65;border-radius:4px;font:inherit}#matchup-note{font-size:9px;color:#c7a976;line-height:1.9;margin-bottom:0}.combat-log{padding:18px;background:#171f2b;border:1px solid #303e51;border-radius:9px}.combat-log .eyebrow{margin:0;font-size:9px}.combat-log ol{list-style:none;padding:0;margin:13px 0 0;max-height:230px;overflow:auto}.combat-log li{font-size:10px;color:#a3b6c4;line-height:1.9;padding:8px 0;border-bottom:1px solid #2f3c4a}.combat-log time{font-size:8px;color:#647f91;margin-right:7px}.rules p{font-size:10px}.rules small{font-size:8px}.rules button{font-size:11px}.rules-copy{font-size:12px;line-height:2;color:#a7bdca}.rules-copy h3{color:#e3e8c6;font-size:15px;margin:24px 0 9px}.rules-copy ul{padding-left:20px}.rules-copy li{margin-bottom:9px}#rules-dialog{max-width:760px}footer{font-size:8px}.inspect-heading h2{font-size:22px}
-@media(max-width:1120px){.game-layout{grid-template-columns:minmax(0,1fr) 255px}.skill-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.skill-button{min-height:100px}.arena-panel{height:550px}.intro h1{font-size:34px}.showcase-name>b{font-size:14px}.skill-panel-heading>span{font-size:8px}.launch-info{display:none}}
-@media(max-width:790px){.game-layout{grid-template-columns:1fr}.intro>p{max-width:240px}.battle-column{order:1}aside{display:grid;grid-template-columns:1.2fr 1fr;align-items:start;order:0}.loadout{padding:16px}.showcase{height:170px}#tops{max-height:145px}.combat-log{height:auto}.game-layout{gap:16px}.arena-panel{height:570px}.skill-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.skill-panel-heading>span{font-size:9px}.combat-log ol{max-height:300px}.intro{margin-bottom:20px}.showcase-name{margin-bottom:10px}}
-@media(max-width:520px){header{padding:0 4%;gap:9px}header .brand{font-size:14px;letter-spacing:1px}header .brand>span:first-child{font-size:24px;margin:0}header button{font-size:8px;padding:7px 8px}.intro h1{font-size:30px}.intro>p{display:none}aside{grid-template-columns:1fr}.combat-log{display:none}.showcase{height:170px;float:left;width:44%;margin-right:13px}.showcase-name{padding-top:6px}.showcase-name>b{font-size:14px}.showcase-name>span{font-size:9px}.faction-tabs{gap:3px}.faction-tabs button{font-size:9px;padding:6px 2px}#tops{grid-template-columns:repeat(3,minmax(0,1fr));max-height:120px}.general-choice{padding:7px 3px}.general-choice span{font-size:11px}.general-choice small{font-size:7px}.war-stats{clear:both;grid-template-columns:repeat(6,minmax(0,1fr));padding-top:10px;gap:5px}.war-stats b{font-size:13px}#stat-provenance{margin:10px 0;font-size:8px;padding-bottom:9px}.showcase-name{margin-bottom:9px}.loadout{padding:14px}.showcase-code{font-size:8px}.enemy-select{display:flex;align-items:center;gap:10px;white-space:nowrap}.enemy-select select{margin:0;flex:1;min-width:0}#matchup-note{font-size:8px;margin-top:8px}.arena-panel{height:475px}.scoreboard .player b{font-size:16px}.scoreboard .player small{font-size:8px}.center-message h2{font-size:23px}.center-message>span{font-size:7px}.center-message p{font-size:9px}.arena-label{font-size:8px}.stamina{gap:20px;bottom:8px}.stamina label{font-size:8px}.actor-status{font-size:7px;min-height:22px}.launch-panel{padding:14px}.skill-panel{padding:15px}.skill-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.skill-panel-heading h2{font-size:16px}.skill-panel-heading>span{font-size:8px}.signature-button{padding:12px;gap:10px}.signature-button strong{font-size:16px}.signature-button small{font-size:9px}.signature-button>span:last-child{font-size:10px}.skill-button{min-height:113px}.skill-button>strong{font-size:13px}.skill-button>small{font-size:9px}.skill-meta{font-size:9px}#skill-banner{font-size:20px;letter-spacing:2px}footer{font-size:7px}}
-.mode-picker{display:flex;align-items:center;gap:24px;flex-wrap:wrap;margin:0 0 18px;padding:15px 20px;border:1px solid #405266;border-radius:9px;background:#182536}.mode-picker label{display:flex;align-items:center;gap:15px;font-size:13px;color:#d8e6cd}.mode-picker select{background:#263b45;color:#e4efd8;border:1px solid #7d957c;border-radius:5px;padding:9px;font:inherit}.mode-picker p{font-size:11px;color:#a6bdc9;margin:0;line-height:1.8}#p2-panel{border-color:#806454}#p2-panel .signature-button{background:linear-gradient(100deg,#604833,#392b43)}#skill-feedback-p2{font-size:10px;color:#dac2ac;line-height:1.8}[hidden]{display:none!important}.launch-panel:has(#launch-p2:not([hidden])){flex-wrap:wrap}.launch-panel:has(#launch-p2:not([hidden])) .launch-info{display:none}.launch-panel:has(#launch-p2:not([hidden])) .primary{min-width:100px}.launch-panel:has(#launch-p2:not([hidden])) .timing{min-width:85px}#launch-p2{background:#e5b78f}
-@media(max-width:520px){.mode-picker{padding:12px;gap:10px}.launch-panel:has(#launch-p2:not([hidden])){gap:8px}.launch-panel:has(#launch-p2:not([hidden])) .primary{min-width:85px;padding:12px 7px}.skill-panel-heading{flex-wrap:wrap}}
-.online-lobby{margin-bottom:20px;padding:20px;background:linear-gradient(120deg,#203639,#1c2036);border:1px solid #71958a;border-radius:10px}.online-lobby .section-head{gap:15px;flex-wrap:wrap}.online-lobby b{font-size:13px;letter-spacing:2px}#online-role{font-size:12px;color:#e2c79e}#online-status{font-size:13px;line-height:1.8;color:#d4e7ca}.room-actions,#room-share{display:flex;align-items:end;gap:12px;flex-wrap:wrap}.online-lobby label{flex:1;min-width:180px;font-size:11px;color:#a9c4ce}.online-lobby input{display:block;width:100%;box-sizing:border-box;margin-top:7px;padding:11px;background:#111e2b;color:#e2efdc;border:1px solid #516b76;border-radius:5px}.online-lobby button{padding:11px 15px;border:1px solid #829976;border-radius:5px;background:#30443c;color:#e3eccd}.online-lobby button:disabled{opacity:.4}#room-share{margin-top:14px}.remote-note{font-size:11px;color:#9fb9c5;line-height:1.8;margin-bottom:0}
-.audio-controls{display:flex;align-items:center;gap:8px}.audio-controls input{width:70px;accent-color:#c3dfb7;cursor:pointer}header .audio-controls button{white-space:nowrap}@media(max-width:520px){.audio-controls{gap:3px}.audio-controls input{width:43px}header{gap:6px}}
+:root {
+  --cyan: #bfe5bb;
+  --orange: #e9ae78;
+}
+header .brand {
+  font-size: 18px;
+  letter-spacing: 3px;
+}
+header button {
+  margin-left: 0;
+}
+header #rules-open {
+  margin-left: auto;
+}
+.intro h1 {
+  font-size: 40px;
+  letter-spacing: 1px;
+}
+.intro h1 em {
+  color: #bee4b9;
+}
+.intro > p {
+  font-size: 11px;
+  line-height: 2.1;
+}
+.battle-column {
+  min-width: 0;
+}
+.game-layout {
+  grid-template-columns: minmax(0, 1fr) 300px;
+  align-items: start;
+}
+.arena-panel {
+  height: 595px;
+  min-height: 0;
+}
+.scoreboard .player b {
+  font-size: 19px;
+  letter-spacing: 4px;
+}
+.scoreboard .player small {
+  font-size: 9px;
+  letter-spacing: 1px;
+}
+.round b {
+  font-size: 15px;
+  color: #d6c598;
+  font-family: monospace;
+}
+.stamina {
+  bottom: 14px;
+}
+.stamina label {
+  font-size: 9px;
+}
+.stamina .bar {
+  margin-top: 6px;
+}
+.mana-label {
+  margin-top: 10px;
+}
+.bar.mana i {
+  background: #889bef;
+  box-shadow: 0 0 9px #627adb66;
+}
+.actor-status {
+  font-size: 8px;
+  line-height: 1.6;
+  color: #a6b6c7;
+  min-height: 25px;
+  margin: 8px 0 0;
+}
+.canvas-wrap,
+canvas {
+  min-height: 0;
+}
+.arena-label {
+  font-size: 9px;
+}
+.arena-status {
+  font-size: 8px;
+}
+.center-message {
+  top: 24%;
+}
+.center-message h2 {
+  font-size: 28px;
+  letter-spacing: 2px;
+}
+.center-message p {
+  font-size: 10px;
+}
+.launch-panel {
+  padding: 16px 20px;
+}
+.primary {
+  background: #c3dfb7;
+  min-width: 130px;
+  font-size: 11px;
+}
+.launch-info .eyebrow {
+  font-size: 8px;
+}
+.launch-info p {
+  font-size: 9px;
+}
+#skill-banner {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  text-align: center;
+  font-size: 23px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  color: #ffedb5;
+  text-shadow:
+    0 0 25px #eaaf64,
+    0 3px 5px #07111c;
+  opacity: 0;
+  transition: opacity 0.18s;
+  white-space: nowrap;
+}
+#skill-banner.show {
+  opacity: 1;
+}
+.skill-panel {
+  margin-top: 17px;
+  padding: 20px;
+  border: 1px solid #3f4c59;
+  background: linear-gradient(140deg, #202d35, #17212c);
+  border-radius: 10px;
+}
+.skill-panel-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  gap: 15px;
+}
+.skill-panel-heading .eyebrow {
+  font-size: 8px;
+  margin-bottom: 8px;
+}
+.skill-panel-heading h2 {
+  font-size: 18px;
+  font-weight: 500;
+  margin: 0;
+  letter-spacing: 1px;
+}
+.skill-panel-heading > span {
+  font-size: 9px;
+  color: #8399aa;
+}
+.signature-button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  background: linear-gradient(100deg, #4b593a, #223c3e);
+  border: 1px solid #aeb9797a;
+  border-radius: 7px;
+  padding: 15px 17px;
+  color: #e4eace;
+  text-align: left;
+}
+.signature-button strong {
+  display: block;
+  font-size: 17px;
+  letter-spacing: 2px;
+}
+.signature-button small {
+  font-size: 9px;
+  line-height: 1.8;
+  display: block;
+  color: #b7c7b3;
+  margin-top: 5px;
+}
+.signature-button > span:last-child {
+  white-space: nowrap;
+  color: #e7d99a;
+  font-size: 11px;
+}
+.skill-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 9px;
+  margin-top: 12px;
+}
+.skill-button {
+  position: relative;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 12px 10px;
+  min-height: 110px;
+  background: #202e3b;
+  border: 1px solid #415064;
+  border-radius: 6px;
+  color: #d4e2e8;
+  overflow: hidden;
+}
+.skill-button:enabled:hover {
+  border-color: #c5c989;
+  background: #32414a;
+}
+.skill-button > strong {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+.skill-button > small {
+  font-size: 8px;
+  line-height: 1.8;
+  color: #99adbd;
+  flex: 1;
+}
+.skill-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 8px;
+  color: #9dabd9;
+}
+.skill-button > em {
+  font-style: normal;
+  font-size: 8px;
+  color: #ebc37b;
+}
+.skill-button:disabled,
+.signature-button:disabled {
+  opacity: 0.46;
+}
+#skill-feedback {
+  font-size: 10px;
+  line-height: 1.8;
+  color: #b4c4aa;
+  margin: 14px 0 0;
+  min-height: 18px;
+}
+.loadout {
+  padding: 18px;
+}
+.loadout > .section-head {
+  margin-bottom: 15px;
+}
+.showcase {
+  height: 170px;
+}
+.showcase-name > b {
+  font-size: 16px;
+  line-height: 1.7;
+  letter-spacing: 1px;
+}
+.showcase-name > span {
+  font-size: 10px;
+}
+.faction-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 10px;
+}
+.faction-tabs button {
+  flex: 1;
+  border: 1px solid #34495b;
+  background: #192a38;
+  color: #8b9aaa;
+  padding: 7px 3px;
+  border-radius: 4px;
+  font-size: 10px;
+}
+.faction-tabs button.active {
+  color: #e5e5b9;
+  border-color: #88956d;
+  background: #35423d;
+}
+#tops {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+  max-height: 208px;
+  overflow: auto;
+  padding-right: 3px;
+}
+.general-choice {
+  padding: 9px 4px;
+  background: #1c2b3a;
+  color: #afbfd2;
+  border: 1px solid #35485e;
+  border-radius: 5px;
+  min-width: 0;
+}
+.general-choice.selected {
+  border-color: #b9cc8e;
+  background: #394c44;
+  color: #e1ebd0;
+}
+.general-choice span {
+  display: block;
+  font-size: 13px;
+  letter-spacing: 1px;
+}
+.general-choice small {
+  font-size: 8px;
+  color: #8ca2b7;
+  display: block;
+  margin-top: 6px;
+}
+.general-choice:disabled {
+  opacity: 0.45;
+}
+.war-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 13px 8px;
+  padding: 17px 0 0;
+}
+.war-stats span {
+  display: block;
+  font-size: 8px;
+  color: #8b9aab;
+}
+.war-stats b {
+  display: block;
+  font-size: 14px;
+  font-family: monospace;
+  font-weight: 400;
+  margin-top: 5px;
+  color: #d4dfd2;
+}
+#stat-provenance {
+  font-size: 9px;
+  line-height: 1.8;
+  color: #c4b883;
+  border-bottom: 1px solid #38465b;
+  padding-bottom: 12px;
+}
+.enemy-select {
+  font-size: 10px;
+  color: #aebccd;
+}
+.enemy-select select {
+  display: block;
+  width: 100%;
+  margin-top: 8px;
+  padding: 9px;
+  background: #1b2938;
+  color: #cfdbdd;
+  border: 1px solid #4b5a65;
+  border-radius: 4px;
+  font: inherit;
+}
+#matchup-note {
+  font-size: 9px;
+  color: #c7a976;
+  line-height: 1.9;
+  margin-bottom: 0;
+}
+.combat-log {
+  padding: 18px;
+  background: #171f2b;
+  border: 1px solid #303e51;
+  border-radius: 9px;
+}
+.combat-log .eyebrow {
+  margin: 0;
+  font-size: 9px;
+}
+.combat-log ol {
+  list-style: none;
+  padding: 0;
+  margin: 13px 0 0;
+  max-height: 230px;
+  overflow: auto;
+}
+.combat-log li {
+  font-size: 10px;
+  color: #a3b6c4;
+  line-height: 1.9;
+  padding: 8px 0;
+  border-bottom: 1px solid #2f3c4a;
+}
+.combat-log time {
+  font-size: 8px;
+  color: #647f91;
+  margin-right: 7px;
+}
+.rules p {
+  font-size: 10px;
+}
+.rules small {
+  font-size: 8px;
+}
+.rules button {
+  font-size: 11px;
+}
+.rules-copy {
+  font-size: 12px;
+  line-height: 2;
+  color: #a7bdca;
+}
+.rules-copy h3 {
+  color: #e3e8c6;
+  font-size: 15px;
+  margin: 24px 0 9px;
+}
+.rules-copy ul {
+  padding-left: 20px;
+}
+.rules-copy li {
+  margin-bottom: 9px;
+}
+#rules-dialog {
+  max-width: 760px;
+}
+footer {
+  font-size: 8px;
+}
+.inspect-heading h2 {
+  font-size: 22px;
+}
+@media (max-width: 1120px) {
+  .game-layout {
+    grid-template-columns: minmax(0, 1fr) 255px;
+  }
+  .skill-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .skill-button {
+    min-height: 100px;
+  }
+  .arena-panel {
+    height: 550px;
+  }
+  .intro h1 {
+    font-size: 34px;
+  }
+  .showcase-name > b {
+    font-size: 14px;
+  }
+  .skill-panel-heading > span {
+    font-size: 8px;
+  }
+  .launch-info {
+    display: none;
+  }
+}
+@media (max-width: 790px) {
+  .game-layout {
+    grid-template-columns: 1fr;
+  }
+  .intro > p {
+    max-width: 240px;
+  }
+  .battle-column {
+    order: 1;
+  }
+  aside {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    align-items: start;
+    order: 0;
+  }
+  .loadout {
+    padding: 16px;
+  }
+  .showcase {
+    height: 170px;
+  }
+  #tops {
+    max-height: 145px;
+  }
+  .combat-log {
+    height: auto;
+  }
+  .game-layout {
+    gap: 16px;
+  }
+  .arena-panel {
+    height: 570px;
+  }
+  .skill-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .skill-panel-heading > span {
+    font-size: 9px;
+  }
+  .combat-log ol {
+    max-height: 300px;
+  }
+  .intro {
+    margin-bottom: 20px;
+  }
+  .showcase-name {
+    margin-bottom: 10px;
+  }
+}
+@media (max-width: 520px) {
+  header {
+    padding: 0 4%;
+    gap: 9px;
+  }
+  header .brand {
+    font-size: 14px;
+    letter-spacing: 1px;
+  }
+  header .brand > span:first-child {
+    font-size: 24px;
+    margin: 0;
+  }
+  header button {
+    font-size: 8px;
+    padding: 7px 8px;
+  }
+  .intro h1 {
+    font-size: 30px;
+  }
+  .intro > p {
+    display: none;
+  }
+  aside {
+    grid-template-columns: 1fr;
+  }
+  .combat-log {
+    display: none;
+  }
+  .showcase {
+    height: 170px;
+    float: left;
+    width: 44%;
+    margin-right: 13px;
+  }
+  .showcase-name {
+    padding-top: 6px;
+  }
+  .showcase-name > b {
+    font-size: 14px;
+  }
+  .showcase-name > span {
+    font-size: 9px;
+  }
+  .faction-tabs {
+    gap: 3px;
+  }
+  .faction-tabs button {
+    font-size: 9px;
+    padding: 6px 2px;
+  }
+  #tops {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    max-height: 120px;
+  }
+  .general-choice {
+    padding: 7px 3px;
+  }
+  .general-choice span {
+    font-size: 11px;
+  }
+  .general-choice small {
+    font-size: 7px;
+  }
+  .war-stats {
+    clear: both;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    padding-top: 10px;
+    gap: 5px;
+  }
+  .war-stats b {
+    font-size: 13px;
+  }
+  #stat-provenance {
+    margin: 10px 0;
+    font-size: 8px;
+    padding-bottom: 9px;
+  }
+  .showcase-name {
+    margin-bottom: 9px;
+  }
+  .loadout {
+    padding: 14px;
+  }
+  .showcase-code {
+    font-size: 8px;
+  }
+  .enemy-select {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    white-space: nowrap;
+  }
+  .enemy-select select {
+    margin: 0;
+    flex: 1;
+    min-width: 0;
+  }
+  #matchup-note {
+    font-size: 8px;
+    margin-top: 8px;
+  }
+  .arena-panel {
+    height: 475px;
+  }
+  .scoreboard .player b {
+    font-size: 16px;
+  }
+  .scoreboard .player small {
+    font-size: 8px;
+  }
+  .center-message h2 {
+    font-size: 23px;
+  }
+  .center-message > span {
+    font-size: 7px;
+  }
+  .center-message p {
+    font-size: 9px;
+  }
+  .arena-label {
+    font-size: 8px;
+  }
+  .stamina {
+    gap: 20px;
+    bottom: 8px;
+  }
+  .stamina label {
+    font-size: 8px;
+  }
+  .actor-status {
+    font-size: 7px;
+    min-height: 22px;
+  }
+  .launch-panel {
+    padding: 14px;
+  }
+  .skill-panel {
+    padding: 15px;
+  }
+  .skill-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .skill-panel-heading h2 {
+    font-size: 16px;
+  }
+  .skill-panel-heading > span {
+    font-size: 8px;
+  }
+  .signature-button {
+    padding: 12px;
+    gap: 10px;
+  }
+  .signature-button strong {
+    font-size: 16px;
+  }
+  .signature-button small {
+    font-size: 9px;
+  }
+  .signature-button > span:last-child {
+    font-size: 10px;
+  }
+  .skill-button {
+    min-height: 113px;
+  }
+  .skill-button > strong {
+    font-size: 13px;
+  }
+  .skill-button > small {
+    font-size: 9px;
+  }
+  .skill-meta {
+    font-size: 9px;
+  }
+  #skill-banner {
+    font-size: 20px;
+    letter-spacing: 2px;
+  }
+  footer {
+    font-size: 7px;
+  }
+}
+.mode-picker {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin: 0 0 18px;
+  padding: 15px 20px;
+  border: 1px solid #405266;
+  border-radius: 9px;
+  background: #182536;
+}
+.mode-picker label {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-size: 13px;
+  color: #d8e6cd;
+}
+.mode-picker select {
+  background: #263b45;
+  color: #e4efd8;
+  border: 1px solid #7d957c;
+  border-radius: 5px;
+  padding: 9px;
+  font: inherit;
+}
+.mode-picker p {
+  font-size: 11px;
+  color: #a6bdc9;
+  margin: 0;
+  line-height: 1.8;
+}
+#p2-panel {
+  border-color: #806454;
+}
+#p2-panel .signature-button {
+  background: linear-gradient(100deg, #604833, #392b43);
+}
+#skill-feedback-p2 {
+  font-size: 10px;
+  color: #dac2ac;
+  line-height: 1.8;
+}
+[hidden] {
+  display: none !important;
+}
+.launch-panel:has(#launch-p2:not([hidden])) {
+  flex-wrap: wrap;
+}
+.launch-panel:has(#launch-p2:not([hidden])) .launch-info {
+  display: none;
+}
+.launch-panel:has(#launch-p2:not([hidden])) .primary {
+  min-width: 100px;
+}
+.launch-panel:has(#launch-p2:not([hidden])) .timing {
+  min-width: 85px;
+}
+#launch-p2 {
+  background: #e5b78f;
+}
+@media (max-width: 520px) {
+  .mode-picker {
+    padding: 12px;
+    gap: 10px;
+  }
+  .launch-panel:has(#launch-p2:not([hidden])) {
+    gap: 8px;
+  }
+  .launch-panel:has(#launch-p2:not([hidden])) .primary {
+    min-width: 85px;
+    padding: 12px 7px;
+  }
+  .skill-panel-heading {
+    flex-wrap: wrap;
+  }
+}
+.online-lobby {
+  margin-bottom: 20px;
+  padding: 20px;
+  background: linear-gradient(120deg, #203639, #1c2036);
+  border: 1px solid #71958a;
+  border-radius: 10px;
+}
+.online-lobby .section-head {
+  gap: 15px;
+  flex-wrap: wrap;
+}
+.online-lobby b {
+  font-size: 13px;
+  letter-spacing: 2px;
+}
+#online-role {
+  font-size: 12px;
+  color: #e2c79e;
+}
+#online-status {
+  font-size: 13px;
+  line-height: 1.8;
+  color: #d4e7ca;
+}
+.room-actions,
+#room-share {
+  display: flex;
+  align-items: end;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.online-lobby label {
+  flex: 1;
+  min-width: 180px;
+  font-size: 11px;
+  color: #a9c4ce;
+}
+.online-lobby input {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 7px;
+  padding: 11px;
+  background: #111e2b;
+  color: #e2efdc;
+  border: 1px solid #516b76;
+  border-radius: 5px;
+}
+.online-lobby button {
+  padding: 11px 15px;
+  border: 1px solid #829976;
+  border-radius: 5px;
+  background: #30443c;
+  color: #e3eccd;
+}
+.online-lobby button:disabled {
+  opacity: 0.4;
+}
+#room-share {
+  margin-top: 14px;
+}
+.remote-note {
+  font-size: 11px;
+  color: #9fb9c5;
+  line-height: 1.8;
+  margin-bottom: 0;
+}
+.audio-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.audio-controls input {
+  width: 70px;
+  accent-color: #c3dfb7;
+  cursor: pointer;
+}
+header .audio-controls button {
+  white-space: nowrap;
+}
+@media (max-width: 520px) {
+  .audio-controls {
+    gap: 3px;
+  }
+  .audio-controls input {
+    width: 43px;
+  }
+  header {
+    gap: 6px;
+  }
+}
