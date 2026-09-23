@@ -6,6 +6,7 @@
     <title>三國・陀螺爭霸｜半即時技能對戰</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="war-style.css" />
+    <link rel="stylesheet" href="combat-view.css" />
     <script src="top-art.js" defer></script>
     <script src="general-art.js" defer></script>
     <script src="war-data.js" defer></script>
@@ -16,6 +17,7 @@
     <script src="remote-room.js" defer></script>
     <script src="sound-fx.js" defer></script>
     <script src="game.js" defer></script>
+    <script src="combat-view.js" defer></script>
   </head>
   <body>
     <!-- 頁首：品牌、玩法說明與音效控制。 -->
@@ -74,6 +76,7 @@
             <option value="local">雙人 · 同機對戰</option>
           </select>
         </label>
+        <button id="combat-open" type="button">進入戰鬥畫面 ↗</button>
         <p id="mode-hint">選擇武將，挑戰電腦對手。</p>
       </div>
       <!-- 遠端房間：建立、加入、分享邀請連結。 -->
@@ -111,7 +114,15 @@
       </section>
       <!-- 主畫面：左側戰場與技能，右側武將選擇。 -->
       <div class="game-layout">
-        <section class="battle-column">
+        <section class="battle-column" aria-label="戰場與技能操作">
+          <div id="combat-toolbar" class="combat-toolbar">
+            <button id="combat-close" type="button">← 返回頁面</button>
+            <span class="combat-caption">戰場與技能</span>
+            <button id="combat-details" type="button" aria-pressed="false">
+              招式說明
+            </button>
+            <div id="combat-audio"></div>
+          </div>
           <section class="arena-panel">
             <div class="scoreboard">
               <div class="player">
@@ -201,32 +212,40 @@
               </button>
             </div>
           </section>
-          <section class="skill-panel">
-            <div class="skill-panel-heading">
-              <div>
-                <span class="eyebrow">以招破局 / 技能列</span>
-                <h2>觀察對手，再出手。</h2>
-              </div>
-              <span>P1：1–8 通用技 · Q 專屬技</span>
+          <div id="combat-skills" class="combat-skills">
+            <div class="combat-player-tabs" aria-label="選擇技能面板">
+              <button id="combat-p1" type="button" aria-pressed="true">P1 技能</button>
+              <button id="combat-p2" type="button" aria-pressed="false">P2 技能</button>
             </div>
-            <button id="signature" class="signature-button" disabled></button>
-            <div id="skills" class="skill-grid"></div>
-            <p id="skill-feedback" role="status">
-              戰鬥中點選技能即可施放；不需手動控制陀螺移動。
-            </p>
-          </section>
-          <section id="p2-panel" class="skill-panel" hidden>
-            <div class="skill-panel-heading">
-              <div>
-                <span class="eyebrow">PLAYER TWO</span>
-                <h2 id="p2-heading">玩家 2 技能</h2>
+            <section id="p1-panel" class="skill-panel">
+              <div class="skill-panel-heading">
+                <div>
+                  <span class="eyebrow">以招破局 / 技能列</span>
+                  <h2>觀察對手，再出手。</h2>
+                </div>
+                <span>P1：1–8 通用技 · Q 專屬技</span>
               </div>
-              <span id="p2-hotkeys">Z X C V B N M , 通用技 · / 專屬技</span>
-            </div>
-            <button id="signature-p2" class="signature-button" disabled></button>
-            <div id="skills-p2" class="skill-grid"></div>
-            <p id="skill-feedback-p2" role="status">玩家 2：Enter 發射，/ 施放專屬技。</p>
-          </section>
+              <button id="signature" class="signature-button" disabled></button>
+              <div id="skills" class="skill-grid"></div>
+              <p id="skill-feedback" role="status">
+                戰鬥中點選技能即可施放；不需手動控制陀螺移動。
+              </p>
+            </section>
+            <section id="p2-panel" class="skill-panel" hidden>
+              <div class="skill-panel-heading">
+                <div>
+                  <span class="eyebrow">PLAYER TWO</span>
+                  <h2 id="p2-heading">玩家 2 技能</h2>
+                </div>
+                <span id="p2-hotkeys">Z X C V B N M , 通用技 · / 專屬技</span>
+              </div>
+              <button id="signature-p2" class="signature-button" disabled></button>
+              <div id="skills-p2" class="skill-grid"></div>
+              <p id="skill-feedback-p2" role="status">
+                玩家 2：Enter 發射，/ 施放專屬技。
+              </p>
+            </section>
+          </div>
         </section>
         <aside>
           <section class="loadout">

@@ -123,6 +123,10 @@ try:
     host_browser.evaluate("for(let i=0;i<181;i++)SpinArena.simulate(1/120)")
     until(guest_browser, 'SpinArena.game.phase==="battle"')
     assert not host_browser.evaluate("SpinArena.game.aiEnabled")
+    assert host_browser.evaluate("document.body.classList.contains('combat-focus')")
+    assert guest_browser.evaluate(
+        "document.body.classList.contains('combat-focus') && getComputedStyle(document.getElementById('p1-panel')).display==='none' && getComputedStyle(document.getElementById('p2-panel')).display!=='none'"
+    )
     guest_browser.evaluate(
         'window.dispatchEvent(new KeyboardEvent("keydown",{code:"Digit5"}))'
     )

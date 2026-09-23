@@ -5,6 +5,7 @@
 | 想修改的內容 | 檔案 | 閱讀起點 |
 | --- | --- | --- |
 | 網頁內容與按鈕 | `index.html` | 依中文區塊註解找頁首、房間、戰場或彈出視窗 |
+| 同畫面戰鬥操作 | `combat-view.js`、`combat-view.css` | `open()`、`close()` 與響應式技能列 |
 | 介面排版與顏色 | `war-style.css` | 覆寫基礎 `style.css` 的三國主題 |
 | 武將與技能數值 | `war-data.js` | `characters`、`common` |
 | 傷害、技能與勝負 | `war-engine.js` | `WarBattle.hit()`、`use()`、`checkEnd()` |

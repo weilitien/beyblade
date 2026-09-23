@@ -74,6 +74,7 @@ function canSelect() {
 }
 function reset() {
   if (playMode === 'online' && RemoteRoom.role === 'guest') return;
+  window.CombatView?.close(false);
   networkRevision++;
   SoundFX.stop();
   soundJournal = [];
@@ -345,8 +346,10 @@ function updateUI() {
     );
   }
   $('skill-banner').classList.toggle('show', bannerLife > 0);
+  window.CombatView?.refresh();
 }
 function charge() {
+  window.CombatView?.open();
   game.reset(selected, enemy);
   game.aiEnabled = playMode === 'solo';
   launchQualities = [null, null];
@@ -417,6 +420,7 @@ function pause(remote = false) {
     SoundFX.stop();
     message('暫停演武', '運籌帷幄。', '按 P 或播放按鈕繼續。');
   } else if (before === 'paused') {
+    window.CombatView?.open();
     if (game.phase === 'battle') $('center-message').hidden = true;
     else message('準備發射', '蓄勢待發。', '按空白鍵或發射按鈕。');
   }
@@ -970,6 +974,13 @@ function applyNetwork(s) {
   }
   $('enemy-select').value = enemy;
   updateUI();
+  if (
+    ['ready', 'result'].includes(previousPhase) &&
+    ['charging', 'countdown', 'battle'].includes(game.phase)
+  )
+    window.CombatView?.open();
+  if (game.phase === 'ready' && previousPhase !== 'ready')
+    window.CombatView?.close(false);
   if (!soundInitialized || previousRevision !== networkRevision) {
     receivedSound = s.soundSequence || 0;
     soundInitialized = true;

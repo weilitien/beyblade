@@ -1,0 +1,322 @@
+/* 戰鬥專用版面：桌機左右並排，窄螢幕上下排列。 */
+#combat-open,
+.combat-toolbar button,
+.combat-player-tabs button {
+  border: 1px solid #6f897c;
+  border-radius: 6px;
+  background: #263d37;
+  color: #e4eedc;
+  padding: 10px 14px;
+  font-size: 12px;
+  cursor: pointer;
+}
+.combat-toolbar,
+.combat-player-tabs {
+  display: none;
+}
+body.combat-focus {
+  overflow: hidden;
+}
+.combat-focus .battle-column {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  background: #0c1520;
+  padding: 10px max(10px, env(safe-area-inset-right))
+    max(10px, env(safe-area-inset-bottom)) max(10px, env(safe-area-inset-left));
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 330px;
+  grid-template-rows: 42px minmax(0, 1fr);
+  gap: 10px;
+  height: 100dvh;
+  box-sizing: border-box;
+}
+.combat-focus .combat-toolbar {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+.combat-caption {
+  flex: 1;
+  color: #9db5c1;
+  font-size: 13px;
+}
+#combat-audio {
+  margin-left: auto;
+}
+.combat-focus .arena-panel {
+  grid-column: 1;
+  grid-row: 2;
+  height: 100%;
+  min-height: 0;
+}
+.combat-focus .canvas-wrap,
+.combat-focus #arena {
+  min-height: 0;
+}
+.combat-focus .scoreboard {
+  padding: 14px 20px;
+  flex-shrink: 0;
+}
+.combat-focus .launch-panel {
+  padding: 12px;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.combat-focus .launch-info {
+  display: none;
+}
+.combat-focus .combat-skills {
+  grid-column: 2;
+  grid-row: 2;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  min-height: 0;
+  border: 1px solid #3b505e;
+  border-radius: 10px;
+  background: #17232d;
+  padding: 12px;
+}
+.combat-focus .skill-panel {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+}
+.combat-focus .skill-panel-heading {
+  margin: 0 0 10px;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.combat-focus .skill-panel-heading h2 {
+  font-size: 16px;
+}
+.combat-focus .skill-panel-heading .eyebrow {
+  display: none;
+}
+.combat-focus .skill-panel-heading > span {
+  font-size: 11px;
+}
+.combat-focus .signature-button {
+  padding: 12px;
+  gap: 8px;
+  min-height: 52px;
+}
+.combat-focus .signature-button strong {
+  font-size: 15px;
+  letter-spacing: 0;
+}
+.combat-focus .skill-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 8px;
+}
+.combat-focus .skill-button {
+  min-height: 68px;
+  padding: 9px;
+  gap: 4px;
+}
+.combat-focus .skill-button > strong {
+  font-size: 14px;
+  letter-spacing: 0;
+}
+.combat-focus .skill-meta,
+.combat-focus .skill-button > em {
+  font-size: 10px;
+}
+.combat-focus .skill-button:disabled,
+.combat-focus .signature-button:disabled {
+  opacity: 0.65;
+}
+.combat-focus:not(.combat-details-open) .skill-button > small,
+.combat-focus:not(.combat-details-open) .signature-button small {
+  display: none;
+}
+.combat-focus #skill-feedback,
+.combat-focus #skill-feedback-p2 {
+  font-size: 11px;
+  line-height: 1.6;
+  margin: 10px 0 0;
+}
+.combat-focus[data-combat-mode='online'][data-combat-owner='1'] #p1-panel,
+.combat-focus[data-combat-mode='online'][data-combat-owner='0'] #p2-panel {
+  display: none;
+}
+.combat-focus[data-combat-mode='local'] .battle-column {
+  grid-template-columns: minmax(0, 1fr) 380px;
+}
+.combat-focus[data-combat-mode='local'] #p2-panel {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid #695d50;
+}
+.combat-focus[data-combat-mode='local'] .skill-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.combat-focus[data-combat-mode='local'] .skill-button {
+  padding: 6px;
+  min-height: 64px;
+}
+.combat-focus[data-combat-mode='local'] .skill-meta {
+  flex-wrap: wrap;
+  gap: 2px;
+}
+.combat-focus[data-combat-mode='local'] .skill-button > strong {
+  font-size: 12px;
+}
+.combat-focus[data-combat-mode='local'] .skill-panel-heading h2 {
+  font-size: 14px;
+}
+
+@media (max-width: 900px) {
+  .combat-focus .battle-column,
+  .combat-focus[data-combat-mode='local'] .battle-column {
+    padding: 6px 6px max(6px, env(safe-area-inset-bottom));
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: 38px minmax(0, 1fr) auto;
+    gap: 6px;
+  }
+  .combat-focus .combat-toolbar {
+    gap: 6px;
+  }
+  .combat-focus .combat-caption {
+    display: none;
+  }
+  .combat-focus .combat-toolbar button {
+    font-size: 11px;
+    padding: 9px;
+  }
+  .combat-focus .arena-panel {
+    grid-row: 2;
+  }
+  .combat-focus .combat-skills {
+    grid-row: 3;
+    grid-column: 1;
+    padding: 8px;
+    max-height: 46dvh;
+  }
+  .combat-focus .skill-panel-heading {
+    margin-bottom: 5px;
+  }
+  .combat-focus .skill-panel-heading h2 {
+    font-size: 12px;
+  }
+  .combat-focus .skill-panel-heading > span {
+    font-size: 9px;
+  }
+  .combat-focus .signature-button {
+    min-height: 40px;
+    padding: 8px 10px;
+  }
+  .combat-focus .signature-button strong {
+    font-size: 14px;
+  }
+  .combat-focus .skill-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 5px;
+    margin-top: 5px;
+  }
+  .combat-focus .skill-button,
+  .combat-focus[data-combat-mode='local'] .skill-button {
+    min-height: 52px;
+    padding: 5px;
+    gap: 3px;
+  }
+  .combat-focus .skill-button > strong {
+    font-size: 12px;
+  }
+  .combat-focus .skill-meta {
+    font-size: 8px;
+    flex-wrap: wrap;
+    gap: 1px;
+  }
+  .combat-focus .skill-button > em {
+    font-size: 8px;
+  }
+  .combat-focus #skill-feedback,
+  .combat-focus #skill-feedback-p2 {
+    font-size: 9px;
+    margin-top: 5px;
+    min-height: 0;
+  }
+  .combat-focus .scoreboard {
+    padding: 8px 12px;
+  }
+  .combat-focus .scoreboard .player b {
+    font-size: 14px;
+  }
+  .combat-focus .round > span {
+    display: none;
+  }
+  .combat-focus .launch-panel {
+    padding: 8px;
+  }
+  .combat-focus .primary {
+    min-width: 100px;
+    padding: 10px;
+  }
+  .combat-focus .stamina {
+    left: 12px;
+    right: 12px;
+    bottom: 4px;
+    gap: 18px;
+  }
+  .combat-focus .mana-label {
+    margin-top: 5px;
+  }
+  .combat-focus .actor-status {
+    margin-top: 4px;
+    min-height: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .combat-focus .arena-label small {
+    display: none;
+  }
+  .combat-focus .center-message h2 {
+    font-size: 20px;
+  }
+  .combat-focus[data-combat-mode='local'] .combat-player-tabs {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+  .combat-player-tabs button {
+    flex: 1;
+    padding: 6px;
+    font-size: 11px;
+  }
+  .combat-player-tabs button[aria-pressed='true'] {
+    background: #c4dfb7;
+    color: #173127;
+  }
+  .combat-focus[data-combat-mode='local'][data-control-side='0'] #p2-panel,
+  .combat-focus[data-combat-mode='local'][data-control-side='1'] #p1-panel {
+    display: none;
+  }
+  .combat-focus[data-combat-mode='local'] #p2-panel {
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+}
+
+/* 手機橫向：使用左右配置，避免下方技能擠掉戰場。 */
+@media (max-height: 500px) and (min-width: 600px) {
+  .combat-focus .battle-column,
+  .combat-focus[data-combat-mode='local'] .battle-column {
+    grid-template-columns: minmax(0, 1fr) 310px;
+    grid-template-rows: 34px minmax(0, 1fr);
+  }
+  .combat-focus .combat-skills {
+    grid-column: 2;
+    grid-row: 2;
+    max-height: none;
+  }
+  .combat-focus .combat-player-tabs {
+    margin-bottom: 4px;
+  }
+}
