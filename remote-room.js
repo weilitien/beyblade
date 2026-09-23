@@ -1,7 +1,7 @@
 'use strict';
 // PeerServer only introduces peers. Battle snapshots use an encrypted WebRTC data channel.
 window.RemoteRoom = (() => {
-  const VERSION = 'spin-arena-remote-2',
+  const VERSION = 'spin-arena-remote-3',
     PREFIX = 'sanguo-spin-';
   let peer = null,
     connection = null,
@@ -144,7 +144,8 @@ window.RemoteRoom = (() => {
       if (kind === 'host') status('房間已建立，將邀請連結傳給朋友。請保持此頁開啟。');
       else
         attach(
-          peer.connect(PREFIX + code, { reliable: true, serialization: 'json' }),
+          // Binary transport automatically chunks larger effect snapshots.
+          peer.connect(PREFIX + code, { reliable: true, serialization: 'binary' }),
           gen,
         );
     });

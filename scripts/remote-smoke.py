@@ -170,6 +170,31 @@ try:
         guest_browser.evaluate("heard.length") == heard
     ), "Repeated snapshots must not replay sounds"
     print("PASS: remote sound events delivered once", flush=True)
+    # 同一個結算事件，兩位玩家應聽到各自的勝利／戰敗音效。
+    for loser in [1, 0]:
+        host_browser.evaluate(
+            f"SpinArena.game.actors[{loser}].hp=0;SpinArena.simulate(1/120)"
+        )
+        until(guest_browser, "SpinArena.game.phase === 'result'")
+        assert host_browser.evaluate("heard.at(-1)") == (
+            "win" if loser == 1 else "lose"
+        )
+        assert guest_browser.evaluate("heard.at(-1)") == (
+            "lose" if loser == 1 else "win"
+        )
+        sound_count = guest_browser.evaluate("heard.length")
+        time.sleep(0.2)
+        assert guest_browser.evaluate("heard.length") == sound_count
+        host_browser.evaluate(
+            "SpinArena.reset();SpinArena.launch();SpinArena.game.charge=.81;SpinArena.launch()"
+        )
+        until(guest_browser, "SpinArena.game.phase === 'charging'")
+        guest_browser.evaluate("SpinArena.game.charge=.81;SpinArena.launch()")
+        until(host_browser, "SpinArena.game.phase === 'countdown'")
+        host_browser.evaluate("for(let i=0;i<181;i++)SpinArena.simulate(1/120)")
+        until(guest_browser, "SpinArena.game.phase === 'battle'")
+    print("PASS: each player hears the correct ending exactly once", flush=True)
+
     guest_browser.evaluate(
         (Path(__file__).parent / "cases" / "remote-smoke-1.js").read_text()
     )

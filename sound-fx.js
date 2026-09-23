@@ -260,6 +260,51 @@ window.SoundFX = (() => {
     }
   }
 
+  // 結算音效約兩秒：先留出空間，再以節奏、和聲與低頻建立張力。
+  // 清掉尚未結束的碰撞或招式，避免搶走結局的重音。
+  function victory() {
+    stop();
+    impact(0.9, 0, 0);
+    tone(82, 48, 0.3, 0.16, 'sine', 0.22);
+    const fanfare = [392, 494, 587, 784];
+    fanfare.forEach((frequency, index) => {
+      const delay = 0.18 + index * 0.18;
+      tone(frequency, frequency, 0.46, 0.12, 'triangle', delay, -0.25);
+      tone(frequency * 1.005, frequency, 0.42, 0.035, 'sawtooth', delay, 0.25);
+    });
+    // 最後一記戰鼓接寬幅大和弦，留下高音餘韻。
+    impact(0.65, 0.95);
+    [196, 392, 494, 587, 784].forEach((frequency, index) =>
+      tone(frequency, frequency * 0.999, 1.3, 0.075, 'triangle', 0.98, (index - 2) * 0.2),
+    );
+    noise(2600, 7200, 0.65, 0.09, 0.9);
+    tone(1568, 1566, 0.95, 0.045, 'sine', 1.15, 0.4);
+  }
+
+  function defeat() {
+    stop();
+    impact(1.05, 0);
+    // 失速下墜的氣流與低音，接短暫停頓後的黯淡和弦。
+    tone(310, 42, 0.7, 0.11, 'sawtooth', 0.08, -0.2);
+    noise(3900, 110, 0.85, 0.2, 0.04, 0.2);
+    tone(68, 28, 0.9, 0.2, 'sine', 0.03);
+    [294, 233, 196].forEach((frequency, index) =>
+      tone(
+        frequency,
+        frequency * 0.97,
+        0.72,
+        0.1,
+        'triangle',
+        0.3 + index * 0.2,
+        (index - 1) * 0.3,
+      ),
+    );
+    [98, 147, 233].forEach((frequency, index) =>
+      tone(frequency, frequency * 0.985, 1.05, 0.075, 'sine', 0.88, (index - 1) * 0.3),
+    );
+    noise(410, 65, 0.8, 0.11, 0.84);
+  }
+
   function play(kind, data = {}) {
     if (!enabled || !context || context.state !== 'running' || document.hidden) return;
     const pan = Math.max(-0.8, Math.min(0.8, (data.x || 0) / 4));
@@ -329,10 +374,10 @@ window.SoundFX = (() => {
         noise(950, 300, 0.12, 0.09, 0, pan);
         break;
       case 'win':
-        chime([392, 494, 587, 784], 0.12, 'triangle', 0.11);
+        victory();
         break;
       case 'lose':
-        chime([294, 247, 196], 0.15, 'triangle', 0.08);
+        defeat();
         break;
       case 'draw':
         chime([330, 392, 330], 0.12, 'sine', 0.08);

@@ -80,6 +80,19 @@ try:
     browser.evaluate('SoundFX.play("skill",{id:"signature",character:"zhugeliang"})')
     time.sleep(1.3)
     assert browser.evaluate("SoundFX.activeVoices") == 0
+    # 結算段落需要能正常播完，也必須能立即被靜音中止。
+    for outcome in ["win", "lose"]:
+        browser.evaluate(f"SoundFX.play('{outcome}')")
+        time.sleep(0.10)
+        assert browser.evaluate("SoundFX.activeVoices > 0")
+        time.sleep(1.05)
+        tail = browser.evaluate(
+            "(()=>{const samples=new Float32Array(meter.fftSize);meter.getFloatTimeDomainData(samples);return Math.max(...samples.map(Math.abs));})()"
+        )
+        assert tail > 0.00001, (outcome, "Missing musical tail")
+        time.sleep(1.4)
+        assert browser.evaluate("SoundFX.activeVoices === 0")
+    browser.evaluate("SoundFX.play('win')")
     browser.evaluate('document.getElementById("sound").click()')
     time.sleep(0.1)
     assert browser.evaluate("!SoundFX.enabled&&SoundFX.activeVoices===0")
