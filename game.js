@@ -17,7 +17,8 @@ for (const c of Object.values(WarData.characters)) {
 }
 let networkRevision = 0,
   playMode = 'solo',
-  launchQualities = [null, null];
+  launchQualities = [null, null],
+  playerReady = [false, false];
 const p2Keys = ['Z', 'X', 'C', 'V', 'B', 'N', 'M', ','];
 let selected = 'guanyu',
   enemy = 'lubu',
@@ -76,6 +77,7 @@ function reset() {
   if (playMode === 'online' && RemoteRoom.role === 'guest') return;
   window.CombatView?.close(false);
   networkRevision++;
+  playerReady = [false, false];
   SoundFX.stop();
   soundJournal = [];
   game.reset(selected, enemy);
@@ -322,6 +324,23 @@ function updateUI() {
         : 'P1 空白鍵 · P2 Enter，各自鎖定。';
   }
   if (playMode === 'online') {
+    const selecting = canSelect();
+    $('room-ready').disabled = !RemoteRoom.connected || !selecting;
+    $('room-ready').textContent = playerReady[mySide()] ? '取消準備' : '準備好了';
+    $('ready-status').textContent = !RemoteRoom.connected
+      ? '等待另一位玩家加入後，雙方選將並按準備。'
+      : selecting
+        ? playerReady
+            .map((ready, side) => 'P' + (side + 1) + (ready ? ' 已準備 ✓' : ' 選將中'))
+            .join(' · ')
+        : '雙方已準備，對戰進行中。';
+    if (selecting) {
+      for (const owner of [0, 1]) {
+        $(owner ? 'launch-p2' : 'launch').textContent =
+          'P' + (owner + 1) + (playerReady[owner] ? ' 已準備，等待對手' : ' 準備好了');
+        $(owner ? 'launch-p2' : 'launch').disabled ||= playerReady[owner];
+      }
+    }
     $('launch').disabled ||= !RemoteRoom.connected || mySide() !== 0;
     $('launch-p2').disabled ||= !RemoteRoom.connected || mySide() !== 1;
     $('pause').disabled ||= !RemoteRoom.connected;
@@ -330,7 +349,9 @@ function updateUI() {
       '遠端對戰：你是 ' +
       (RemoteRoom.role ? 'P' + (mySide() + 1) : '尚未加入的玩家') +
       ' · 1–8 / Q 出招 · 空白鍵發射';
-    $('launch-hint').textContent = '你是 P' + (mySide() + 1) + ' · 空白鍵發射';
+    $('launch-hint').textContent = selecting
+      ? '雙方按準備才開始蓄力；更換武將會取消雙方準備。'
+      : '你是 P' + (mySide() + 1) + ' · 空白鍵發射';
   } else $('restart').disabled = false;
   const key = game.log[0]?.time + '|' + game.log[0]?.text;
   if (key !== logKey) {
@@ -372,7 +393,24 @@ function charge() {
   cue('charge');
   updateUI();
 }
+// The host owns readiness; explicit booleans make repeated requests idempotent.
+function setReady(value, owner = mySide(), remote = false) {
+  if (playMode !== 'online' || !RemoteRoom.connected || !canSelect()) return;
+  if (owner !== 0 && owner !== 1) return;
+  if (!remote && owner !== mySide()) return;
+  if (!remote && RemoteRoom.role === 'guest') {
+    onlineCommand('ready', value);
+    return;
+  }
+  playerReady[owner] = value === true;
+  if (playerReady.every(Boolean)) charge();
+  else updateUI();
+}
 function launch(owner = mySide(), remote = false, observedCharge = null) {
+  if (playMode === 'online' && canSelect()) {
+    setReady(true, owner, remote);
+    return;
+  }
   if (playMode === 'online' && !remote) {
     if (!RemoteRoom.connected || owner !== mySide()) return;
     if (RemoteRoom.role === 'guest') {
@@ -523,6 +561,7 @@ function processEvents() {
       }
     }
     if (e.type === 'finish') {
+      playerReady = [false, false];
       updateUI();
       const won = e.winner === 0,
         draw = e.winner === null;
@@ -916,6 +955,7 @@ function captureNetwork() {
     fields,
     actors: game.actors,
     launchQualities,
+    playerReady,
     trail,
     particleList,
     shockwaves,
@@ -961,6 +1001,7 @@ function applyNetwork(s) {
   tops = game.actors;
   game.aiEnabled = false;
   launchQualities = s.launchQualities;
+  playerReady = s.playerReady || [false, false];
   trail = s.trail;
   particleList = s.particleList;
   shockwaves = s.shockwaves;
@@ -1014,7 +1055,9 @@ RemoteRoom.configure({
     ) {
       enemy = payload.value;
       reset();
-    } else if (
+    } else if (action === 'ready' && typeof payload.value === 'boolean')
+      setReady(payload.value, 1, true);
+    else if (
       action === 'launch' &&
       Number.isFinite(payload.value) &&
       payload.value >= 0 &&
@@ -1034,6 +1077,7 @@ RemoteRoom.configure({
     updateUI();
   },
   closed: () => {
+    playerReady = [false, false];
     SoundFX.stop();
     soundInitialized = false;
     renderLoadout();
@@ -1064,3 +1108,5 @@ $('room-leave').onclick = () => {
 };
 $('room-refresh').onclick = () => PublicLobby.refresh();
 PublicLobby.render();
+
+$('room-ready').onclick = () => setReady(!playerReady[mySide()]);

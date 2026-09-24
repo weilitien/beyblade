@@ -867,3 +867,16 @@ header .audio-controls button {
     min-height: 0;
   }
 }
+
+.ready-actions {
+  margin-top: 16px;
+  align-items: center;
+}
+#ready-status {
+  color: #d4e7ca;
+  font-size: 13px;
+}
+#room-ready {
+  border-color: #eac883;
+  min-width: 130px;
+}

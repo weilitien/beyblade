@@ -115,8 +115,28 @@ try:
     until(host_browser, 'SpinArena.game.actors[1].id==="zhaoyun"')
     time.sleep(0.2)
     assert guest_browser.evaluate("SpinArena.game.actors[0].id") == "liubei"
-    host_browser.evaluate("SpinArena.launch()")
+    # One player's readiness cannot launch a round; cancellation and selection reset it.
+    host_browser.evaluate("document.getElementById('room-ready').click()")
+    until(guest_browser, "captureNetwork().playerReady[0] === true")
+    assert host_browser.evaluate("SpinArena.game.phase === 'ready'")
+    host_browser.evaluate("document.getElementById('room-ready').click()")
+    until(guest_browser, "captureNetwork().playerReady.every(value=>!value)")
+    guest_browser.evaluate("document.getElementById('room-ready').click()")
+    until(host_browser, "captureNetwork().playerReady[1] === true")
+    host_browser.evaluate("SpinArena.select('liubei')")
+    until(guest_browser, "captureNetwork().playerReady.every(value=>!value)")
+    guest_browser.evaluate("RemoteRoom.command('ready',{revision:-1,value:true})")
     time.sleep(0.2)
+    assert host_browser.evaluate("captureNetwork().playerReady.every(value=>!value)")
+    host_browser.evaluate("document.getElementById('room-ready').click()")
+    until(guest_browser, "captureNetwork().playerReady[0] === true")
+    guest_browser.evaluate("document.getElementById('room-ready').click()")
+    until(host_browser, "SpinArena.game.phase === 'charging'")
+    until(guest_browser, "SpinArena.game.phase === 'charging'")
+    print(
+        "PASS: both players must ready; cancellation, selection reset and stale readiness are safe",
+        flush=True,
+    )
     host_browser.evaluate("SpinArena.game.charge=.81;SpinArena.launch()")
     time.sleep(0.2)
     assert guest_browser.evaluate("SpinArena.game.phase") == "charging"
@@ -179,6 +199,9 @@ try:
             f"SpinArena.game.actors[{loser}].hp=0;SpinArena.simulate(1/120)"
         )
         until(guest_browser, "SpinArena.game.phase === 'result'")
+        assert host_browser.evaluate(
+            "captureNetwork().playerReady.every(value=>!value)"
+        )
         assert host_browser.evaluate("heard.at(-1)") == (
             "win" if loser == 1 else "lose"
         )
@@ -188,9 +211,14 @@ try:
         sound_count = guest_browser.evaluate("heard.length")
         time.sleep(0.2)
         assert guest_browser.evaluate("heard.length") == sound_count
-        host_browser.evaluate(
-            "SpinArena.reset();SpinArena.launch();SpinArena.game.charge=.81;SpinArena.launch()"
+        host_browser.evaluate("SpinArena.reset();SpinArena.launch()")
+        until(
+            guest_browser,
+            "SpinArena.game.phase === 'ready' && captureNetwork().playerReady[0]",
         )
+        guest_browser.evaluate("document.getElementById('room-ready').click()")
+        until(host_browser, "SpinArena.game.phase === 'charging'")
+        host_browser.evaluate("SpinArena.game.charge=.81;SpinArena.launch()")
         until(guest_browser, "SpinArena.game.phase === 'charging'")
         guest_browser.evaluate("SpinArena.game.charge=.81;SpinArena.launch()")
         until(host_browser, "SpinArena.game.phase === 'countdown'")

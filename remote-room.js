@@ -1,7 +1,7 @@
 'use strict';
 // PeerServer only introduces peers. Battle snapshots use an encrypted WebRTC data channel.
 window.RemoteRoom = (() => {
-  const VERSION = 'spin-arena-remote-3',
+  const VERSION = 'spin-arena-remote-4',
     PREFIX = 'sanguo-spin-public-';
   let peer = null,
     connection = null,
@@ -80,8 +80,8 @@ window.RemoteRoom = (() => {
         clearTimeout(timeout);
         status(
           role === 'host'
-            ? 'P2 已加入。選好武將後即可發射。'
-            : '已加入房間，你是 P2。選好武將後即可發射。',
+            ? 'P2 已加入。選好武將後請按準備。'
+            : '已加入房間，你是 P2。選好武將後請按準備。',
         );
         handlers.connected?.(state());
         return;
