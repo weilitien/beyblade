@@ -762,6 +762,7 @@ function setMode(mode) {
     return;
   playMode = mode;
   reset();
+  PublicLobby.setActive(mode === 'online');
 }
 document.addEventListener('visibilitychange', () => {
   if (document.hidden) SoundFX.stop();
@@ -1050,40 +1051,16 @@ RemoteRoom.configure({
     $('online-role').textContent = state.role
       ? '你是 ' + (state.role === 'host' ? 'P1 · 房主' : 'P2 · 訪客')
       : '尚未連線';
-    $('room-create').disabled = !!state.role;
-    $('room-join').disabled = !!state.role;
     $('room-leave').disabled = !state.role;
-    $('room-share').hidden = state.role !== 'host';
-    if (state.role === 'host') $('room-link').value = RemoteRoom.invite();
+    PublicLobby.render();
     renderLoadout();
     updateUI();
   },
 });
-$('room-create').onclick = () => {
-  if (playMode === 'online') {
-    reset();
-    RemoteRoom.create();
-  }
-};
-$('room-join').onclick = () => {
-  if (playMode === 'online') RemoteRoom.join($('room-code').value);
-};
 $('room-leave').onclick = () => {
   RemoteRoom.leave();
   reset();
+  PublicLobby.refresh();
 };
-$('room-copy').onclick = async () => {
-  try {
-    await navigator.clipboard.writeText($('room-link').value);
-    $('online-status').textContent = '邀請連結已複製，傳給朋友即可加入。';
-  } catch {
-    $('room-link').focus();
-    $('room-link').select();
-    $('online-status').textContent = '請複製已選取的邀請連結。';
-  }
-};
-if (/^#room=[a-f0-9]{10}$/i.test(location.hash)) {
-  setMode('online');
-  $('room-code').value = location.hash.slice(6);
-  $('online-status').textContent = '已填入朋友的房間，按「加入房間 · P2」即可連線。';
-}
+$('room-refresh').onclick = () => PublicLobby.refresh();
+PublicLobby.render();

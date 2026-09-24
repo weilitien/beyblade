@@ -87,7 +87,8 @@ try:
         client.evaluate(
             'SpinArena.setMode("online");setInterval(()=>RemoteRoom.tick(performance.now()),50)'
         )
-    host_browser.evaluate('document.getElementById("room-create").click()')
+    until(host_browser, "!document.querySelector('[data-room=\"1\"]').disabled", 30)
+    host_browser.evaluate("document.querySelector('[data-room=\"1\"]').click()")
     until(
         host_browser,
         'document.getElementById("online-status").textContent.includes("房間已建立")',
@@ -95,11 +96,13 @@ try:
     )
     code = host_browser.evaluate("RemoteRoom.code")
     print("ROOM CREATED", flush=True)
-    guest_browser.evaluate(
-        'document.getElementById("room-code").value='
-        + json.dumps(code)
-        + ';document.getElementById("room-join").click()'
+    guest_browser.evaluate("PublicLobby.refresh()")
+    until(
+        guest_browser,
+        "document.querySelector('[data-room=\"1\"]').textContent.includes('加入對戰')",
+        30,
     )
+    guest_browser.evaluate("document.querySelector('[data-room=\"1\"]').click()")
     until(host_browser, "RemoteRoom.connected", 30)
     until(guest_browser, "RemoteRoom.connected", 30)
     time.sleep(0.4)

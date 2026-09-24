@@ -13,13 +13,14 @@
 | 陀螺幾何與徽章 | `top-art.js`、`general-art.js` | 共用繪製器與各武將外觀資料 |
 | 戰場繪製 | `war-visuals.js` | `draw()`、`topMesh()` |
 | 音效設計 | `sound-fx.js` | `impact()`、`slash()`、`shield()`、`signature()` |
+| 公開大廳 | `public-lobby.js` | 三間房的狀態查詢、加入入口與自動更新 |
 | 遠端房間 | `remote-room.js` | 房間生命週期、連線與封包 |
 
 一個操作的路徑：按鈕或鍵盤 → `game.js` → `WarBattle.use()` → 引擎產生事件 → `processEvents()` → 畫面與音效。遠端訪客的操作先送房主，再由房主計算並同步結果。
 
 ## Python 測試
 
-`audio-smoke.py`、`health-smoke.py`、`remote-smoke.py` 分別測試音效、血量結算與遠端對戰。共同的瀏覽器通訊程式集中在 `scripts/browser_support.py`。
+`audio-smoke.py`、`health-smoke.py`、`remote-smoke.py` 分別測試音效、血量結算與遠端對戰。`lobby-smoke.py` 測試三間公開房的上限與釋出。共同的瀏覽器通訊程式集中在 `scripts/browser_support.py`。
 
 較長的 JavaScript 測試情境放在 `scripts/cases/`，Python 負責啟動瀏覽器與斷言；不再把整段情境擠在單行字串中。
 

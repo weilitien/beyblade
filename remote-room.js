@@ -2,7 +2,7 @@
 // PeerServer only introduces peers. Battle snapshots use an encrypted WebRTC data channel.
 window.RemoteRoom = (() => {
   const VERSION = 'spin-arena-remote-3',
-    PREFIX = 'sanguo-spin-';
+    PREFIX = 'sanguo-spin-public-';
   let peer = null,
     connection = null,
     role = null,
@@ -110,12 +110,7 @@ window.RemoteRoom = (() => {
   function start(kind, room = '') {
     close('正在連線…');
     role = kind;
-    code =
-      kind === 'host'
-        ? Array.from(crypto.getRandomValues(new Uint8Array(5)), (b) =>
-            b.toString(16).padStart(2, '0'),
-          ).join('')
-        : room;
+    code = room;
     const gen = generation;
     sequence = 0;
     acceptedSequence = 0;
@@ -141,7 +136,7 @@ window.RemoteRoom = (() => {
     peer.on('open', () => {
       if (gen !== generation) return;
       clearTimeout(timeout);
-      if (kind === 'host') status('房間已建立，將邀請連結傳給朋友。請保持此頁開啟。');
+      if (kind === 'host') status('房間已建立，等待其他玩家參賽。請保持此頁開啟。');
       else
         attach(
           // Binary transport automatically chunks larger effect snapshots.
@@ -151,6 +146,16 @@ window.RemoteRoom = (() => {
     });
     peer.on('connection', (c) => {
       if (gen !== generation) return;
+      if (kind === 'host' && c.metadata?.lobbyProbe === true) {
+        const cleanup = setTimeout(() => c.close(), 5000);
+        c.on('error', () => clearTimeout(cleanup));
+        c.on('close', () => clearTimeout(cleanup));
+        c.on('open', () => {
+          c.send({ type: 'room-info', occupied: !!connection, version: VERSION });
+          setTimeout(() => c.close(), 300);
+        });
+        return;
+      }
       if (kind !== 'host' || connection) {
         c.on('open', () => {
           c.send({ type: 'reject', reason: 'full' });
@@ -164,9 +169,9 @@ window.RemoteRoom = (() => {
       if (gen !== generation) return;
       lost(
         e.type === 'peer-unavailable'
-          ? '找不到房間，請確認代碼與房主是否在線。'
+          ? '房主已離開，請重新整理大廳。'
           : e.type === 'unavailable-id'
-            ? '房間代碼已被使用，請重新建立。'
+            ? '這個房間剛被其他玩家建立，請重新整理後加入。'
             : '房間服務連線失敗。請檢查網路後再試。',
       );
     });
@@ -191,15 +196,6 @@ window.RemoteRoom = (() => {
       send({ type: 'ping' });
     }
   }
-  function parse(value) {
-    let s = value.trim();
-    try {
-      if (s.includes('://')) s = new URL(s).hash.replace(/^#room=/, '');
-    } catch {
-      return null;
-    }
-    return /^[a-f0-9]{10}$/i.test(s) ? s.toLowerCase() : null;
-  }
   return {
     configure: (h) => {
       handlers = h;
@@ -213,14 +209,13 @@ window.RemoteRoom = (() => {
     get code() {
       return code;
     },
-    create: () => start('host'),
-    join: (value) => {
-      const room = parse(value);
-      if (!room) {
-        status('請輸入 10 碼房間代碼，或貼上邀請連結。');
-        return;
-      }
-      start('guest', room);
+    prefix: PREFIX,
+    version: VERSION,
+    create: (room) => {
+      if (!role && /^[123]$/.test(String(room))) start('host', String(room));
+    },
+    join: (room) => {
+      if (!role && /^[123]$/.test(String(room))) start('guest', String(room));
     },
     leave: close,
     tick,
@@ -228,10 +223,5 @@ window.RemoteRoom = (() => {
       connected &&
       role === 'guest' &&
       send({ type: 'input', seq: ++sequence, action, value }),
-    invite: () => {
-      const u = new URL(location.href);
-      u.hash = 'room=' + code;
-      return u.href;
-    },
   };
 })();

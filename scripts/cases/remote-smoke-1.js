@@ -1,7 +1,7 @@
 window.thirdPeer = new Peer();
 window.thirdRejected = false;
 thirdPeer.on('open', () => {
-  const link = thirdPeer.connect('sanguo-spin-' + RemoteRoom.code, {
+  const link = thirdPeer.connect(RemoteRoom.prefix + RemoteRoom.code, {
     serialization: 'json',
   });
   link.on('data', (m) => {

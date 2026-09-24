@@ -15,6 +15,7 @@
     <script src="vendor/peerjs.min.js" defer></script>
     <script src="network-config.js" defer></script>
     <script src="remote-room.js" defer></script>
+    <script src="public-lobby.js" defer></script>
     <script src="sound-fx.js" defer></script>
     <script src="game.js" defer></script>
     <script src="combat-view.js" defer></script>
@@ -66,46 +67,32 @@
           <b>生命歸零 / 出界 / 爆裂即敗</b>
         </span>
       </section>
-      <!-- 對戰入口：單人、同機雙人與遠端邀請。 -->
+      <!-- 對戰入口：單人、同機雙人與公開大廳。 -->
       <div class="mode-picker">
         <label>
           對戰模式
           <select id="play-mode">
             <option value="solo">單人 · 挑戰電腦</option>
-            <option value="online">遠端雙人 · 邀請朋友</option>
+            <option value="online">遠端雙人 · 公開大廳</option>
             <option value="local">雙人 · 同機對戰</option>
           </select>
         </label>
         <button id="combat-open" type="button">進入戰鬥畫面 ↗</button>
         <p id="mode-hint">選擇武將，挑戰電腦對手。</p>
       </div>
-      <!-- 遠端房間：建立、加入、分享邀請連結。 -->
+      <!-- 三個共用房間，每房最多兩位玩家。 -->
       <section id="online-lobby" class="online-lobby" hidden>
         <div class="section-head">
-          <b>REMOTE DUEL / 遠端對戰</b>
+          <b>PUBLIC LOBBY / 公開對戰大廳</b>
           <span id="online-role">尚未連線</span>
         </div>
-        <p id="online-status" role="status">建立房間後，把邀請連結傳給朋友。</p>
+        <p id="online-status" role="status">選擇空房等待對手，或加入正在招募的房間。</p>
+        <p>共 3 間房 · 每房 2 人 · 不需邀請連結</p>
+        <div id="public-rooms" class="public-rooms" aria-label="公開房間"></div>
         <div class="room-actions">
-          <button id="room-create">建立房間 · P1</button>
-          <label>
-            房間代碼或邀請連結
-            <input
-              id="room-code"
-              maxlength="500"
-              autocomplete="off"
-              placeholder="貼上朋友的邀請連結"
-            />
-          </label>
-          <button id="room-join">加入房間 · P2</button>
+          <button id="room-refresh">重新整理大廳</button>
           <button id="room-leave" disabled>離開房間</button>
-        </div>
-        <div id="room-share" hidden>
-          <label>
-            邀請連結
-            <input id="room-link" readonly />
-          </label>
-          <button id="room-copy">複製邀請連結</button>
+          <span id="lobby-status" role="status"></span>
         </div>
         <p class="remote-note">
           雙方使用 1–8 出招、Q 專屬技、空白鍵發射、P
