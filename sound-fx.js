@@ -7,7 +7,8 @@ window.SoundFX = (() => {
     noiseBuffer = null,
     enabled = true,
     volume = 0.7,
-    lastHit = -Infinity;
+    lastHit = -Infinity,
+    skillFocusUntil = 0;
   const voices = new Set();
   const signatures = {
     lubu: { notes: [110, 147, 220], wave: 'sawtooth', step: 0.095, noise: 900 },
@@ -57,7 +58,7 @@ window.SoundFX = (() => {
       } catch {}
     }
     voices.clear();
-    lastHit = -Infinity;
+    ((lastHit = -Infinity), (skillFocusUntil = 0));
   }
   async function setEnabled(value) {
     enabled = !!value;
@@ -117,7 +118,14 @@ window.SoundFX = (() => {
       Math.max(20, endFrequency),
       at + duration,
     );
-    voice(oscillator, [], null, pan, at, duration, level);
+    // Round off bright harmonics so signature layers do not become a harsh buzz.
+    if (wave === 'sawtooth' || wave === 'square') {
+      const filter = context.createBiquadFilter();
+      filter.type = 'lowpass';
+      filter.frequency.value = 2400;
+      filter.Q.value = 0.5;
+      voice(oscillator, [filter], filter, pan, at, duration, level);
+    } else voice(oscillator, [], null, pan, at, duration, level);
   }
   function noise(
     startFrequency,
@@ -144,19 +152,48 @@ window.SoundFX = (() => {
   function chime(notes, step = 0.08, wave = 'sine', level = 0.07, pan = 0) {
     notes.forEach((f, i) => tone(f, f * 0.995, 0.3, level, wave, i * step, pan));
   }
-  // 撞擊由三層組成：低頻重量、金屬脆響、短暫的空氣震動。
+  // Inharmonic resonances mimic a struck metal blade, without a laser-like pitch slide.
+  function metal(level, delay = 0, pan = 0, pitch = 1, decay = 0.2) {
+    [690, 1137, 1843, 2789].forEach((frequency, index) => {
+      const partialLevel = [1, 0.58, 0.27, 0.09][index];
+      tone(
+        frequency * pitch,
+        frequency * pitch * 0.998,
+        decay / (1 + index * 0.45),
+        level * partialLevel,
+        'sine',
+        delay,
+        pan,
+      );
+    });
+  }
+
+  // Heavy actions retain their low-end punch; ordinary contacts use a lighter mix.
   function impact(force = 1, delay = 0, pan = 0) {
-    tone(160, 38, 0.26, 0.25 * force, 'sine', delay, pan);
-    tone(95, 44, 0.2, 0.12 * force, 'triangle', delay, pan);
-    noise(3100, 650, 0.16, 0.24 * force, delay, pan);
-    tone(1750, 1210, 0.22, 0.065 * force, 'sine', delay, pan);
-    noise(220, 70, 0.3, 0.17 * force, delay + 0.018, pan);
+    tone(115, 42, 0.21, 0.22 * force, 'sine', delay, pan);
+    noise(1800, 1100, 0.055, 0.19 * force, delay, pan);
+    metal(0.085 * force, delay, pan, 0.88, 0.28);
+    noise(240, 85, 0.2, 0.13 * force, delay + 0.012, pan);
+  }
+
+  function collision(damage, pan, focus) {
+    const strength = Math.max(0.2, Math.min(1.4, damage / 85));
+    const pitch = 0.92 + Math.random() * 0.16;
+    const level = Math.sqrt(strength) * focus;
+    noise(2200, 1500, 0.035, 0.13 * level, 0, pan);
+    metal(0.065 * level, 0, pan, pitch, 0.16 + strength * 0.045);
+    // Low damage remains a clink; heavy collisions add a short physical thump.
+    tone(105, 60, 0.09, 0.055 * strength * focus, 'sine', 0, pan);
+    if (damage >= 65) {
+      tone(95, 36, 0.24, 0.19 * strength * focus, 'sine', 0, pan);
+      noise(260, 90, 0.16, 0.12 * strength * focus, 0.008, pan);
+    }
   }
 
   function slash(delay = 0, pan = 0, weight = 1) {
-    noise(650, 6200, 0.11, 0.19 * weight, delay, pan);
-    noise(5300, 650, 0.22, 0.22 * weight, delay + 0.075, -pan);
-    tone(980, 170, 0.16, 0.06 * weight, 'sawtooth', delay + 0.06, pan);
+    noise(500, 2600, 0.1, 0.14 * weight, delay, pan);
+    noise(2900, 700, 0.16, 0.16 * weight, delay + 0.065, -pan);
+    metal(0.035 * weight, delay + 0.08, pan, 1.08, 0.13);
   }
 
   function shield(delay = 0, pan = 0) {
@@ -310,14 +347,17 @@ window.SoundFX = (() => {
     const pan = Math.max(-0.8, Math.min(0.8, (data.x || 0) / 4));
     switch (kind) {
       case 'hit': {
-        if (context.currentTime - lastHit < 0.045) return;
+        const damage = Number.isFinite(data.damage) ? Math.max(0, data.damage) : 35;
+        const gap = context.currentTime - lastHit;
+        if (gap < (damage >= 65 ? 0.055 : 0.095)) return;
         lastHit = context.currentTime;
-        const force = Math.max(0.25, Math.min(1.5, (data.damage || 35) / 85));
-        impact(force, 0, pan);
-        tone(2630, 2210, 0.12, 0.04 * force, 'sine', 0.008, pan);
+        // Give abilities room in the mix and soften densely repeated contacts.
+        const focus = context.currentTime < skillFocusUntil ? 0.52 : 1;
+        collision(damage, pan, focus * (gap < 0.22 ? 0.72 : 1));
         break;
       }
       case 'skill': {
+        skillFocusUntil = context.currentTime + (data.id === 'signature' ? 0.7 : 0.35);
         const id = data.id;
         if (id === 'signature') {
           signature(data.character, pan);
@@ -355,14 +395,19 @@ window.SoundFX = (() => {
         break;
       }
       case 'charge':
-        tone(110, 550, 0.48, 0.09, 'triangle');
-        noise(450, 1600, 0.3, 0.035);
+        // Launcher teeth and rising friction replace the electronic power-up beep.
+        [0, 0.09, 0.17, 0.24, 0.3].forEach((delay, index) => {
+          noise(900 + index * 160, 650, 0.045, 0.045 + index * 0.008, delay);
+          metal(0.018, delay, 0, 0.75 + index * 0.04, 0.045);
+        });
+        noise(220, 1200, 0.45, 0.09);
         break;
       case 'launch':
-        slash(0, 0, 1.2);
-        impact(1.2, 0.11);
-        tone(500, 70, 0.35, 0.14, 'sawtooth');
-        chime([440, 880], 0.06, 'sine', 0.07);
+        noise(550, 2700, 0.16, 0.2);
+        metal(0.09, 0.04, 0, 0.82, 0.24);
+        impact(0.9, 0.12);
+        noise(1400, 280, 0.48, 0.13, 0.15);
+        tone(145, 62, 0.26, 0.08, 'triangle', 0.1);
         break;
       case 'evade':
         noise(4000, 1300, 0.14, 0.09, 0, pan);

@@ -72,6 +72,27 @@ try:
     )
     print("Audio waveform peak:", power, flush=True)
     assert power > 0.00001
+    # Compare light and heavy contacts through the actual audio graph.
+    levels = []
+    for damage in [15, 110]:
+        browser.evaluate(f"SoundFX.stop();SoundFX.play('hit',{{damage:{damage}}})")
+        time.sleep(0.035)
+        levels.append(
+            browser.evaluate(
+                "(()=>{const a=new Float32Array(meter.fftSize);meter.getFloatTimeDomainData(a);return Math.sqrt(a.reduce((sum,v)=>sum+v*v,0)/a.length);})()"
+            )
+        )
+    assert levels[1] > levels[0] * 1.3, levels
+    browser.evaluate("SoundFX.stop();SoundFX.play('hit',{damage:30})")
+    voice_count = browser.evaluate("SoundFX.activeVoices")
+    browser.evaluate("for(let i=0;i<40;i++)SoundFX.play('hit',{damage:30})")
+    assert browser.evaluate("SoundFX.activeVoices") <= voice_count
+    browser.evaluate("SoundFX.stop()")
+    print(
+        "PASS: heavy impacts have more weight; repeated contacts are bounded",
+        levels,
+        flush=True,
+    )
     checks = browser.evaluate(
         (Path(__file__).parent / "cases" / "audio-smoke-1.js").read_text()
     )
