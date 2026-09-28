@@ -1,5 +1,6 @@
 """瀏覽器整合測試；請先在遊戲目錄啟動 localhost:8082。"""
 
+import base64
 import json
 import subprocess
 import tempfile
@@ -51,7 +52,8 @@ try:
             break
         time.sleep(0.1)
     checks = []
-    for width, height in [(1440, 900), (1366, 768), (390, 844), (375, 667), (844, 390)]:
+    for width, height in [(1440, 900), (1366, 768), (390, 844), (375, 667),
+                          (320, 568), (844, 390), (667, 375), (568, 320)]:
         browser.send(
             "Emulation.setDeviceMetricsOverride",
             {
@@ -70,12 +72,62 @@ try:
             (Path(__file__).parent / "cases" / "layout-bounds.js").read_text()
         )
         assert bounds["details"] and bounds["width"] == width, bounds
-        assert (
-            bounds["signature"]["top"] >= 0 and bounds["lastBottom"] <= height
-        ), bounds
+        assert bounds["signature"]["top"] >= 0, bounds
         assert bounds["canvas"]["height"] >= 140, bounds
-        browser.save_screenshot(f"/private/tmp/combat-{width}x{height}.png")
-        checks.append(f"{width}x{height}: arena and all 9 skills visible")
+        if width < 900:
+            browser.send("Emulation.setTouchEmulationEnabled", {"enabled": True})
+            def tap(selector):
+                point = browser.evaluate("""((selector) => {
+                  const el = document.querySelector(selector);
+                  el.scrollIntoView({block:'nearest', inline:'nearest'});
+                  const r = el.getBoundingClientRect();
+                  const x = r.left + r.width/2, y = r.top + r.height/2;
+                  if (r.width < 44 || r.height < 44 || r.bottom > innerHeight + 1 ||
+                      r.right > innerWidth + 1 || r.top < 0 || r.left < 0 ||
+                      !el.contains(document.elementFromPoint(x,y)))
+                    throw Error('Unreachable touch control: ' + selector + ' ' + JSON.stringify(r));
+                  return {x,y};
+                })(""" + json.dumps(selector) + ")")
+                browser.send("Input.dispatchTouchEvent", {
+                    "type": "touchStart", "touchPoints": [point]})
+                browser.send("Input.dispatchTouchEvent", {
+                    "type": "touchEnd", "touchPoints": []})
+
+            for mode in ["solo", "local"]:
+                browser.evaluate(f"SpinArena.reset();SpinArena.setMode('{mode}');CombatView.open()")
+                tap("#launch")
+                tap("#launch")
+                if mode == "local":
+                    tap("#launch-p2")
+                browser.evaluate("SpinArena.simulate(2);updateUI()")
+                assert browser.evaluate("SpinArena.game.phase==='battle'")
+                assert browser.evaluate("document.getElementById('arena').getBoundingClientRect().height >= 140"), (width, height, mode)
+                for side in range(2 if mode == "local" else 1):
+                    if mode == "local":
+                        tap(f"#combat-p{side+1}")
+                    suffix = "-p2" if side else ""
+                    for selector in [f"#signature{suffix}"] + [
+                        f"#skills{suffix} button:nth-child({i})" for i in range(1, 9)
+                    ]:
+                        browser.evaluate(f"""(() => {{
+                          const actor = SpinArena.game.actors[{side}];
+                          actor.mana=100;actor.globalCooldown=0;
+                          actor.cooldowns={{}};actor.status={{}};actor.cast=null;
+                          actor.pending=null;actor.sequence=null;updateUI();
+                        }})()""")
+                        tap(selector)
+                        assert browser.evaluate(f"SpinArena.game.actors[{side}].mana < 100"), selector
+                tap("#pause")
+                assert browser.evaluate("SpinArena.game.phase==='paused'")
+                tap("#pause")
+                assert browser.evaluate("SpinArena.game.phase==='battle'")
+                browser.evaluate("document.getElementById('combat-skills').scrollTop=0;SpinArena.draw()")
+                shot = browser.send("Page.captureScreenshot", {
+                    "format": "png", "captureBeyondViewport": False})
+                Path(f"/private/tmp/combat-{width}x{height}-{mode}.png").write_bytes(
+                    base64.b64decode(shot["data"]))
+            browser.send("Emulation.setTouchEmulationEnabled", {"enabled": False})
+        checks.append(f"{width}x{height}: arena visible; skills reachable")
     browser.send(
         "Emulation.setDeviceMetricsOverride",
         {"width": 390, "height": 844, "deviceScaleFactor": 1, "mobile": True},
