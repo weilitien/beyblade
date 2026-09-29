@@ -454,6 +454,7 @@ window.WarBattle = class WarBattle {
           if (k === 'storm') this.set(a, 'weak', 3);
           if (k === 'evade') a.evades = 0;
           if (k === 'store') {
+            this.event('signature-release', { actor: a });
             const amount = a.stored;
             a.stored = 0;
             this.hit(a, b, 1, {
@@ -472,8 +473,10 @@ window.WarBattle = class WarBattle {
           const kind = shot.kind;
           a.cast = null;
           delete a.status.runup;
-          if (kind === 'guanyu') this.hit(a, b, 2, { ignoreDefense: 0.3, knockback: 1 });
-          else if (kind === 'huangzhong') {
+          if (kind === 'guanyu') {
+            this.event('signature-release', { actor: a });
+            this.hit(a, b, 2, { ignoreDefense: 0.3, knockback: 1 });
+          } else if (kind === 'huangzhong') {
             const dx = b.x - a.x,
               dz = b.z - a.z;
             const along = dx * shot.dx + dz * shot.dz;
@@ -485,7 +488,10 @@ window.WarBattle = class WarBattle {
               this.event('miss', { actor: a });
               this.logEvent('百步穿楊落空！');
             }
-          } else this.dash(a, 2, 7.2, 3.5, 'machao');
+          } else {
+            this.event('signature-release', { actor: a });
+            this.dash(a, 2, 7.2, 3.5, 'machao');
+          }
         }
       }
       if (a.sequence) {
@@ -495,6 +501,7 @@ window.WarBattle = class WarBattle {
           seq.remaining--;
           seq.timer = 0.65;
           if (seq.kind === 'lubu') {
+            this.event('signature-release', { actor: a });
             this.dash(a, 0.8, 5.5, 1.2, 'lubu');
           } else {
             this.hit(a, b, 0.75, { retaliation: true });

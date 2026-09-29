@@ -179,6 +179,10 @@ try:
     assert not host_browser.evaluate(
         'SpinArena.game.has(SpinArena.game.actors[1],"storm")'
     )
+    host_browser.evaluate("SpinArena.useSkill('signature');for(let i=0;i<125;i++){SpinArena.game.actors.forEach((a,j)=>{a.x=j?2:-2;a.z=0;a.vx=0;a.vz=0});SpinArena.simulate(1/120)}")
+    until(guest_browser, "captureNetwork().signatureEffects.some(e=>e.id==='huangzhong' && e.phase==='release')")
+    assert guest_browser.evaluate("captureNetwork().signatureEffects.length <= 16")
+    print("PASS: signature release visuals synchronized to guest",flush=True)
     host_browser.evaluate("SpinArena.draw()")
     guest_browser.evaluate("SpinArena.draw()")
     host_browser.save_screenshot("/private/tmp/remote-host.png")

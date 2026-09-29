@@ -29,6 +29,7 @@ let selected = 'guanyu',
   last = 0,
   accumulator = 0,
   particleList = [],
+  signatureEffects = [],
   trail = [],
   shockwaves = [],
   floaters = [],
@@ -85,6 +86,7 @@ function reset() {
   launchQualities = [null, null];
   tops = game.actors;
   particleList = [];
+  signatureEffects = [];
   trail = [];
   shockwaves = [];
   floaters = [];
@@ -379,6 +381,7 @@ function charge() {
   chargingTime = 0;
   game.charge = 0;
   particleList = [];
+  signatureEffects = [];
   trail = [];
   shockwaves = [];
   floaters = [];
@@ -517,6 +520,22 @@ function processEvents() {
       shake = 3;
       cue('hit', { damage: e.damage, x: e.actor.x });
     }
+    if (
+      e.type === 'signature-release' ||
+      e.type === 'summon' ||
+      e.type === 'arrow' ||
+      (e.type === 'skill' && e.name === e.actor.c.signature)
+    ) {
+      const target = e.type === 'arrow' ? { x: e.x, z: e.z } : game.opponent(e.actor);
+      signatureEffects.push(
+        SignatureFX.create(e.actor, target, e.type === 'skill' ? 'activate' : 'release'),
+      );
+      signatureEffects = signatureEffects.slice(-16);
+    }
+    if (e.type === 'interrupt')
+      signatureEffects = signatureEffects.filter(
+        (effect) => effect.owner !== (e.actor.ai ? 1 : 0) || effect.phase === 'release',
+      );
     if (e.type === 'skill') {
       bannerLife = 1.25;
       $('skill-banner').textContent = e.actor.c.name + ' · ' + e.name;
@@ -625,6 +644,8 @@ function simulate(dt) {
       for (const t of tops) trail.push({ x: t.x, z: t.z, life: 0.4, color: t.color });
   } else if (game.phase === 'ready' && !reduced.matches)
     for (const t of tops) t.angle += dt * 0.4;
+  for (const effect of signatureEffects) effect.life -= dt;
+  signatureEffects = signatureEffects.filter((effect) => effect.life > 0);
   for (const p of particleList) {
     p.x += p.vx * dt;
     p.z += p.vz * dt;
@@ -988,6 +1009,7 @@ function captureNetwork() {
     playerReady,
     trail,
     particleList,
+    signatureEffects,
     shockwaves,
     floaters,
     bannerLife,
@@ -1034,6 +1056,7 @@ function applyNetwork(s) {
   playerReady = s.playerReady || [false, false];
   trail = s.trail;
   particleList = s.particleList;
+  signatureEffects = s.signatureEffects || [];
   shockwaves = s.shockwaves;
   floaters = s.floaters;
   bannerLife = s.bannerLife;

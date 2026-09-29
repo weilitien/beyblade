@@ -1,7 +1,7 @@
 'use strict';
 // PeerServer only introduces peers. Battle snapshots use an encrypted WebRTC data channel.
 window.RemoteRoom = (() => {
-  const VERSION = 'spin-arena-remote-5',
+  const VERSION = 'spin-arena-remote-6',
     PREFIX = 'sanguo-spin-public-';
   let peer = null,
     connection = null,

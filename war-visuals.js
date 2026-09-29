@@ -166,6 +166,16 @@ function draw() {
   }
   ctx.globalAlpha = 1;
   for (const t of [...tops].sort((a, b) => a.z - b.z)) topMesh(t);
+  SignatureFX.draw(
+    ctx,
+    project,
+    scale,
+    ['battle', 'paused'].includes(game.phase) ? tops : [],
+    signatureEffects,
+    game.time,
+    reduced.matches,
+    ['battle', 'paused'].includes(game.phase) ? game.hazards : [],
+  );
   for (const w of shockwaves) {
     const p = project(w.x, floorY(w.x, w.z) + 0.15, w.z),
       r = (1 - w.life / w.max) * scale * 1.2;
