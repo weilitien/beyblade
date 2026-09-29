@@ -35,6 +35,247 @@ window.SignatureFX = (() => {
       charges: actor.evades,
     };
   }
+  // Filled energy volumes and tapered trails, computed from shared time (no random state).
+  function cinematic(ctx, effect, radius, target, time, reduced) {
+    const age = reduced ? 0.28 : 1 - effect.life / effect.max;
+    const clock = reduced ? 0 : time;
+    const color = effect.color;
+    const ongoing = effect.phase === 'aura' || effect.phase === 'aim';
+    ctx.save();
+    ctx.globalAlpha *= ongoing ? 0.62 : 0.9;
+    ctx.globalCompositeOperation = 'lighter';
+    ctx.shadowBlur = reduced ? 0 : 12;
+    ctx.shadowColor = color;
+    const glow = (x, y, size, strength = 0.45) => {
+      ctx.save();
+      ctx.globalAlpha *= strength;
+      const gradient = ctx.createRadialGradient(x, y, 0, x, y, size);
+      gradient.addColorStop(0, '#fff8de');
+      gradient.addColorStop(0.18, color);
+      gradient.addColorStop(1, color + '00');
+      ctx.fillStyle = gradient;
+      ctx.fillRect(x - size, y - size, size * 2, size * 2);
+      ctx.restore();
+    };
+    const crescent = (angle, size, bend = 0.65) => {
+      ctx.save();
+      ctx.rotate(angle);
+      const r = radius * size;
+      const gradient = ctx.createLinearGradient(-r, 0, r, 0);
+      gradient.addColorStop(0, color + '00');
+      gradient.addColorStop(0.5, color);
+      gradient.addColorStop(0.83, '#fffbea');
+      gradient.addColorStop(1, color + '00');
+      ctx.fillStyle = gradient;
+      ctx.beginPath();
+      ctx.moveTo(-r, 0);
+      ctx.bezierCurveTo(-r * 0.2, -r * bend, r * 0.7, -r * bend, r, 0);
+      ctx.bezierCurveTo(r * 0.45, -r * bend * 0.58, -r * 0.15, -r * bend * 0.45, -r, 0);
+      ctx.fill();
+      ctx.restore();
+    };
+    const ring = (size, angle = 0, segments = 48) => {
+      ctx.save();
+      ctx.rotate(angle);
+      ctx.scale(1, 0.56);
+      ctx.strokeStyle = color;
+      ctx.lineWidth = radius * 0.025;
+      ctx.beginPath();
+      ctx.arc(0, 0, radius * size, 0, TAU);
+      ctx.stroke();
+      for (let i = 0; i < segments; i++) {
+        const a = (i * TAU) / segments;
+        ctx.beginPath();
+        ctx.moveTo(Math.cos(a) * radius * size, Math.sin(a) * radius * size);
+        ctx.lineTo(
+          Math.cos(a) * radius * (size + 0.1),
+          Math.sin(a) * radius * (size + 0.1),
+        );
+        ctx.stroke();
+      }
+      ctx.restore();
+    };
+    const beam = (offset = 0, tint = color) => {
+      const distance = Math.hypot(...target);
+      if (distance < 1) return;
+      ctx.save();
+      ctx.rotate(Math.atan2(target[1], target[0]));
+      const gradient = ctx.createLinearGradient(0, 0, distance, 0);
+      gradient.addColorStop(0, tint + '00');
+      gradient.addColorStop(0.5, tint);
+      gradient.addColorStop(0.85, '#fffbe6');
+      gradient.addColorStop(1, tint + '00');
+      ctx.fillStyle = gradient;
+      ctx.beginPath();
+      ctx.moveTo(0, offset);
+      ctx.quadraticCurveTo(distance * 0.45, offset - radius * 0.23, distance, 0);
+      ctx.quadraticCurveTo(distance * 0.45, offset + radius * 0.08, 0, offset);
+      ctx.fill();
+      ctx.restore();
+    };
+    const shards = (count, spread = 1.8, flame = false) => {
+      for (let i = 0; i < (reduced ? Math.min(count, 5) : count); i++) {
+        const seed = (i * 0.61803398875) % 1;
+        const pulse = ongoing ? (clock * 0.65 + seed) % 1 : (age + seed * 0.55) % 1;
+        const angle = i * 2.39996;
+        const x = flame
+          ? (seed - 0.5) * radius * 2.6
+          : Math.cos(angle) * radius * (0.4 + pulse * spread);
+        const y = flame
+          ? radius * (0.45 - pulse * 2.5)
+          : Math.sin(angle) * radius * (0.4 + pulse * spread) * 0.6;
+        const size = radius * (flame ? 0.13 : 0.045) * (1 - pulse * 0.65);
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.rotate(flame ? Math.sin(clock + i) * 0.3 : angle);
+        ctx.globalAlpha *= 1 - pulse * 0.7;
+        ctx.fillStyle = i % 3 === 0 ? '#fff1ba' : color;
+        ctx.beginPath();
+        ctx.moveTo(0, -size * (flame ? 4 : 2));
+        ctx.quadraticCurveTo(size * 1.6, 0, 0, size);
+        ctx.quadraticCurveTo(-size, 0, 0, -size * (flame ? 4 : 2));
+        ctx.fill();
+        ctx.restore();
+      }
+    };
+    // Each family has a different silhouette and movement, beyond its crest.
+    switch (effect.id) {
+      case 'lubu':
+        for (let i = 0; i < 3; i++) crescent(-0.6 + i * 0.55 + age * 0.8, 1.2 + i * 0.25);
+        shards(16);
+        break;
+      case 'guanyu':
+        crescent(-0.5 + age * 1.2, effect.phase === 'release' ? 2.3 : 1.25, 0.9);
+        crescent(-0.65 + age * 1.2, effect.phase === 'release' ? 1.95 : 1.05, 0.9);
+        if (effect.phase === 'release') beam();
+        shards(14);
+        break;
+      case 'zhangfei':
+        for (let i = 0; i < 3; i++) ring(0.6 + ((age + i * 0.3) % 1) * 1.7, 0, 12);
+        shards(20, 2.6);
+        break;
+      case 'zhaoyun':
+        for (let i = 0; i < (ongoing ? effect.charges : 3); i++) {
+          const angle = clock * 1.5 + (i * TAU) / 3;
+          crescent(angle, 1.5, 0.45);
+          crescent(angle - 0.13, 1.35, 0.4);
+        }
+        shards(10);
+        break;
+      case 'zhugeliang':
+        ring(1.7, clock * 0.25);
+        ring(1.35, -clock * 0.35, 24);
+        ring(0.7, 0, 8);
+        for (let i = 0; i < 8; i++)
+          glow(
+            Math.cos((i * TAU) / 8 + clock * 0.2) * radius * 1.5,
+            Math.sin((i * TAU) / 8 + clock * 0.2) * radius * 0.85,
+            radius * 0.2,
+            0.7,
+          );
+        break;
+      case 'liubei':
+        ctx.save();
+        ctx.translate(-radius * 0.6, 0);
+        crescent(-0.7, 1.4);
+        ctx.restore();
+        ctx.save();
+        ctx.translate(radius * 0.6, 0);
+        crescent(0.7, 1.4);
+        ctx.restore();
+        if (effect.phase === 'release') {
+          beam(-radius * 0.35, '#58e4c4');
+          beam(radius * 0.35, '#b59bff');
+        }
+        shards(12);
+        break;
+      case 'caocao':
+        ctx.translate(...target);
+        ring(1.35, 0, 24);
+        for (let i = 0; i < 4; i++) {
+          ctx.save();
+          ctx.rotate((i * TAU) / 4);
+          crescent(clock * 0.15, 1.5, 0.32);
+          ctx.restore();
+        }
+        shards(12, 1.2);
+        break;
+      case 'simayi':
+        for (let i = 0; i < 5; i++)
+          crescent(-clock * 1.2 + (i * TAU) / 5, 0.65 + i * 0.2, 1.2);
+        if (effect.phase === 'release') beam();
+        shards(12, 1.1);
+        break;
+      case 'zhouyu':
+        ctx.translate(...target);
+        glow(0, 0, radius * 1.8, 0.6);
+        shards(24, 1.6, true);
+        crescent(0, 1.7, 0.45);
+        break;
+      case 'diaochan':
+        for (let i = 0; i < 7; i++) {
+          ctx.save();
+          ctx.rotate(clock * 0.55 + (i * TAU) / 7);
+          ctx.translate(0, -radius * 0.45);
+          crescent(-Math.PI / 2, 0.85, 1.2);
+          ctx.restore();
+        }
+        shards(15, 2);
+        break;
+      case 'machao':
+        for (let i = 0; i < 4; i++) {
+          ctx.save();
+          ctx.translate(-radius * 0.6, i * radius * 0.22 - radius * 0.3);
+          crescent(-0.2, 1.8, 0.2);
+          ctx.restore();
+        }
+        if (effect.phase === 'release') beam();
+        shards(12);
+        break;
+      case 'pangde':
+        ring(1.1, 0, 6);
+        ring(1.3, 0, 6);
+        shards(16, 1.3);
+        for (let i = 0; i < 6; i++)
+          glow(
+            Math.cos((i * TAU) / 6) * radius,
+            Math.sin((i * TAU) / 6) * radius * 0.6,
+            radius * 0.23,
+          );
+        break;
+      case 'xiahou':
+        crescent(-0.65, 1.5, 0.45);
+        crescent(Math.PI - 0.65, 1.5, 0.45);
+        glow(0, 0, radius * 0.65, 0.8);
+        shards(16, 1.7);
+        break;
+      case 'ganning':
+        crescent(-0.5 + age * 2, 1.8, 1.15);
+        crescent(2.5 + age * 2, 1.1, 0.8);
+        beam();
+        shards(14);
+        break;
+      case 'sunce':
+        for (let i = 0; i < 3; i++) {
+          ctx.save();
+          ctx.translate((i - 1) * radius * 0.4, 0);
+          crescent(-0.8 + age * 0.7, 1.75, 0.5);
+          ctx.restore();
+        }
+        shards(20, 2.1);
+        break;
+      case 'huangzhong':
+        ring(1.3, 0, 12);
+        crescent(Math.PI / 2, 1.4, 0.9);
+        if (effect.phase === 'release') {
+          beam();
+          shards(18);
+        } else shards(8, 1.1);
+        break;
+    }
+    glow(0, 0, radius * 1.15, 0.18);
+    ctx.restore();
+  }
   function draw(ctx, project, scale, actors, effects, time, reduced, hazards = []) {
     // Sustained effects derive from authoritative status, so interruption removes them.
     const sustained = [];
@@ -111,6 +352,16 @@ window.SignatureFX = (() => {
       // Avoid large bloom or full-screen flashes; keep the opponent readable.
       ctx.shadowColor = effect.color;
       ctx.shadowBlur = reduced ? 0 : 8;
+      cinematic(
+        ctx,
+        effect,
+        radius,
+        [target[0] - origin[0], target[1] - origin[1]],
+        time,
+        reduced,
+      );
+      // The crest is now a restrained inner detail, leaving energy trails dominant.
+      ctx.globalAlpha *= 0.58;
       const line = (points) => {
         ctx.beginPath();
         points.forEach(([x, y], i) =>
