@@ -233,6 +233,9 @@ function updateUI() {
   const a = tops[0],
     b = tops[1],
     phase = game.phase;
+  const result = phase === 'result' ? BattleResult.describe(game) : null;
+  $('center-message').dataset.result = result?.type || '';
+  if (result) $('center-message').style.setProperty('--result-color', result.color);
   $('player-name').textContent = a.c.name;
   $('ai-name').textContent = b.c.name;
   $('player-faction').textContent =
@@ -599,20 +602,10 @@ function processEvents() {
     if (e.type === 'finish') {
       playerReady = [false, false];
       updateUI();
-      const won = e.winner === 0,
-        draw = e.winner === null;
-      message(
-        '一戰定勝負',
-        draw
-          ? '英雄相惜，平手。'
-          : playMode !== 'solo'
-            ? 'P' + (e.winner + 1) + ' · 勝利！'
-            : won
-              ? '此戰，大獲全勝！'
-              : '勝敗乃兵家常事。',
-        e.kind + ' · ' + (draw ? '再戰分高下' : tops[e.winner].c.name + '獲勝'),
-      );
-      announce($('message-title').textContent + ' ' + e.kind);
+      const draw = e.winner === null;
+      const result = BattleResult.describe(game);
+      message(result.victor, result.title, result.detail);
+      announce(result.victor + '，' + result.title + '。' + result.detail);
       if (!draw)
         sparks(tops[1 - e.winner].x, tops[1 - e.winner].z, tops[1 - e.winner].color, 36);
       renderLoadout();

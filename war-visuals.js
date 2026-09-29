@@ -206,6 +206,7 @@ function draw() {
   }
   ctx.globalCompositeOperation = 'source-over';
   ctx.globalAlpha = 1;
+  BattleResult.draw(ctx, project, scale, game, width, height);
   ctx.restore();
 }
 function resize() {

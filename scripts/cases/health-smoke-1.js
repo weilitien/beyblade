@@ -67,5 +67,30 @@
       document.getElementById('ai-spin').textContent.startsWith('0 /'),
     'Remote snapshot renders HP without stale derived spin',
   );
+  for (const [kind,winner,title,type] of [
+    ['生命耗盡',0,'生命歸零','hp'],
+    ['出界落敗',1,'出界終結','out'],
+    ['霸王突擊・出界',0,'出界終結','out'],
+    ['爆裂終結',0,'爆裂終結','burst'],
+    ['心之一方・擊倒',0,'絕技擊倒','special'],
+    ['限時判定・剩餘生命比例',1,'時間到','time'],
+    ['限時判定・剩餘生命比例',null,'平手','time'],
+    ['同歸於盡',null,'雙方同時停轉','draw'],
+  ]) {
+    start();
+    if(type==='hp'||type==='special')g.actors[1-winner].hp=0;
+    if(type==='burst')g.actors[1-winner].integrity=0;
+    if(type==='draw')g.actors.forEach(actor=>actor.hp=0);
+    if(type==='out'){g.actors[1-winner].x=3.55;g.actors[1-winner].z=0;}
+    g.end(winner,kind);processEvents();a.draw();
+    ok(document.getElementById('message-title').textContent.includes(title),kind+' prominent title');
+    ok(document.getElementById('center-message').dataset.result===type,kind+' distinct visual');
+    if(type==='out')ok(document.getElementById('message-copy').textContent.includes('剩餘生命'), 'Ring out explains HP remains');
+    const snapshot=JSON.parse(JSON.stringify(captureNetwork()));
+    applyNetwork(snapshot);
+    ok(document.getElementById('message-title').textContent.includes(title),kind+' remote result preserved');
+  }
+  a.reset();
+  ok(document.getElementById('center-message').dataset.result==='', 'New round clears result styling');
   return checks;
 })();

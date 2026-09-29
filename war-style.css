@@ -880,3 +880,32 @@ header .audio-controls button {
   border-color: #eac883;
   min-width: 130px;
 }
+
+/* Keep the finish reason readable over both the arena and signature effects. */
+.center-message[data-result]:not([data-result='']) {
+  top: 10%;
+  transform: translate(-50%, 0);
+  width: min(90%, 480px);
+  padding: 12px 16px;
+  box-sizing: border-box;
+  border: 1px solid var(--result-color);
+  border-radius: 12px;
+  background: rgba(7, 16, 30, 0.94);
+}
+.center-message[data-result]:not([data-result='']) > span {
+  font-size: 13px;
+  font-weight: 700;
+  color: #f1f5fa;
+  letter-spacing: 0.5px;
+}
+.center-message[data-result]:not([data-result='']) h2 {
+  color: var(--result-color);
+  font-size: clamp(19px, 3vw, 28px);
+  margin: 6px 0;
+}
+.center-message[data-result]:not([data-result='']) p {
+  color: #e0e8f2;
+  font-size: 12px;
+  margin: 0;
+  line-height: 1.5;
+}

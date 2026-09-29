@@ -203,6 +203,8 @@ try:
             f"SpinArena.game.actors[{loser}].hp=0;SpinArena.simulate(1/120)"
         )
         until(guest_browser, "SpinArena.game.phase === 'result'")
+        assert guest_browser.evaluate("document.getElementById('message-title').textContent.includes('生命歸零')")
+        assert guest_browser.evaluate("document.getElementById('message-eyebrow').textContent") == host_browser.evaluate("document.getElementById('message-eyebrow').textContent")
         assert host_browser.evaluate(
             "captureNetwork().playerReady.every(value=>!value)"
         )
