@@ -203,6 +203,13 @@ window.WarBattle = class WarBattle {
       case 'lubu':
         a.sequence = { remaining: 3, timer: 0, kind: 'lubu' };
         break;
+      case 'huangzhong': {
+        const dx = b.x - a.x,
+          dz = b.z - a.z,
+          distance = Math.hypot(dx, dz) || 1;
+        a.cast = { kind: 'huangzhong', left: 1, dx: dx / distance, dz: dz / distance };
+        break;
+      }
       case 'guanyu':
         a.cast = { kind: 'guanyu', left: 2 };
         break;
@@ -367,7 +374,7 @@ window.WarBattle = class WarBattle {
   interrupt(a) {
     if (a.cast) {
       this.logEvent(
-        a.c.name + '的' + (a.cast.kind === 'guanyu' ? '蓄力' : '助跑') + '被打斷！',
+        a.c.name + '的' + (a.cast.kind === 'machao' ? '助跑' : '蓄力') + '被打斷！',
       );
       a.cast = null;
       delete a.status.runup;
@@ -461,11 +468,24 @@ window.WarBattle = class WarBattle {
       if (a.cast) {
         a.cast.left -= dt;
         if (a.cast.left <= 0) {
-          const kind = a.cast.kind;
+          const shot = a.cast;
+          const kind = shot.kind;
           a.cast = null;
           delete a.status.runup;
           if (kind === 'guanyu') this.hit(a, b, 2, { ignoreDefense: 0.3, knockback: 1 });
-          else this.dash(a, 2, 7.2, 3.5, 'machao');
+          else if (kind === 'huangzhong') {
+            const dx = b.x - a.x,
+              dz = b.z - a.z;
+            const along = dx * shot.dx + dz * shot.dz;
+            const across = Math.abs(dx * shot.dz - dz * shot.dx);
+            this.event('arrow', { actor: a, x: a.x + shot.dx * 7, z: a.z + shot.dz * 7 });
+            if (along >= 0 && along <= 7 && across <= 0.55)
+              this.hit(a, b, 2.4, { ignoreDefense: 0.2, knockback: 1.2 });
+            else {
+              this.event('miss', { actor: a });
+              this.logEvent('百步穿楊落空！');
+            }
+          } else this.dash(a, 2, 7.2, 3.5, 'machao');
         }
       }
       if (a.sequence) {
@@ -506,7 +526,7 @@ window.WarBattle = class WarBattle {
         a.vz = 0;
         continue;
       }
-      if (a.cast?.kind === 'guanyu') {
+      if (['guanyu', 'huangzhong'].includes(a.cast?.kind)) {
         a.vx *= 0.85;
         a.vz *= 0.85;
       } else {

@@ -97,7 +97,7 @@ try:
         (Path(__file__).parent / "cases" / "audio-smoke-1.js").read_text()
     )
     print(checks, flush=True)
-    assert checks["signatures"] == 15 and checks["voices"] == 0
+    assert checks["signatures"] == 16 and checks["voices"] == 0
     browser.evaluate('SoundFX.play("skill",{id:"signature",character:"zhugeliang"})')
     time.sleep(1.3)
     assert browser.evaluate("SoundFX.activeVoices") == 0
@@ -124,7 +124,7 @@ try:
         == "false"
     )
     print(
-        "PASS: audio output, 8 common skills, 15 signatures, cleanup, volume and mute",
+        "PASS: audio output, 8 common skills, 16 signatures, cleanup, volume and mute",
         flush=True,
     )
     assert not browser.errors, browser.errors

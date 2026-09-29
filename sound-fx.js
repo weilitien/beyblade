@@ -11,6 +11,7 @@ window.SoundFX = (() => {
     skillFocusUntil = 0;
   const voices = new Set();
   const signatures = {
+    huangzhong: { notes: [147, 220], wave: 'triangle', step: 0.18, noise: 0 },
     lubu: { notes: [110, 147, 220], wave: 'sawtooth', step: 0.095, noise: 900 },
     guanyu: { notes: [147, 220, 440, 880], wave: 'triangle', step: 0.14, noise: 2100 },
     zhangfei: { notes: [90, 65, 48], wave: 'sawtooth', step: 0.1, noise: 420 },
@@ -209,6 +210,10 @@ window.SoundFX = (() => {
     if (!theme) return;
     chime(theme.notes, theme.step, theme.wave, 0.08, pan);
     switch (character) {
+      case 'huangzhong': // 弓臂拉緊；釋放聲由真正射出的事件觸發。
+        noise(280, 1400, 0.75, 0.09, 0, pan);
+        tone(120, 240, 0.8, 0.055, 'triangle', 0, pan);
+        break;
       case 'lubu': // 三段重斬
         [0, 0.16, 0.34].forEach((delay, index) => {
           slash(delay, index % 2 ? -0.55 : 0.55, 0.7);
@@ -408,6 +413,11 @@ window.SoundFX = (() => {
         impact(0.9, 0.12);
         noise(1400, 280, 0.48, 0.13, 0.15);
         tone(145, 62, 0.26, 0.08, 'triangle', 0.1);
+        break;
+      case 'arrow':
+        tone(320, 95, 0.13, 0.14, 'triangle', 0, pan);
+        noise(2400, 650, 0.2, 0.17, 0, pan);
+        metal(0.055, 0.015, pan, 1.15, 0.16);
         break;
       case 'evade':
         noise(4000, 1300, 0.14, 0.09, 0, pan);

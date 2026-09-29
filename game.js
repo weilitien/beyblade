@@ -210,7 +210,7 @@ function actorStatus(a) {
     );
   if (a.cast)
     tags.unshift(
-      (a.cast.kind === 'guanyu' ? '青龍蓄力' : '鐵騎助跑') +
+      { guanyu: '青龍蓄力', huangzhong: '穿楊瞄準', machao: '鐵騎助跑' }[a.cast.kind] +
         ' ' +
         a.cast.left.toFixed(1) +
         '秒',
@@ -543,6 +543,23 @@ function processEvents() {
         life: 1,
         max: 1,
       });
+    if (e.type === 'arrow') {
+      for (let i = 0; i < 28; i++) {
+        const fraction = i / 28;
+        particleList.push({
+          x: e.actor.x + (e.x - e.actor.x) * fraction,
+          z: e.actor.z + (e.z - e.actor.z) * fraction,
+          y: 0.3,
+          vx: 0,
+          vz: 0,
+          vy: 0.1,
+          life: 0.3,
+          color: '#ffe7a1',
+          size: 2.5,
+        });
+      }
+      cue('arrow', { x: e.actor.x });
+    }
     if (e.type === 'summon') {
       const target = e.target;
       for (let i = 0; i < 12; i++) {
@@ -658,6 +675,18 @@ function drawBattleFields() {
         ctx.ellipse(...p, scale * 0.6, scale * 0.4, 0, 0, TAU);
         ctx.stroke();
       }
+    if (t.cast?.kind === 'huangzhong') {
+      ctx.save();
+      ctx.strokeStyle = '#efc36c';
+      ctx.globalAlpha = 0.6;
+      ctx.lineWidth = 2;
+      ctx.setLineDash([6, 7]);
+      ctx.beginPath();
+      ctx.moveTo(...project(t.x, 0.3, t.z));
+      ctx.lineTo(...project(t.x + t.cast.dx * 7, 0.3, t.z + t.cast.dz * 7));
+      ctx.stroke();
+      ctx.restore();
+    }
     if (t.cast) {
       const p = project(t.x, 0.4, t.z);
       ctx.strokeStyle = '#ffe39c';
@@ -669,7 +698,8 @@ function drawBattleFields() {
         scale * 0.4,
         0,
         -Math.PI / 2,
-        -Math.PI / 2 + TAU * (1 - t.cast.left / (t.cast.kind === 'guanyu' ? 2 : 3)),
+        -Math.PI / 2 +
+          TAU * (1 - t.cast.left / { guanyu: 2, huangzhong: 1, machao: 3 }[t.cast.kind]),
       );
       ctx.stroke();
     }

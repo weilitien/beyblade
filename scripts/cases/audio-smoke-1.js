@@ -5,6 +5,7 @@
     SoundFX.play('skill', { id: 'signature', character });
     SoundFX.stop();
   }
+  SoundFX.play('arrow');
   SoundFX.play('launch');
   SoundFX.setVolume(0);
   SoundFX.setVolume(0.55);

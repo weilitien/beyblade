@@ -107,14 +107,14 @@ try:
     until(guest_browser, "RemoteRoom.connected", 30)
     time.sleep(0.4)
     print("REAL WEBRTC CONNECTED", flush=True)
-    host_browser.evaluate('SpinArena.select("liubei")')
-    until(guest_browser, 'SpinArena.game.actors[0].id==="liubei"')
+    host_browser.evaluate('SpinArena.select("huangzhong")')
+    until(guest_browser, 'SpinArena.game.actors[0].id==="huangzhong"')
     guest_browser.evaluate(
         'document.getElementById("enemy-select").value="zhaoyun";document.getElementById("enemy-select").dispatchEvent(new Event("change"))'
     )
     until(host_browser, 'SpinArena.game.actors[1].id==="zhaoyun"')
     time.sleep(0.2)
-    assert guest_browser.evaluate("SpinArena.game.actors[0].id") == "liubei"
+    assert guest_browser.evaluate("SpinArena.game.actors[0].id") == "huangzhong"
     # One player's readiness cannot launch a round; cancellation and selection reset it.
     host_browser.evaluate("document.getElementById('room-ready').click()")
     until(guest_browser, "captureNetwork().playerReady[0] === true")
@@ -123,7 +123,7 @@ try:
     until(guest_browser, "captureNetwork().playerReady.every(value=>!value)")
     guest_browser.evaluate("document.getElementById('room-ready').click()")
     until(host_browser, "captureNetwork().playerReady[1] === true")
-    host_browser.evaluate("SpinArena.select('liubei')")
+    host_browser.evaluate("SpinArena.select('huangzhong')")
     until(guest_browser, "captureNetwork().playerReady.every(value=>!value)")
     guest_browser.evaluate("RemoteRoom.command('ready',{revision:-1,value:true})")
     time.sleep(0.2)

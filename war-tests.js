@@ -24,7 +24,7 @@ window.runWarTests = () => {
       g.tick(0.01);
     }
   };
-  assert(Object.keys(WarData.characters).length === 15, '15 位角色齊全');
+  assert(Object.keys(WarData.characters).length === 16, '16 位角色齊全');
   assert(Object.keys(WarData.common).length === 8, '8 招通用技齊全');
   const exact = {
     machao: [88, 45, 900, 100, 92, 50],
@@ -42,8 +42,8 @@ window.runWarTests = () => {
     );
   }
   assert(
-    Object.values(WarData.characters).filter((c) => c.provisional).length === 10,
-    '其餘十位明示暫定數值',
+    Object.values(WarData.characters).filter((c) => c.provisional).length === 11,
+    '其餘十一位明示暫定數值',
   );
   let g = duel(),
     [a, b] = g.actors;
@@ -297,6 +297,44 @@ window.runWarTests = () => {
   assert(!g.aiEnabled, '重新選將保留 AI 關閉狀態');
   g.start(0.25);
   assert(near(g.actors[1].vx, -3.7), '單人對手保留原初速');
+  g = duel('huangzhong', 'diaochan');
+  advance(g, 0.01);
+  const archer = g.actors[0],
+    target = g.actors[1];
+  const beforeArrow = target.hp;
+  assert(cast(g).ok && archer.cast.kind === 'huangzhong', '黃忠開始瞄準蓄力');
+  assert(near(archer.mana, 55), '黃忠消耗 45 魔法');
+  advance(g, 0.5);
+  assert(near(target.hp, beforeArrow), '蓄力未完成不會造成傷害');
+  advance(g, 0.51);
+  assert(
+    near(
+      beforeArrow - target.hp,
+      g.damageFormula(archer.c.attack, 2.4, target.c.defense * 0.8),
+    ),
+    '百步穿楊命中與穿防傷害',
+  );
+  assert(
+    g.events.some((e) => e.type === 'arrow'),
+    '射擊產生可同步的箭光事件',
+  );
+  g = duel('huangzhong', 'diaochan');
+  advance(g, 0.01);
+  cast(g);
+  g.actors[0].cast.dx = 0;
+  g.actors[0].cast.dz = 1;
+  const missedHp = g.actors[1].hp;
+  advance(g, 1.01);
+  assert(
+    near(g.actors[1].hp, missedHp) && g.events.some((e) => e.type === 'miss'),
+    '離開瞄準射線可躲避',
+  );
+  g = duel('huangzhong', 'diaochan');
+  cast(g);
+  g.hit(g.actors[1], g.actors[0]);
+  assert(!g.actors[0].cast, '黃忠受擊中斷蓄力');
+  advance(g, 1.1);
+  assert(!g.events.some((e) => e.type === 'arrow'), '中斷後不會殘留射擊');
   return checks;
 };
 try {

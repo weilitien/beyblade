@@ -1,6 +1,6 @@
 'use strict';
 window.WarData = (() => {
-  // The final five rows reproduce the supplied PDF. Earlier rows are prototype values.
+  // 馬超至孫策採文件數值；其餘武將及新增黃忠皆為暫定平衡值。
   const rows = [
     [
       'lubu',
@@ -227,8 +227,25 @@ window.WarData = (() => {
       'rival',
       false,
     ],
+    [
+      'huangzhong',
+      '黃忠',
+      '蜀',
+      '蓄力狙擊',
+      92,
+      48,
+      950,
+      52,
+      65,
+      '百步穿楊',
+      45,
+      'attack',
+      true,
+    ],
   ];
   const signatureText = {
+    huangzhong:
+      '瞄準當前方向並蓄力 1 秒，射出直線衝擊；命中造成 2.4 倍傷害並忽略 20% 防禦。可走位躲避，受擊會中斷。',
     lubu: '連續三次追擊，各 0.8 倍傷害；結束後穩定度降低 5 秒。',
     guanyu: '蓄力 2 秒，造成 2 倍傷害並忽略 30% 防禦；受擊中斷。',
     zhangfei: '對手速度降低 60%，4 秒內禁止位移；可打斷馬超助跑。',
@@ -247,6 +264,7 @@ window.WarData = (() => {
     sunce: '1.8 倍衝撞並大幅擊退；目標位於最外圈時可直接出界。',
   };
   const colors = {
+    huangzhong: '#efc36c',
     lubu: '#e84372',
     guanyu: '#21ddd1',
     zhangfei: '#8678ff',
