@@ -20,6 +20,74 @@ window.SignatureFX = (() => {
     sunce: '霸王虎爪',
     huangzhong: '穿楊金弓',
   };
+  const textures = new Map();
+  const prepared = new Set();
+  const bends = {
+    lubu: [0.65],
+    guanyu: [0.9],
+    zhaoyun: [0.45, 0.4],
+    liubei: [0.65],
+    caocao: [0.32],
+    simayi: [1.2],
+    zhouyu: [0.45],
+    diaochan: [1.2],
+    machao: [0.2],
+    xiahou: [0.45],
+    ganning: [1.15, 0.8],
+    sunce: [0.5],
+    huangzhong: [0.9],
+  };
+  // Rasterize expensive blur once, then reuse the small transparent texture.
+  function texture(color, bend = null) {
+    const key = color + ':' + bend;
+    if (textures.has(key)) return textures.get(key);
+    const surface = document.createElement('canvas');
+    surface.width = surface.height = 192;
+    const painter = surface.getContext('2d');
+    painter.translate(96, 96);
+    if (bend === null) {
+      const gradient = painter.createRadialGradient(0, 0, 0, 0, 0, 96);
+      gradient.addColorStop(0, '#fff8de');
+      gradient.addColorStop(0.18, color);
+      gradient.addColorStop(1, color + '00');
+      painter.fillStyle = gradient;
+      painter.fillRect(-96, -96, 192, 192);
+    } else {
+      const r = 64;
+      const gradient = painter.createLinearGradient(-r, 0, r, 0);
+      gradient.addColorStop(0, color + '00');
+      gradient.addColorStop(0.5, color);
+      gradient.addColorStop(0.83, '#fffbea');
+      gradient.addColorStop(1, color + '00');
+      painter.fillStyle = gradient;
+      painter.shadowColor = color;
+      painter.shadowBlur = 8;
+      painter.beginPath();
+      painter.moveTo(-r, 0);
+      painter.bezierCurveTo(-r * 0.2, -r * bend, r * 0.7, -r * bend, r, 0);
+      painter.bezierCurveTo(
+        r * 0.45,
+        -r * bend * 0.58,
+        -r * 0.15,
+        -r * bend * 0.45,
+        -r,
+        0,
+      );
+      painter.fill();
+    }
+    // Bounded even if future/custom palettes supply many colors.
+    if (textures.size >= 96) textures.delete(textures.keys().next().value);
+    textures.set(key, surface);
+    return surface;
+  }
+  function prepare(id, color) {
+    const key = id + ':' + color;
+    if (prepared.has(key)) return;
+    texture(color);
+    for (const bend of bends[id] || []) texture(color, bend);
+    if (prepared.size >= 64) prepared.clear();
+    prepared.add(key);
+  }
   function create(actor, target, phase = 'activate') {
     return {
       id: actor.id,
@@ -44,34 +112,19 @@ window.SignatureFX = (() => {
     ctx.save();
     ctx.globalAlpha *= ongoing ? 0.62 : 0.9;
     ctx.globalCompositeOperation = 'lighter';
-    ctx.shadowBlur = reduced ? 0 : 12;
+    ctx.shadowBlur = 0;
     ctx.shadowColor = color;
     const glow = (x, y, size, strength = 0.45) => {
       ctx.save();
       ctx.globalAlpha *= strength;
-      const gradient = ctx.createRadialGradient(x, y, 0, x, y, size);
-      gradient.addColorStop(0, '#fff8de');
-      gradient.addColorStop(0.18, color);
-      gradient.addColorStop(1, color + '00');
-      ctx.fillStyle = gradient;
-      ctx.fillRect(x - size, y - size, size * 2, size * 2);
+      ctx.drawImage(texture(color), x - size, y - size, size * 2, size * 2);
       ctx.restore();
     };
     const crescent = (angle, size, bend = 0.65) => {
       ctx.save();
       ctx.rotate(angle);
       const r = radius * size;
-      const gradient = ctx.createLinearGradient(-r, 0, r, 0);
-      gradient.addColorStop(0, color + '00');
-      gradient.addColorStop(0.5, color);
-      gradient.addColorStop(0.83, '#fffbea');
-      gradient.addColorStop(1, color + '00');
-      ctx.fillStyle = gradient;
-      ctx.beginPath();
-      ctx.moveTo(-r, 0);
-      ctx.bezierCurveTo(-r * 0.2, -r * bend, r * 0.7, -r * bend, r, 0);
-      ctx.bezierCurveTo(r * 0.45, -r * bend * 0.58, -r * 0.15, -r * bend * 0.45, -r, 0);
-      ctx.fill();
+      ctx.drawImage(texture(color, bend), -r * 1.5, -r * 1.5, r * 3, r * 3);
       ctx.restore();
     };
     const ring = (size, angle = 0, segments = 48) => {
@@ -82,17 +135,15 @@ window.SignatureFX = (() => {
       ctx.lineWidth = radius * 0.025;
       ctx.beginPath();
       ctx.arc(0, 0, radius * size, 0, TAU);
-      ctx.stroke();
       for (let i = 0; i < segments; i++) {
         const a = (i * TAU) / segments;
-        ctx.beginPath();
         ctx.moveTo(Math.cos(a) * radius * size, Math.sin(a) * radius * size);
         ctx.lineTo(
           Math.cos(a) * radius * (size + 0.1),
           Math.sin(a) * radius * (size + 0.1),
         );
-        ctx.stroke();
       }
+      ctx.stroke();
       ctx.restore();
     };
     const beam = (offset = 0, tint = color) => {
@@ -351,7 +402,7 @@ window.SignatureFX = (() => {
       ctx.lineCap = 'round';
       // Avoid large bloom or full-screen flashes; keep the opponent readable.
       ctx.shadowColor = effect.color;
-      ctx.shadowBlur = reduced ? 0 : 8;
+      ctx.shadowBlur = 0;
       cinematic(
         ctx,
         effect,
@@ -622,5 +673,5 @@ window.SignatureFX = (() => {
       ctx.restore();
     }
   }
-  return { themes, create, draw };
+  return { themes, create, draw, prepare };
 })();

@@ -102,6 +102,9 @@ function reset() {
 }
 // 選將與技能面板：顯示內容從目前角色資料產生。
 function renderLoadout() {
+  // Prepare both selected palettes before battle, not during the first ultimate.
+  for (const id of [selected, enemy])
+    SignatureFX.prepare(id, WarData.characters[id].color);
   $('tops').replaceChildren();
   for (const c of Object.values(WarData.characters)) {
     if (faction !== 'all' && c.faction !== faction) continue;

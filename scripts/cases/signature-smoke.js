@@ -10,6 +10,14 @@
   paint.fillRect(0, 0, 1200, 1000);
   const ids = Object.keys(WarData.characters);
   const hashes = new Set();
+  for (const [id, character] of Object.entries(WarData.characters))
+    SignatureFX.prepare(id, character.color);
+  const originalCreate = document.createElement.bind(document);
+  let textureAllocations = 0;
+  document.createElement = (...args) => {
+    if (args[0] === 'canvas') textureAllocations++;
+    return originalCreate(...args);
+  };
   for (const [index, id] of ids.entries()) {
     SpinArena.select(id);
     SpinArena.game.start();
@@ -48,6 +56,11 @@
     SpinArena.reset();
     assert(captureNetwork().signatureEffects.length === 0, 'Reset must clear effects');
   }
+  document.createElement = originalCreate;
+  assert(
+    textureAllocations === 16,
+    'Warm effects reuse textures; only preview canvases are created',
+  );
   assert(hashes.size === 16, 'Every character must have a distinct visual');
   SpinArena.select('guanyu');
   SpinArena.game.start();
