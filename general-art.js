@@ -1,6 +1,22 @@
 'use strict';
 // Appearance only. Dimensions here never change collision radii or combat stats.
 window.GeneralArt = {
+  dianwei: {
+    name: '雙戟・惡來輪', motif: '雙戟重刃', crest: 'halberd', blades: 2,
+    body: 0.94, metal: 'obsidian', color: '#809dff', light: '#dce5ff',
+    dark: '#182c59', secondary: '#53668a', gold: '#c6d0e9', ridge: 0.5,
+    thickness: 0.2,
+    profile: [[0.4, 0.04, 0.3], [0.9, -0.1, 0.35], [1.18, 0.15, 0.28],
+      [0.8, 0.28, 0.36], [1.13, 0.65, 0.25], [0.65, 0.9, 0.32]],
+  },
+  luxun: {
+    name: '連營・流火輪', motif: '四葉火羽', crest: 'phoenix', blades: 4,
+    body: 0.76, metal: 'gold', color: '#ff9952', light: '#fff1ba',
+    dark: '#73331e', secondary: '#a13a28', gold: '#ffd988', ridge: 0.35,
+    thickness: 0.1,
+    profile: [[0.4, 0.03, 0.23], [0.72, -0.12, 0.28], [1.12, 0.04, 0.16],
+      [0.8, 0.3, 0.25], [1.0, 0.64, 0.19], [0.56, 0.85, 0.29]],
+  },
   lubu: {
     name: '方天・無雙戟',
     motif: '三叉戟刃',

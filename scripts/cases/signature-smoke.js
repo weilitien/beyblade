@@ -4,10 +4,10 @@
   };
   const sheet = document.createElement('canvas');
   sheet.width = 1200;
-  sheet.height = 1000;
+  sheet.height = 1250;
   const paint = sheet.getContext('2d');
   paint.fillStyle = '#09131f';
-  paint.fillRect(0, 0, 1200, 1000);
+  paint.fillRect(0, 0, 1200, 1250);
   const ids = Object.keys(WarData.characters);
   const hashes = new Set();
   for (const [id, character] of Object.entries(WarData.characters))
@@ -58,10 +58,10 @@
   }
   document.createElement = originalCreate;
   assert(
-    textureAllocations === 16,
+    textureAllocations === ids.length,
     'Warm effects reuse textures; only preview canvases are created',
   );
-  assert(hashes.size === 16, 'Every character must have a distinct visual');
+  assert(hashes.size === ids.length, 'Every character must have a distinct visual');
   SpinArena.select('guanyu');
   SpinArena.game.start();
   SpinArena.simulate(0);

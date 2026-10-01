@@ -24,7 +24,7 @@ window.runWarTests = () => {
       g.tick(0.01);
     }
   };
-  assert(Object.keys(WarData.characters).length === 16, '16 位角色齊全');
+  assert(Object.keys(WarData.characters).length === 18, '18 位角色齊全');
   assert(Object.keys(WarData.common).length === 8, '8 招通用技齊全');
   const exact = {
     machao: [88, 45, 900, 100, 92, 50],
@@ -42,8 +42,8 @@ window.runWarTests = () => {
     );
   }
   assert(
-    Object.values(WarData.characters).filter((c) => c.provisional).length === 11,
-    '其餘十一位明示暫定數值',
+    Object.values(WarData.characters).filter((c) => c.provisional).length === 13,
+    '其餘十三位明示暫定數值',
   );
   let g = duel(),
     [a, b] = g.actors;
@@ -335,6 +335,60 @@ window.runWarTests = () => {
   assert(!g.actors[0].cast, '黃忠受擊中斷蓄力');
   advance(g, 1.1);
   assert(!g.events.some((e) => e.type === 'arrow'), '中斷後不會殘留射擊');
+  g = duel('dianwei');
+  [a, b] = g.actors;
+  cast(g);
+  assert(a.mana === 60 && a.status.ferocity === 8, '典韋啟動消耗40魔法且持續8秒');
+  const basicDamage = g.damageFormula(a.c.attack, 1, b.c.defense);
+  assert(near(g.hit(a, b, 1, {contact:true}), basicDamage * 1.15), '典韋首次碰撞即增加15%');
+  b.hp = b.maxHp;
+  g.hit(a, b, 1, {contact:true});
+  g.hit(a, b, 1, {contact:true});
+  assert(near(g.hit(a, b, 1, {contact:true}), basicDamage * 1.6), '典韋四層增加60%');
+  b.hp = b.maxHp;
+  assert(near(g.hit(a, b, 1, {contact:true}), basicDamage * 1.6) && a.ferocityStacks === 4, '典韋層數不超過4');
+  b.hp = b.maxHp;
+  assert(near(g.hit(a, b), basicDamage) && a.ferocityStacks === 4, '非碰撞傷害不享受或增加連擊');
+  b.evades = 1;
+  a.ferocityStacks = 0;
+  g.hit(a, b, 1, {contact:true});
+  assert(a.ferocityStacks === 0, '閃避不增加連擊');
+  a.ferocityStacks = 4;
+  a.x=-2; b.x=2; a.z=b.z=0;
+  g.tick(0.01);
+  assert(a.ferocityStacks === 0, '拉開距離清除連擊');
+  a.ferocityStacks=4; a.status.ferocity=0.005;
+  g.tick(0.01);
+  assert(!a.status.ferocity && a.ferocityStacks===0, '連擊到期清除層數');
+  g = duel('luxun');
+  [a,b] = g.actors;
+  cast(g);
+  assert(a.mana === 55 && a.status.fireTrail === 6, '陸遜消耗45魔法且持續6秒');
+  a.x=-2; a.z=0; b.x=2; b.z=0;
+  a.fireTrailPoint={x:-2,z:0}; a.vx=a.vz=0;
+  g.tick(0.01);
+  assert(g.hazards.length===0, '靜止不產生火痕');
+  a.x=-1; a.vx=a.vz=0;
+  g.tick(0.01);
+  assert(g.hazards.length===1 && g.hazards[0].kind==='trail', '移動後留下火痕');
+  g.hazards = [0,1,2].map(() => ({owner:a,x:b.x,z:b.z,radius:0.55,left:2,tick:0,kind:'trail'}));
+  const fireDamage=g.damageFormula(a.c.attack,0.25,b.c.defense);
+  const beforeFire=b.hp;
+  g.tick(0.01);
+  assert(near(beforeFire-b.hp,fireDamage), '重疊火痕僅造成一次傷害');
+  g.tick(0.01);
+  assert(near(beforeFire-b.hp,fireDamage), '火痕傷害間隔至少0.5秒');
+  a.status.fireTrail=0;
+  g.hazards.forEach(f=>f.left=0.005);
+  g.tick(0.01);
+  assert(g.hazards.length===0, '到期火痕移除');
+  g.reset();
+  assert(g.hazards.length===0 && !g.actors[0].status.fireTrail, '重置不殘留火痕');
+  // Exercise actual collision plumbing, not just the damage helper.
+  g=duel('dianwei'); [a,b]=g.actors; cast(g);
+  a.x=-0.3;b.x=0.3;a.z=b.z=0;a.vx=2;b.vx=-2;
+  g.collide();
+  assert(a.ferocityStacks===1, '實際碰撞會啟動典韋連擊');
   return checks;
 };
 try {

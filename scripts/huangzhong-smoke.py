@@ -54,13 +54,13 @@ try:
         time.sleep(0.1)
     browser.evaluate("const result=document.createElement('pre');result.id='result';document.body.append(result)")
     browser.evaluate((Path(__file__).parent.parent/'war-tests.js').read_text())
-    assert browser.evaluate("testResults.length") == 83
+    assert browser.evaluate("testResults.length") == 101
     browser.evaluate("SpinArena.select('huangzhong');SpinArena.draw()")
     assert browser.evaluate("SpinArena.game.actors[0].id === 'huangzhong'")
     browser.evaluate("document.getElementById('result').remove()")
     browser.save_screenshot('/private/tmp/huangzhong-preview.png')
     assert not browser.errors, browser.errors
-    print('PASS: 83 engine checks; Huang Zhong selection and rendering',flush=True)
+    print('PASS: 101 engine checks; Huang Zhong selection and rendering',flush=True)
 finally:
     chrome.terminate()
     try:

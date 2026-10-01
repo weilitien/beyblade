@@ -21,7 +21,7 @@
 
 ## 部署
 
-獨立儲存庫以此資料夾內容作為根目錄。`.github/workflows/pages.yml` 應採用 `deploy/pages.yml` 的內容。GitHub 儲存庫 Settings → Pages → Source 選 **GitHub Actions**；推送 main 後執行 83 項引擎檢查，再發布網站。不需 npm 安裝或後端主機。
+獨立儲存庫以此資料夾內容作為根目錄。`.github/workflows/pages.yml` 應採用 `deploy/pages.yml` 的內容。GitHub 儲存庫 Settings → Pages → Source 選 **GitHub Actions**；推送 main 後執行 101 項引擎檢查，再發布網站。不需 npm 安裝或後端主機。
 
 本機：在遊戲根目錄執行 `python3 -m http.server 8082`，開啟 http://localhost:8082/。遠端分享時使用部署後的 HTTPS 網址，localhost 連結僅供本機驗證。
 

@@ -15,7 +15,7 @@
 | 音效設計 | `sound-fx.js` | `impact()`、`slash()`、`shield()`、`signature()` |
 | 公開大廳 | `public-lobby.js` | 三間房的狀態查詢、加入入口與自動更新 |
 | 勝負結算 | `battle-result.js` | 明確顯示出界、生命歸零、爆裂、特殊擊倒與限時判定 |
-| 大絕特效 | `signature-fx.js` | 16 位武將的獨立圖形、持續狀態與出手效果 |
+| 大絕特效 | `signature-fx.js` | 18 位武將的獨立圖形、持續狀態與出手效果 |
 | 遠端房間 | `remote-room.js` | 房間生命週期、連線與封包 |
 
 一個操作的路徑：按鈕或鍵盤 → `game.js` → `WarBattle.use()` → 引擎產生事件 → `processEvents()` → 畫面與音效。遠端訪客的操作先送房主，再由房主計算並同步結果。

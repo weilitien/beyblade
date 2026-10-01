@@ -11,6 +11,8 @@ window.SoundFX = (() => {
     skillFocusUntil = 0;
   const voices = new Set();
   const signatures = {
+    dianwei: { notes: [82, 110, 82, 165], wave: 'triangle', step: 0.1, noise: 500 },
+    luxun: { notes: [330, 440, 660, 880], wave: 'sine', step: 0.09, noise: 1800 },
     huangzhong: { notes: [147, 220], wave: 'triangle', step: 0.18, noise: 0 },
     lubu: { notes: [110, 147, 220], wave: 'sawtooth', step: 0.095, noise: 900 },
     guanyu: { notes: [147, 220, 440, 880], wave: 'triangle', step: 0.14, noise: 2100 },
@@ -210,6 +212,15 @@ window.SoundFX = (() => {
     if (!theme) return;
     chime(theme.notes, theme.step, theme.wave, 0.08, pan);
     switch (character) {
+      case 'dianwei':
+        impact(0.8, 0, -0.5);
+        impact(1, 0.18, 0.5);
+        metal(0.08, 0.3, pan, 0.7, 0.3);
+        break;
+      case 'luxun':
+        noise(500, 2400, 0.4, 0.12, 0, pan);
+        noise(1800, 400, 0.5, 0.09, 0.2, -pan);
+        break;
       case 'huangzhong': // 弓臂拉緊；釋放聲由真正射出的事件觸發。
         noise(280, 1400, 0.75, 0.09, 0, pan);
         tone(120, 240, 0.8, 0.055, 'triangle', 0, pan);

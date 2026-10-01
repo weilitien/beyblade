@@ -200,6 +200,15 @@ window.WarBattle = class WarBattle {
   }
   signature(a, b) {
     switch (a.id) {
+      case 'dianwei':
+        this.set(a, 'ferocity', 8);
+        a.ferocityStacks = 0;
+        break;
+      case 'luxun':
+        this.set(a, 'fireTrail', 6);
+        a.fireTrailPoint = { x: a.x, z: a.z };
+        a.fireTrailTimer = 0;
+        break;
       case 'lubu':
         a.sequence = { remaining: 3, timer: 0, kind: 'lubu' };
         break;
@@ -326,6 +335,10 @@ window.WarBattle = class WarBattle {
       return 0;
     }
     let mult = multiplier;
+    if (options.contact && this.has(a, 'ferocity')) {
+      a.ferocityStacks = Math.min(4, (a.ferocityStacks || 0) + 1);
+      mult *= 1 + a.ferocityStacks * 0.15;
+    }
     if (a.id === 'sunce' && a.firstHit) {
       mult *= 1.2;
       a.firstHit = false;
@@ -446,11 +459,16 @@ window.WarBattle = class WarBattle {
       if (behind && !a.wasBehind) a.behindCount = Math.min(4, a.behindCount + 1);
       a.wasBehind = behind;
       a.globalCooldown = Math.max(0, a.globalCooldown - dt);
+      a.fireTrailDamageCooldown = Math.max(0, (a.fireTrailDamageCooldown || 0) - dt);
+      a.fireTrailTimer = Math.max(0, (a.fireTrailTimer || 0) - dt);
+      if (!this.has(a, 'ferocity') || Math.hypot(a.x - b.x, a.z - b.z) > 2)
+        a.ferocityStacks = 0;
       for (const k in a.cooldowns) a.cooldowns[k] = Math.max(0, a.cooldowns[k] - dt);
       for (const k of Object.keys(a.status)) {
         a.status[k] -= dt;
         if (a.status[k] <= 0) {
           delete a.status[k];
+          if (k === 'ferocity') a.ferocityStacks = 0;
           if (k === 'storm') this.set(a, 'weak', 3);
           if (k === 'evade') a.evades = 0;
           if (k === 'store') {
@@ -589,16 +607,32 @@ window.WarBattle = class WarBattle {
         }
       }
     }
+    for (const a of this.actors) {
+      if (!this.has(a, 'fireTrail') || a.fireTrailTimer > 0) continue;
+      const last = a.fireTrailPoint || a;
+      if (Math.hypot(a.x - last.x, a.z - last.z) < 0.35) continue;
+      this.hazards.push({ owner: a, x: a.x, z: a.z, radius: 0.55,
+        left: 2, tick: 0, kind: 'trail' });
+      a.fireTrailPoint = { x: a.x, z: a.z };
+      a.fireTrailTimer = 0.3;
+    }
     this.collide();
     if (this.phase !== 'battle') return;
     for (const fire of this.hazards) {
       fire.left -= dt;
       fire.tick -= dt;
-      if (fire.tick <= 0) {
+      if (fire.left <= 0) continue;
+      if (fire.kind === 'trail' || fire.tick <= 0) {
         fire.tick = 0.5;
         const target = this.opponent(fire.owner);
-        if (Math.hypot(target.x - fire.x, target.z - fire.z) < fire.radius)
-          this.hit(fire.owner, target, 0.3, { unavoidable: true, noReflect: true });
+        if (Math.hypot(target.x - fire.x, target.z - fire.z) < fire.radius) {
+          if (fire.kind === 'trail') {
+            if (target.fireTrailDamageCooldown > 0) continue;
+            target.fireTrailDamageCooldown = 0.5;
+          }
+          this.hit(fire.owner, target, fire.kind === 'trail' ? 0.25 : 0.3,
+            { unavoidable: true, noReflect: true });
+        }
       }
     }
     this.hazards = this.hazards.filter((f) => f.left > 0);
@@ -656,11 +690,13 @@ window.WarBattle = class WarBattle {
       this.hit(a, b, ap?.multiplier ?? basic, {
         knockback: ap?.knockback || 0.8,
         kind: ap?.kind,
+        contact: true,
       });
     if (this.phase === 'battle' && !cb)
       this.hit(b, a, bp?.multiplier ?? basic, {
         knockback: bp?.knockback || 0.8,
         kind: bp?.kind,
+        contact: true,
       });
     this.exchange = false;
     this.checkEnd();

@@ -187,6 +187,8 @@ function renderSkills() {
       : '玩家 2：Enter 發射，/ 施放專屬技。';
 }
 const statusNames = {
+  ferocity: '惡來連擊',
+  fireTrail: '連營火痕',
   storm: '攻擊 +30%',
   weak: '虛弱',
   edge: '邊緣滑行',
@@ -220,6 +222,7 @@ function actorStatus(a) {
         a.cast.left.toFixed(1) +
         '秒',
     );
+  if (a.status.ferocity > 0) tags.push('連擊 ' + (a.ferocityStacks || 0) + '/4 層');
   if (a.sealed) tags.unshift('下一招被封鎖');
   if (a.pending) tags.unshift('衝撞待命');
   if (a.id === 'zhugeliang')

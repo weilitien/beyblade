@@ -3,6 +3,8 @@
 window.SignatureFX = (() => {
   const TAU = Math.PI * 2;
   const themes = {
+    dianwei: '雙戟連擊',
+    luxun: '連營流火',
     lubu: '戟刃三連',
     guanyu: '青龍偃月',
     zhangfei: '雷吼震波',
@@ -23,6 +25,8 @@ window.SignatureFX = (() => {
   const textures = new Map();
   const prepared = new Set();
   const bends = {
+    dianwei: [0.65],
+    luxun: [0.65],
     lubu: [0.65],
     guanyu: [0.9],
     zhaoyun: [0.45, 0.4],
@@ -191,6 +195,15 @@ window.SignatureFX = (() => {
     };
     // Each family has a different silhouette and movement, beyond its crest.
     switch (effect.id) {
+      case 'dianwei':
+        crescent(age * 0.7, 1.5);
+        crescent(Math.PI + age * 0.7, 1.5);
+        ring(0.85);
+        break;
+      case 'luxun':
+        for (let i = 0; i < 4; i++) crescent(i * TAU / 4 + clock, 0.7 + age * 0.5);
+        shards(12, true);
+        break;
       case 'lubu':
         for (let i = 0; i < 3; i++) crescent(-0.6 + i * 0.55 + age * 0.8, 1.2 + i * 0.25);
         shards(16);
@@ -340,7 +353,7 @@ window.SignatureFX = (() => {
         actor.evades > 0 ||
         status.store > 0 ||
         status.death > 0 ||
-        status.xiahouBoost > 0
+        status.xiahouBoost > 0 || status.ferocity > 0 || status.fireTrail > 0
       ) {
         sustained.push({
           ...create(actor, opponent, actor.cast ? 'aim' : 'aura'),
@@ -374,7 +387,7 @@ window.SignatureFX = (() => {
     }
     for (const fire of hazards) {
       sustained.push({
-        id: 'zhouyu',
+        id: fire.kind === 'trail' ? 'luxun' : 'zhouyu',
         x: fire.x,
         z: fire.z,
         tx: fire.x,
