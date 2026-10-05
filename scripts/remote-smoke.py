@@ -217,12 +217,15 @@ try:
         sound_count = guest_browser.evaluate("heard.length")
         time.sleep(0.2)
         assert guest_browser.evaluate("heard.length") == sound_count
-        host_browser.evaluate("SpinArena.reset();SpinArena.launch()")
+        assert guest_browser.evaluate("document.getElementById('result-reselect').disabled")
+        assert host_browser.evaluate("!document.getElementById('result-reselect').disabled")
+        host_browser.evaluate("document.getElementById('result-rematch').click()")
         until(
             guest_browser,
-            "SpinArena.game.phase === 'ready' && captureNetwork().playerReady[0]",
+            "SpinArena.game.phase === 'result' && captureNetwork().playerReady[0]",
         )
-        guest_browser.evaluate("document.getElementById('room-ready').click()")
+        assert host_browser.evaluate("document.getElementById('result-rematch').disabled")
+        guest_browser.evaluate("document.getElementById('result-rematch').click()")
         until(host_browser, "SpinArena.game.phase === 'charging'")
         host_browser.evaluate("SpinArena.game.charge=.81;SpinArena.launch()")
         until(guest_browser, "SpinArena.game.phase === 'charging'")

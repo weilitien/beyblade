@@ -398,3 +398,36 @@ body.combat-focus {
 @media (max-height: 350px) and (orientation: landscape) {
   .combat-focus .scoreboard .player small { display: none; }
 }
+
+/* Keep post-battle actions together, including on short landscape screens. */
+.center-message[data-result]:not([data-result='']) {
+  pointer-events: auto;
+  z-index: 8;
+  max-height: 90%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+#result-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+#result-actions button {
+  min-height: 44px;
+  padding: 10px 14px;
+  border: 1px solid #829d90;
+  border-radius: 6px;
+  background: #263d37;
+  color: #e4eedc;
+  font-size: 14px;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+#result-actions #result-rematch {
+  background: #c4dfb7;
+  color: #173127;
+}
+#result-actions button:disabled { opacity: 0.6; cursor: default; }
+#result-action-hint { flex-basis: 100%; font-size: 11px; line-height: 1.5; }

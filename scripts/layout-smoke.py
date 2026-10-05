@@ -122,6 +122,14 @@ try:
                 tap("#pause")
                 assert browser.evaluate("SpinArena.game.phase==='battle'")
                 browser.evaluate("document.getElementById('combat-skills').scrollTop=0;SpinArena.draw()")
+                browser.evaluate("SpinArena.game.end(0,'生命歸零');processEvents();updateUI()")
+                assert browser.evaluate("!document.getElementById('result-actions').hidden")
+                tap('#result-rematch')
+                assert browser.evaluate("SpinArena.game.phase==='charging' && document.getElementById('result-actions').hidden")
+                browser.evaluate("SpinArena.game.start();SpinArena.game.end(0,'生命歸零');processEvents();updateUI()")
+                tap('#result-reselect')
+                assert browser.evaluate("SpinArena.game.phase==='ready' && !document.body.classList.contains('combat-focus')")
+                browser.evaluate("CombatView.open();SpinArena.draw()")
                 shot = browser.send("Page.captureScreenshot", {
                     "format": "png", "captureBeyondViewport": False})
                 Path(f"/private/tmp/combat-{width}x{height}-{mode}.png").write_bytes(

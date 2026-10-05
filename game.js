@@ -364,6 +364,16 @@ function updateUI() {
       ? '雙方按準備才開始蓄力；更換武將會取消雙方準備。'
       : '你是 P' + (mySide() + 1) + ' · 空白鍵發射';
   } else $('restart').disabled = false;
+  $('result-actions').hidden = phase !== 'result';
+  const onlineResult = playMode === 'online';
+  const readyForRematch = onlineResult && playerReady[mySide()];
+  $('result-rematch').disabled = onlineResult && (!RemoteRoom.connected || readyForRematch);
+  $('result-rematch').textContent = readyForRematch ? '已準備，等待對手' : '再戰一場';
+  $('result-reselect').disabled = $('restart').disabled;
+  $('result-action-hint').textContent = onlineResult
+    ? !RemoteRoom.connected ? '連線已中止，請返回大廳。'
+      : '雙方按再戰後開始蓄力；重新選將由房主操作。'
+    : '再戰保留目前武將；重新選將返回設定頁。';
   if (canSelect() && !document.body.classList.contains('combat-focus')) {
     for (const id of ['launch', 'launch-p2']) {
       $(id).textContent = '進入戰鬥畫面 ↗';
@@ -780,6 +790,14 @@ $('launch').onclick = () => launch(0);
 $('launch-p2').onclick = () => launch(1);
 $('pause').onclick = () => pause();
 $('restart').onclick = reset;
+$('result-rematch').onclick = () => {
+  if (game.phase !== 'result') return;
+  window.CombatView?.open();
+  launch();
+};
+$('result-reselect').onclick = () => {
+  if (game.phase === 'result') reset();
+};
 $('signature').onclick = () => useSkill('signature', 0);
 $('sound').onclick = async () => {
   try {
