@@ -364,6 +364,13 @@ function updateUI() {
       ? '雙方按準備才開始蓄力；更換武將會取消雙方準備。'
       : '你是 P' + (mySide() + 1) + ' · 空白鍵發射';
   } else $('restart').disabled = false;
+  if (canSelect() && !document.body.classList.contains('combat-focus')) {
+    for (const id of ['launch', 'launch-p2']) {
+      $(id).textContent = '進入戰鬥畫面 ↗';
+      $(id).disabled = false;
+    }
+    $('launch-hint').textContent = '先進入戰鬥畫面，再準備發射。';
+  }
   const key = game.log[0]?.time + '|' + game.log[0]?.text;
   if (key !== logKey) {
     logKey = key;
@@ -419,6 +426,10 @@ function setReady(value, owner = mySide(), remote = false) {
   else updateUI();
 }
 function launch(owner = mySide(), remote = false, observedCharge = null) {
+  if (!remote && canSelect() && !document.body.classList.contains('combat-focus')) {
+    window.CombatView?.open();
+    return;
+  }
   if (playMode === 'online' && canSelect()) {
     setReady(true, owner, remote);
     return;

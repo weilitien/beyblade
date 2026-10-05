@@ -34,6 +34,7 @@ window.CombatView = (() => {
       $('arena').focus({ preventScroll: true });
     }
     refresh();
+    updateUI();
   }
 
   function close(pauseBattle = true) {
@@ -51,6 +52,7 @@ window.CombatView = (() => {
     audioHome.after(audioControls);
     const target = returnFocus?.isConnected ? returnFocus : $('combat-open');
     target?.focus({ preventScroll: true });
+    updateUI();
   }
 
   $('combat-open').onclick = open;
@@ -75,5 +77,6 @@ window.CombatView = (() => {
     }
   });
   refresh();
+  updateUI();
   return { open, close, refresh };
 })();

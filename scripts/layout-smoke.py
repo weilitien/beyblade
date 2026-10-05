@@ -144,6 +144,11 @@ try:
     )
     browser.evaluate("SpinArena.reset();SpinArena.setMode('solo');SpinArena.launch()")
     assert browser.evaluate("document.body.classList.contains('combat-focus')")
+    assert browser.evaluate("SpinArena.game.phase==='ready' && document.getElementById('launch').textContent.includes('蓄力發射')")
+    browser.evaluate("document.getElementById('combat-close').click()")
+    assert browser.evaluate("SpinArena.game.phase==='ready' && document.getElementById('launch').textContent.includes('進入戰鬥畫面')")
+    browser.evaluate("document.getElementById('launch').click();document.getElementById('launch').click()")
+    assert browser.evaluate("SpinArena.game.phase==='charging'")
     browser.evaluate("document.getElementById('combat-close').click()")
     assert browser.evaluate(
         "SpinArena.game.phase==='paused'&&!document.body.classList.contains('combat-focus')&&!!document.querySelector('header .audio-controls')"
