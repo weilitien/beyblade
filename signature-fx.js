@@ -2,6 +2,15 @@
 // Compact effect records are synchronized by the host; rendering never changes damage.
 window.SignatureFX = (() => {
   const TAU = Math.PI * 2;
+  // Actor.ai is the stable P2 marker, including in serialized host snapshots.
+  function hazardStyle(fire) {
+    const side = fire.owner.ai ? 1 : 0;
+    return {
+      side,
+      color: side ? '#ff9952' : '#55ddd7',
+      opacity: Math.max(0, Math.min(1, fire.left / (fire.kind === 'trail' ? 2 : 10))),
+    };
+  }
   const themes = {
     dianwei: '雙戟連擊',
     luxun: '連營流火',
@@ -386,6 +395,7 @@ window.SignatureFX = (() => {
         });
     }
     for (const fire of hazards) {
+      const style = hazardStyle(fire);
       sustained.push({
         id: fire.kind === 'trail' ? 'luxun' : 'zhouyu',
         x: fire.x,
@@ -395,7 +405,8 @@ window.SignatureFX = (() => {
         phase: 'aura',
         life: 0.5,
         max: 1,
-        color: '#ff6652',
+        color: style.color,
+        opacity: style.opacity,
       });
     }
     for (const effect of [...effects, ...sustained]) {
@@ -408,7 +419,7 @@ window.SignatureFX = (() => {
       const radius = scale * (reduced ? 0.95 : 0.7 + progress * 0.5);
       ctx.save();
       ctx.translate(...origin);
-      ctx.globalAlpha = Math.min(0.85, effect.life * 2) * (reduced ? 0.6 : 1);
+      ctx.globalAlpha = Math.min(0.85, effect.life * 2) * (reduced ? 0.6 : 1) * (effect.opacity ?? 1);
       ctx.strokeStyle = effect.color;
       ctx.fillStyle = effect.color;
       ctx.lineWidth = Math.max(1.5, scale * 0.035);
@@ -686,5 +697,5 @@ window.SignatureFX = (() => {
       ctx.restore();
     }
   }
-  return { themes, create, draw, prepare };
+  return { themes, create, draw, prepare, hazardStyle };
 })();

@@ -9,6 +9,33 @@
   paint.fillStyle = '#09131f';
   paint.fillRect(0, 0, 1200, 1250);
   const ids = Object.keys(WarData.characters);
+  // Fire ownership survives JSON snapshots; both animation modes fade the actual pixels.
+  for (const kind of ['trail', 'zone']) {
+    const lifetime = kind === 'trail' ? 2 : 10;
+    const colors = [];
+    for (const ai of [false, true]) {
+      const fire = { owner: { ai }, kind, left: lifetime, x: 0, z: 0, radius: 0.55 };
+      const style = SignatureFX.hazardStyle(fire);
+      colors.push(style.color);
+      assert(JSON.stringify(style) === JSON.stringify(SignatureFX.hazardStyle(JSON.parse(JSON.stringify(fire)))), 'Fire ownership must survive remote snapshots');
+      for (const reduced of [false, true]) {
+        const probe = document.createElement('canvas');
+        probe.width = probe.height = 200;
+        const ctx = probe.getContext('2d');
+        const measure = (left) => {
+          ctx.clearRect(0, 0, 200, 200);
+          SignatureFX.draw(ctx, () => [100,100], 40, [], [], 0.5, reduced, [{...fire, left}]);
+          const pixels = ctx.getImageData(0,0,200,200).data;
+          let total = 0;
+          for (let i=3; i<pixels.length; i+=4) total += pixels[i];
+          return total;
+        };
+        const fresh = measure(lifetime), fading = measure(lifetime / 4), expired = measure(0);
+        assert(fresh > fading && fading > 0 && expired === 0, 'Fire must fade to transparent in both motion modes');
+      }
+    }
+    assert(colors[0] !== colors[1], 'P1 and P2 fire must have different colors');
+  }
   const hashes = new Set();
   for (const [id, character] of Object.entries(WarData.characters))
     SignatureFX.prepare(id, character.color);

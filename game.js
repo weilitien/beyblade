@@ -102,6 +102,10 @@ function reset() {
 }
 // 選將與技能面板：顯示內容從目前角色資料產生。
 function renderLoadout() {
+  for (const ai of [false, true]) {
+    const { color } = SignatureFX.hazardStyle({ owner: { ai }, left: 2, kind: 'trail' });
+    for (const id of ['luxun', 'zhouyu']) SignatureFX.prepare(id, color);
+  }
   // Prepare both selected palettes before battle, not during the first ultimate.
   for (const id of [selected, enemy])
     SignatureFX.prepare(id, WarData.characters[id].color);
@@ -686,18 +690,25 @@ function simulate(dt) {
 function drawBattleFields() {
   for (const f of game.hazards) {
     const p = project(f.x, floorY(f.x, f.z) + 0.04, f.z);
+    const style = SignatureFX.hazardStyle(f);
     ctx.save();
-    ctx.globalAlpha = 0.45;
+    ctx.globalAlpha = 0.45 * style.opacity;
     const g = ctx.createRadialGradient(...p, 0, ...p, f.radius * scale);
-    g.addColorStop(0, '#ffb842');
-    g.addColorStop(1, '#ee443311');
+    g.addColorStop(0, style.color);
+    g.addColorStop(1, style.color + '11');
     ctx.fillStyle = g;
     ctx.beginPath();
     ctx.ellipse(...p, f.radius * scale, f.radius * scale * 0.58, 0, 0, TAU);
     ctx.fill();
-    ctx.strokeStyle = '#ff9658';
+    ctx.strokeStyle = style.color;
+    if (style.side) ctx.setLineDash([4, 3]);
     ctx.lineWidth = 2;
     ctx.stroke();
+    ctx.globalAlpha = style.opacity;
+    ctx.fillStyle = style.color;
+    ctx.font = 'bold 10px system-ui';
+    ctx.textAlign = 'center';
+    ctx.fillText('P' + (style.side + 1), p[0], p[1] + 3);
     ctx.restore();
   }
   for (const t of tops) {
