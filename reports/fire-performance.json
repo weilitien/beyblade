@@ -1,0 +1,256 @@
+{
+  "pacing": [
+    {
+      "count": 0,
+      "timedOut": false,
+      "frameIntervals": {
+        "medianMs": 16.69999999999709,
+        "p95Ms": 16.799999999999272,
+        "maxMs": 16.799999999999272,
+        "over16ms": 48,
+        "samples": 79
+      }
+    },
+    {
+      "count": 14,
+      "timedOut": false,
+      "frameIntervals": {
+        "medianMs": 16.700000000000728,
+        "p95Ms": 33.39999999999782,
+        "maxMs": 33.400000000001455,
+        "over16ms": 67,
+        "samples": 79
+      }
+    },
+    {
+      "count": 40,
+      "timedOut": false,
+      "frameIntervals": {
+        "medianMs": 50,
+        "p95Ms": 66.70000000000073,
+        "maxMs": 66.80000000000291,
+        "over16ms": 79,
+        "samples": 79
+      }
+    }
+  ],
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36",
+  "devicePixelRatio": 1,
+  "viewport": [
+    1440,
+    1100
+  ],
+  "note": "Headless Chrome --disable-gpu, synchronous draw+readback timings, Pacing separately samples headless RAF with drawing and local snapshot round-trip, not physical phone FPS. Full scene uses OS reduced-motion preference, independent of isolated effect reduced flag.",
+  "cases": [
+    {
+      "count": 0,
+      "reduced": false,
+      "compactOwnerBytes": 2171,
+      "effectDrawAndReadback": {
+        "medianMs": 1.300000011920929,
+        "p95Ms": 1.699999988079071,
+        "maxMs": 2.699999988079071,
+        "over16ms": 0,
+        "samples": 120
+      },
+      "fullSceneDrawAndReadback": {
+        "medianMs": 5,
+        "p95Ms": 5.600000023841858,
+        "maxMs": 7.400000035762787,
+        "over16ms": 0,
+        "samples": 120
+      },
+      "serialize": {
+        "medianMs": 0,
+        "p95Ms": 0.10000002384185791,
+        "maxMs": 0.20000004768371582,
+        "over16ms": 0,
+        "samples": 120
+      },
+      "parseApply": {
+        "medianMs": 0.09999996423721313,
+        "p95Ms": 0.19999998807907104,
+        "maxMs": 1.2000000476837158,
+        "over16ms": 0,
+        "samples": 120
+      },
+      "snapshotBytes": 2171,
+      "estimatedBytesPerSecondAt20Hz": 43420
+    },
+    {
+      "count": 0,
+      "reduced": true,
+      "compactOwnerBytes": 2171,
+      "effectDrawAndReadback": {
+        "medianMs": 1.2000000476837158,
+        "p95Ms": 1.4000000357627869,
+        "maxMs": 1.600000023841858,
+        "over16ms": 0,
+        "samples": 120
+      },
+      "fullSceneDrawAndReadback": {
+        "medianMs": 4.599999964237213,
+        "p95Ms": 5,
+        "maxMs": 6.599999964237213,
+        "over16ms": 0,
+        "samples": 120
+      },
+      "serialize": {
+        "medianMs": 0,
+        "p95Ms": 0,
+        "maxMs": 0.10000002384185791,
+        "over16ms": 0,
+        "samples": 120
+      },
+      "parseApply": {
+        "medianMs": 0,
+        "p95Ms": 0.10000002384185791,
+        "maxMs": 0.9000000357627869,
+        "over16ms": 0,
+        "samples": 120
+      },
+      "snapshotBytes": 2171,
+      "estimatedBytesPerSecondAt20Hz": 43420
+    },
+    {
+      "count": 14,
+      "reduced": false,
+      "compactOwnerBytes": 3637,
+      "effectDrawAndReadback": {
+        "medianMs": 10.899999976158142,
+        "p95Ms": 11.699999988079071,
+        "maxMs": 12.5,
+        "over16ms": 0,
+        "samples": 120
+      },
+      "fullSceneDrawAndReadback": {
+        "medianMs": 11,
+        "p95Ms": 12.199999988079071,
+        "maxMs": 13.5,
+        "over16ms": 0,
+        "samples": 120
+      },
+      "serialize": {
+        "medianMs": 0,
+        "p95Ms": 0.10000002384185791,
+        "maxMs": 0.10000002384185791,
+        "over16ms": 0,
+        "samples": 120
+      },
+      "parseApply": {
+        "medianMs": 0.09999996423721313,
+        "p95Ms": 0.19999998807907104,
+        "maxMs": 1,
+        "over16ms": 0,
+        "samples": 120
+      },
+      "snapshotBytes": 14326,
+      "estimatedBytesPerSecondAt20Hz": 286520
+    },
+    {
+      "count": 14,
+      "reduced": true,
+      "compactOwnerBytes": 3637,
+      "effectDrawAndReadback": {
+        "medianMs": 7.800000011920929,
+        "p95Ms": 8.300000011920929,
+        "maxMs": 8.800000011920929,
+        "over16ms": 0,
+        "samples": 120
+      },
+      "fullSceneDrawAndReadback": {
+        "medianMs": 11.099999964237213,
+        "p95Ms": 12.099999964237213,
+        "maxMs": 13.199999988079071,
+        "over16ms": 0,
+        "samples": 120
+      },
+      "serialize": {
+        "medianMs": 0,
+        "p95Ms": 0.10000002384185791,
+        "maxMs": 0.10000002384185791,
+        "over16ms": 0,
+        "samples": 120
+      },
+      "parseApply": {
+        "medianMs": 0.09999996423721313,
+        "p95Ms": 0.30000001192092896,
+        "maxMs": 0.800000011920929,
+        "over16ms": 0,
+        "samples": 120
+      },
+      "snapshotBytes": 14326,
+      "estimatedBytesPerSecondAt20Hz": 286520
+    },
+    {
+      "count": 40,
+      "reduced": false,
+      "compactOwnerBytes": 6432,
+      "effectDrawAndReadback": {
+        "medianMs": 29.19999998807907,
+        "p95Ms": 31,
+        "maxMs": 31.5,
+        "over16ms": 120,
+        "samples": 120
+      },
+      "fullSceneDrawAndReadback": {
+        "medianMs": 23.400000035762787,
+        "p95Ms": 25.19999998807907,
+        "maxMs": 28.5,
+        "over16ms": 120,
+        "samples": 120
+      },
+      "serialize": {
+        "medianMs": 0,
+        "p95Ms": 0.10000002384185791,
+        "maxMs": 0.30000001192092896,
+        "over16ms": 0,
+        "samples": 120
+      },
+      "parseApply": {
+        "medianMs": 0.10000002384185791,
+        "p95Ms": 0.30000001192092896,
+        "maxMs": 1.100000023841858,
+        "over16ms": 0,
+        "samples": 120
+      },
+      "snapshotBytes": 36972,
+      "estimatedBytesPerSecondAt20Hz": 739440
+    },
+    {
+      "count": 40,
+      "reduced": true,
+      "compactOwnerBytes": 6432,
+      "effectDrawAndReadback": {
+        "medianMs": 20.099999964237213,
+        "p95Ms": 20.80000001192093,
+        "maxMs": 21.100000023841858,
+        "over16ms": 120,
+        "samples": 120
+      },
+      "fullSceneDrawAndReadback": {
+        "medianMs": 23.400000035762787,
+        "p95Ms": 24.899999976158142,
+        "maxMs": 25.399999976158142,
+        "over16ms": 120,
+        "samples": 120
+      },
+      "serialize": {
+        "medianMs": 0,
+        "p95Ms": 0.10000002384185791,
+        "maxMs": 0.19999998807907104,
+        "over16ms": 0,
+        "samples": 120
+      },
+      "parseApply": {
+        "medianMs": 0.10000002384185791,
+        "p95Ms": 0.3999999761581421,
+        "maxMs": 1.199999988079071,
+        "over16ms": 0,
+        "samples": 120
+      },
+      "snapshotBytes": 36972,
+      "estimatedBytesPerSecondAt20Hz": 739440
+    }
+  ]
+}

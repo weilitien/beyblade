@@ -1,0 +1,115 @@
+{
+  "note": "Two local Chrome tabs over actual WebRTC; synthetic stable double-Lu-Xun hazards; 5 seconds each, 50ms sender stamps, 10ms guest polling. Age includes capture cadence and polling, not Internet latency.",
+  "measurements": [
+    {
+      "ageMs": {
+        "samples": 60,
+        "median": 37,
+        "p95": 41,
+        "max": 42
+      },
+      "arrivalGapMs": {
+        "samples": 59,
+        "median": 99,
+        "p95": 107,
+        "max": 110
+      },
+      "ownership": [],
+      "connected": true,
+      "hazards": 0,
+      "snapshotBytes": 2205
+    },
+    {
+      "ageMs": {
+        "samples": 68,
+        "median": 30,
+        "p95": 33,
+        "max": 63
+      },
+      "arrivalGapMs": {
+        "samples": 67,
+        "median": 56,
+        "p95": 101,
+        "max": 101
+      },
+      "ownership": [
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1
+      ],
+      "connected": true,
+      "hazards": 14,
+      "snapshotBytes": 14366
+    },
+    {
+      "ageMs": {
+        "samples": 66,
+        "median": 21,
+        "p95": 33,
+        "max": 61
+      },
+      "arrivalGapMs": {
+        "samples": 65,
+        "median": 91,
+        "p95": 110,
+        "max": 111
+      },
+      "ownership": [
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1
+      ],
+      "connected": true,
+      "hazards": 40,
+      "snapshotBytes": 37022
+    }
+  ]
+}

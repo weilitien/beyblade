@@ -1,0 +1,1035 @@
+{
+  "seeds": 30,
+  "dt": 0.008333333333333333,
+  "policy": "Signature-only; Signature-first, seed-rotated common skills every 0.5s; matched launch quality; swapped sides; alternating decision order",
+  "records": [
+    {
+      "subject": "luxun",
+      "opponent": "dianwei",
+      "games": 60,
+      "wins": 0,
+      "draws": 0,
+      "sideWins": [
+        0,
+        0
+      ],
+      "seconds": 667.0000000000007,
+      "maxHazards": 7,
+      "casts": 60,
+      "ends": {
+        "爆裂終結": 60
+      },
+      "meanSeconds": 11.116666666666678,
+      "winRate": 0
+    },
+    {
+      "subject": "luxun",
+      "opponent": "luxun",
+      "games": 60,
+      "wins": 30,
+      "draws": 0,
+      "sideWins": [
+        0,
+        30
+      ],
+      "seconds": 828.4999999999906,
+      "maxHazards": 14,
+      "casts": 120,
+      "ends": {
+        "爆裂終結": 60
+      },
+      "meanSeconds": 13.808333333333175,
+      "winRate": 0.5
+    },
+    {
+      "subject": "luxun",
+      "opponent": "lubu",
+      "games": 60,
+      "wins": 0,
+      "draws": 0,
+      "sideWins": [
+        0,
+        0
+      ],
+      "seconds": 600.5000000000041,
+      "maxHazards": 7,
+      "casts": 60,
+      "ends": {
+        "爆裂終結": 60
+      },
+      "meanSeconds": 10.008333333333402,
+      "winRate": 0
+    },
+    {
+      "subject": "luxun",
+      "opponent": "guanyu",
+      "games": 60,
+      "wins": 0,
+      "draws": 0,
+      "sideWins": [
+        0,
+        0
+      ],
+      "seconds": 694.2499999999989,
+      "maxHazards": 7,
+      "casts": 60,
+      "ends": {
+        "爆裂終結": 60
+      },
+      "meanSeconds": 11.570833333333315,
+      "winRate": 0
+    },
+    {
+      "subject": "luxun",
+      "opponent": "zhangfei",
+      "games": 60,
+      "wins": 0,
+      "draws": 0,
+      "sideWins": [
+        0,
+        0
+      ],
+      "seconds": 1029.2499999999793,
+      "maxHazards": 6,
+      "casts": 120,
+      "ends": {
+        "爆裂終結": 60
+      },
+      "meanSeconds": 17.15416666666632,
+      "winRate": 0
+    },
+    {
+      "subject": "luxun",
+      "opponent": "zhaoyun",
+      "games": 60,
+      "wins": 0,
+      "draws": 0,
+      "sideWins": [
+        0,
+        0
+      ],
+      "seconds": 636.5000000000027,
+      "maxHazards": 7,
+      "casts": 60,
+      "ends": {
+        "爆裂終結": 60
+      },
+      "meanSeconds": 10.608333333333379,
+      "winRate": 0
+    },
+    {
+      "subject": "luxun",
+      "opponent": "zhugeliang",
+      "games": 60,
+      "wins": 52,
+      "draws": 0,
+      "sideWins": [
+        26,
+        26
+      ],
+      "seconds": 889.533333333321,
+      "maxHazards": 7,
+      "casts": 116,
+      "ends": {
+        "爆裂終結": 52,
+        "心之一方・擊倒": 8
+      },
+      "meanSeconds": 14.82555555555535,
+      "winRate": 0.8666666666666667
+    },
+    {
+      "subject": "luxun",
+      "opponent": "liubei",
+      "games": 60,
+      "wins": 0,
+      "draws": 0,
+      "sideWins": [
+        0,
+        0
+      ],
+      "seconds": 886.999999999988,
+      "maxHazards": 7,
+      "casts": 120,
+      "ends": {
+        "爆裂終結": 60
+      },
+      "meanSeconds": 14.783333333333132,
+      "winRate": 0
+    },
+    {
+      "subject": "luxun",
+      "opponent": "caocao",
+      "games": 60,
+      "wins": 0,
+      "draws": 0,
+      "sideWins": [
+        0,
+        0
+      ],
+      "seconds": 897.999999999988,
+      "maxHazards": 7,
+      "casts": 120,
+      "ends": {
+        "爆裂終結": 60
+      },
+      "meanSeconds": 14.966666666666466,
+      "winRate": 0
+    },
+    {
+      "subject": "luxun",
+      "opponent": "simayi",
+      "games": 60,
+      "wins": 60,
+      "draws": 0,
+      "sideWins": [
+        30,
+        30
+      ],
+      "seconds": 1039.7499999999789,
+      "maxHazards": 7,
+      "casts": 120,
+      "ends": {
+        "爆裂終結": 60
+      },
+      "meanSeconds": 17.329166666666314,
+      "winRate": 1
+    },
+    {
+      "subject": "luxun",
+      "opponent": "zhouyu",
+      "games": 60,
+      "wins": 0,
+      "draws": 0,
+      "sideWins": [
+        0,
+        0
+      ],
+      "seconds": 780.4999999999933,
+      "maxHazards": 8,
+      "casts": 120,
+      "ends": {
+        "爆裂終結": 60
+      },
+      "meanSeconds": 13.008333333333221,
+      "winRate": 0
+    },
+    {
+      "subject": "luxun",
+      "opponent": "diaochan",
+      "games": 60,
+      "wins": 60,
+      "draws": 0,
+      "sideWins": [
+        30,
+        30
+      ],
+      "seconds": 780.249999999994,
+      "maxHazards": 7,
+      "casts": 90,
+      "ends": {
+        "爆裂終結": 60
+      },
+      "meanSeconds": 13.004166666666567,
+      "winRate": 1
+    },
+    {
+      "subject": "luxun",
+      "opponent": "machao",
+      "games": 60,
+      "wins": 0,
+      "draws": 0,
+      "sideWins": [
+        0,
+        0
+      ],
+      "seconds": 552.5000000000072,
+      "maxHazards": 7,
+      "casts": 60,
+      "ends": {
+        "爆裂終結": 60
+      },
+      "meanSeconds": 9.208333333333453,
+      "winRate": 0
+    },
+    {
+      "subject": "luxun",
+      "opponent": "pangde",
+      "games": 60,
+      "wins": 0,
+      "draws": 0,
+      "sideWins": [
+        0,
+        0
+      ],
+      "seconds": 643.7500000000022,
+      "maxHazards": 7,
+      "casts": 60,
+      "ends": {
+        "爆裂終結": 60
+      },
+      "meanSeconds": 10.729166666666703,
+      "winRate": 0
+    },
+    {
+      "subject": "luxun",
+      "opponent": "xiahou",
+      "games": 60,
+      "wins": 0,
+      "draws": 0,
+      "sideWins": [
+        0,
+        0
+      ],
+      "seconds": 813.9999999999923,
+      "maxHazards": 7,
+      "casts": 120,
+      "ends": {
+        "爆裂終結": 60
+      },
+      "meanSeconds": 13.566666666666539,
+      "winRate": 0
+    },
+    {
+      "subject": "luxun",
+      "opponent": "ganning",
+      "games": 60,
+      "wins": 60,
+      "draws": 0,
+      "sideWins": [
+        30,
+        30
+      ],
+      "seconds": 739.499999999996,
+      "maxHazards": 6,
+      "casts": 60,
+      "ends": {
+        "爆裂終結": 60
+      },
+      "meanSeconds": 12.324999999999934,
+      "winRate": 1
+    },
+    {
+      "subject": "luxun",
+      "opponent": "sunce",
+      "games": 60,
+      "wins": 0,
+      "draws": 0,
+      "sideWins": [
+        0,
+        0
+      ],
+      "seconds": 632.0000000000026,
+      "maxHazards": 6,
+      "casts": 60,
+      "ends": {
+        "爆裂終結": 60
+      },
+      "meanSeconds": 10.533333333333378,
+      "winRate": 0
+    },
+    {
+      "subject": "luxun",
+      "opponent": "huangzhong",
+      "games": 60,
+      "wins": 0,
+      "draws": 0,
+      "sideWins": [
+        0,
+        0
+      ],
+      "seconds": 692.2499999999999,
+      "maxHazards": 7,
+      "casts": 60,
+      "ends": {
+        "爆裂終結": 60
+      },
+      "meanSeconds": 11.537499999999998,
+      "winRate": 0
+    },
+    {
+      "subject": "dianwei",
+      "opponent": "dianwei",
+      "games": 60,
+      "wins": 0,
+      "draws": 60,
+      "sideWins": [
+        0,
+        0
+      ],
+      "seconds": 1051.4999999999784,
+      "maxHazards": 0,
+      "casts": 120,
+      "ends": {
+        "同歸於盡": 60
+      },
+      "meanSeconds": 17.52499999999964,
+      "winRate": 0
+    },
+    {
+      "subject": "dianwei",
+      "opponent": "luxun",
+      "games": 60,
+      "wins": 60,
+      "draws": 0,
+      "sideWins": [
+        30,
+        30
+      ],
+      "seconds": 667.0000000000006,
+      "maxHazards": 7,
+      "casts": 60,
+      "ends": {
+        "爆裂終結": 60
+      },
+      "meanSeconds": 11.116666666666676,
+      "winRate": 1
+    },
+    {
+      "subject": "dianwei",
+      "opponent": "lubu",
+      "games": 60,
+      "wins": 60,
+      "draws": 0,
+      "sideWins": [
+        30,
+        30
+      ],
+      "seconds": 445.7500000000099,
+      "maxHazards": 0,
+      "casts": 60,
+      "ends": {
+        "爆裂終結": 60
+      },
+      "meanSeconds": 7.4291666666668315,
+      "winRate": 1
+    },
+    {
+      "subject": "dianwei",
+      "opponent": "guanyu",
+      "games": 60,
+      "wins": 60,
+      "draws": 0,
+      "sideWins": [
+        30,
+        30
+      ],
+      "seconds": 859.2499999999894,
+      "maxHazards": 0,
+      "casts": 120,
+      "ends": {
+        "爆裂終結": 60
+      },
+      "meanSeconds": 14.320833333333157,
+      "winRate": 1
+    },
+    {
+      "subject": "dianwei",
+      "opponent": "zhangfei",
+      "games": 60,
+      "wins": 60,
+      "draws": 0,
+      "sideWins": [
+        30,
+        30
+      ],
+      "seconds": 1339.9999999999634,
+      "maxHazards": 0,
+      "casts": 120,
+      "ends": {
+        "爆裂終結": 60
+      },
+      "meanSeconds": 22.333333333332725,
+      "winRate": 1
+    },
+    {
+      "subject": "dianwei",
+      "opponent": "zhaoyun",
+      "games": 60,
+      "wins": 60,
+      "draws": 0,
+      "sideWins": [
+        30,
+        30
+      ],
+      "seconds": 858.9999999999895,
+      "maxHazards": 0,
+      "casts": 120,
+      "ends": {
+        "爆裂終結": 60
+      },
+      "meanSeconds": 14.316666666666492,
+      "winRate": 1
+    },
+    {
+      "subject": "dianwei",
+      "opponent": "zhugeliang",
+      "games": 60,
+      "wins": 60,
+      "draws": 0,
+      "sideWins": [
+        30,
+        30
+      ],
+      "seconds": 729.499999999997,
+      "maxHazards": 0,
+      "casts": 60,
+      "ends": {
+        "爆裂終結": 60
+      },
+      "meanSeconds": 12.158333333333283,
+      "winRate": 1
+    },
+    {
+      "subject": "dianwei",
+      "opponent": "liubei",
+      "games": 60,
+      "wins": 60,
+      "draws": 0,
+      "sideWins": [
+        30,
+        30
+      ],
+      "seconds": 912.9999999999873,
+      "maxHazards": 0,
+      "casts": 120,
+      "ends": {
+        "爆裂終結": 60
+      },
+      "meanSeconds": 15.216666666666454,
+      "winRate": 1
+    },
+    {
+      "subject": "dianwei",
+      "opponent": "caocao",
+      "games": 60,
+      "wins": 60,
+      "draws": 0,
+      "sideWins": [
+        30,
+        30
+      ],
+      "seconds": 876.7499999999881,
+      "maxHazards": 0,
+      "casts": 120,
+      "ends": {
+        "爆裂終結": 60
+      },
+      "meanSeconds": 14.612499999999802,
+      "winRate": 1
+    },
+    {
+      "subject": "dianwei",
+      "opponent": "simayi",
+      "games": 60,
+      "wins": 60,
+      "draws": 0,
+      "sideWins": [
+        30,
+        30
+      ],
+      "seconds": 922.4999999999862,
+      "maxHazards": 0,
+      "casts": 120,
+      "ends": {
+        "爆裂終結": 60
+      },
+      "meanSeconds": 15.37499999999977,
+      "winRate": 1
+    },
+    {
+      "subject": "dianwei",
+      "opponent": "zhouyu",
+      "games": 60,
+      "wins": 60,
+      "draws": 0,
+      "sideWins": [
+        30,
+        30
+      ],
+      "seconds": 738.2499999999968,
+      "maxHazards": 1,
+      "casts": 60,
+      "ends": {
+        "爆裂終結": 60
+      },
+      "meanSeconds": 12.304166666666614,
+      "winRate": 1
+    },
+    {
+      "subject": "dianwei",
+      "opponent": "diaochan",
+      "games": 60,
+      "wins": 60,
+      "draws": 0,
+      "sideWins": [
+        30,
+        30
+      ],
+      "seconds": 612.0000000000043,
+      "maxHazards": 0,
+      "casts": 60,
+      "ends": {
+        "爆裂終結": 60
+      },
+      "meanSeconds": 10.200000000000072,
+      "winRate": 1
+    },
+    {
+      "subject": "dianwei",
+      "opponent": "machao",
+      "games": 60,
+      "wins": 60,
+      "draws": 0,
+      "sideWins": [
+        30,
+        30
+      ],
+      "seconds": 435.50000000000864,
+      "maxHazards": 0,
+      "casts": 60,
+      "ends": {
+        "爆裂終結": 60
+      },
+      "meanSeconds": 7.258333333333478,
+      "winRate": 1
+    },
+    {
+      "subject": "dianwei",
+      "opponent": "pangde",
+      "games": 60,
+      "wins": 60,
+      "draws": 0,
+      "sideWins": [
+        30,
+        30
+      ],
+      "seconds": 913.9999999999866,
+      "maxHazards": 0,
+      "casts": 120,
+      "ends": {
+        "爆裂終結": 60
+      },
+      "meanSeconds": 15.23333333333311,
+      "winRate": 1
+    },
+    {
+      "subject": "dianwei",
+      "opponent": "xiahou",
+      "games": 60,
+      "wins": 60,
+      "draws": 0,
+      "sideWins": [
+        30,
+        30
+      ],
+      "seconds": 1051.4999999999784,
+      "maxHazards": 0,
+      "casts": 120,
+      "ends": {
+        "爆裂終結": 60
+      },
+      "meanSeconds": 17.52499999999964,
+      "winRate": 1
+    },
+    {
+      "subject": "dianwei",
+      "opponent": "ganning",
+      "games": 60,
+      "wins": 60,
+      "draws": 0,
+      "sideWins": [
+        30,
+        30
+      ],
+      "seconds": 583.0000000000059,
+      "maxHazards": 0,
+      "casts": 60,
+      "ends": {
+        "爆裂終結": 60
+      },
+      "meanSeconds": 9.716666666666764,
+      "winRate": 1
+    },
+    {
+      "subject": "dianwei",
+      "opponent": "sunce",
+      "games": 60,
+      "wins": 60,
+      "draws": 0,
+      "sideWins": [
+        30,
+        30
+      ],
+      "seconds": 753.9999999999961,
+      "maxHazards": 0,
+      "casts": 120,
+      "ends": {
+        "爆裂終結": 60
+      },
+      "meanSeconds": 12.566666666666602,
+      "winRate": 1
+    },
+    {
+      "subject": "dianwei",
+      "opponent": "huangzhong",
+      "games": 60,
+      "wins": 60,
+      "draws": 0,
+      "sideWins": [
+        30,
+        30
+      ],
+      "seconds": 767.7499999999949,
+      "maxHazards": 0,
+      "casts": 90,
+      "ends": {
+        "爆裂終結": 60
+      },
+      "meanSeconds": 12.795833333333247,
+      "winRate": 1
+    },
+    {
+      "subject": "huangzhong",
+      "opponent": "dianwei",
+      "games": 60,
+      "wins": 0,
+      "draws": 0,
+      "sideWins": [
+        0,
+        0
+      ],
+      "seconds": 767.749999999995,
+      "maxHazards": 0,
+      "casts": 90,
+      "ends": {
+        "爆裂終結": 60
+      },
+      "meanSeconds": 12.79583333333325,
+      "winRate": 0
+    },
+    {
+      "subject": "huangzhong",
+      "opponent": "luxun",
+      "games": 60,
+      "wins": 60,
+      "draws": 0,
+      "sideWins": [
+        30,
+        30
+      ],
+      "seconds": 692.2499999999999,
+      "maxHazards": 7,
+      "casts": 60,
+      "ends": {
+        "爆裂終結": 60
+      },
+      "meanSeconds": 11.537499999999998,
+      "winRate": 1
+    },
+    {
+      "subject": "huangzhong",
+      "opponent": "lubu",
+      "games": 60,
+      "wins": 0,
+      "draws": 0,
+      "sideWins": [
+        0,
+        0
+      ],
+      "seconds": 82.49999999999993,
+      "maxHazards": 0,
+      "casts": 60,
+      "ends": {
+        "出界落敗": 60
+      },
+      "meanSeconds": 1.374999999999999,
+      "winRate": 0
+    },
+    {
+      "subject": "huangzhong",
+      "opponent": "guanyu",
+      "games": 60,
+      "wins": 60,
+      "draws": 0,
+      "sideWins": [
+        30,
+        30
+      ],
+      "seconds": 839.4999999999917,
+      "maxHazards": 0,
+      "casts": 120,
+      "ends": {
+        "爆裂終結": 60
+      },
+      "meanSeconds": 13.991666666666529,
+      "winRate": 1
+    },
+    {
+      "subject": "huangzhong",
+      "opponent": "zhangfei",
+      "games": 60,
+      "wins": 0,
+      "draws": 0,
+      "sideWins": [
+        0,
+        0
+      ],
+      "seconds": 1217.2499999999695,
+      "maxHazards": 0,
+      "casts": 120,
+      "ends": {
+        "爆裂終結": 60
+      },
+      "meanSeconds": 20.287499999999493,
+      "winRate": 0
+    },
+    {
+      "subject": "huangzhong",
+      "opponent": "zhaoyun",
+      "games": 60,
+      "wins": 0,
+      "draws": 0,
+      "sideWins": [
+        0,
+        0
+      ],
+      "seconds": 698.7499999999989,
+      "maxHazards": 0,
+      "casts": 60,
+      "ends": {
+        "爆裂終結": 60
+      },
+      "meanSeconds": 11.645833333333314,
+      "winRate": 0
+    },
+    {
+      "subject": "huangzhong",
+      "opponent": "zhugeliang",
+      "games": 60,
+      "wins": 56,
+      "draws": 0,
+      "sideWins": [
+        26,
+        30
+      ],
+      "seconds": 745.8999999999963,
+      "maxHazards": 0,
+      "casts": 88,
+      "ends": {
+        "爆裂終結": 56,
+        "心之一方・擊倒": 4
+      },
+      "meanSeconds": 12.431666666666606,
+      "winRate": 0.9333333333333333
+    },
+    {
+      "subject": "huangzhong",
+      "opponent": "liubei",
+      "games": 60,
+      "wins": 60,
+      "draws": 0,
+      "sideWins": [
+        30,
+        30
+      ],
+      "seconds": 970.4999999999835,
+      "maxHazards": 0,
+      "casts": 120,
+      "ends": {
+        "爆裂終結": 60
+      },
+      "meanSeconds": 16.174999999999724,
+      "winRate": 1
+    },
+    {
+      "subject": "huangzhong",
+      "opponent": "caocao",
+      "games": 60,
+      "wins": 60,
+      "draws": 0,
+      "sideWins": [
+        30,
+        30
+      ],
+      "seconds": 919.7499999999867,
+      "maxHazards": 0,
+      "casts": 120,
+      "ends": {
+        "爆裂終結": 60
+      },
+      "meanSeconds": 15.329166666666445,
+      "winRate": 1
+    },
+    {
+      "subject": "huangzhong",
+      "opponent": "simayi",
+      "games": 60,
+      "wins": 60,
+      "draws": 0,
+      "sideWins": [
+        30,
+        30
+      ],
+      "seconds": 810.4999999999926,
+      "maxHazards": 0,
+      "casts": 120,
+      "ends": {
+        "爆裂終結": 60
+      },
+      "meanSeconds": 13.50833333333321,
+      "winRate": 1
+    },
+    {
+      "subject": "huangzhong",
+      "opponent": "zhouyu",
+      "games": 60,
+      "wins": 60,
+      "draws": 0,
+      "sideWins": [
+        30,
+        30
+      ],
+      "seconds": 815.249999999992,
+      "maxHazards": 1,
+      "casts": 120,
+      "ends": {
+        "爆裂終結": 60
+      },
+      "meanSeconds": 13.587499999999867,
+      "winRate": 1
+    },
+    {
+      "subject": "huangzhong",
+      "opponent": "diaochan",
+      "games": 60,
+      "wins": 60,
+      "draws": 0,
+      "sideWins": [
+        30,
+        30
+      ],
+      "seconds": 617.7500000000033,
+      "maxHazards": 0,
+      "casts": 60,
+      "ends": {
+        "爆裂終結": 60
+      },
+      "meanSeconds": 10.295833333333388,
+      "winRate": 1
+    },
+    {
+      "subject": "huangzhong",
+      "opponent": "machao",
+      "games": 60,
+      "wins": 60,
+      "draws": 0,
+      "sideWins": [
+        30,
+        30
+      ],
+      "seconds": 54.999999999999886,
+      "maxHazards": 0,
+      "casts": 60,
+      "ends": {
+        "出界落敗": 60
+      },
+      "meanSeconds": 0.9166666666666647,
+      "winRate": 1
+    },
+    {
+      "subject": "huangzhong",
+      "opponent": "pangde",
+      "games": 60,
+      "wins": 0,
+      "draws": 0,
+      "sideWins": [
+        0,
+        0
+      ],
+      "seconds": 683.9999999999992,
+      "maxHazards": 0,
+      "casts": 60,
+      "ends": {
+        "爆裂終結": 60
+      },
+      "meanSeconds": 11.399999999999986,
+      "winRate": 0
+    },
+    {
+      "subject": "huangzhong",
+      "opponent": "xiahou",
+      "games": 60,
+      "wins": 0,
+      "draws": 0,
+      "sideWins": [
+        0,
+        0
+      ],
+      "seconds": 899.7499999999873,
+      "maxHazards": 0,
+      "casts": 120,
+      "ends": {
+        "爆裂終結": 60
+      },
+      "meanSeconds": 14.99583333333312,
+      "winRate": 0
+    },
+    {
+      "subject": "huangzhong",
+      "opponent": "ganning",
+      "games": 60,
+      "wins": 60,
+      "draws": 0,
+      "sideWins": [
+        30,
+        30
+      ],
+      "seconds": 659.2500000000013,
+      "maxHazards": 0,
+      "casts": 60,
+      "ends": {
+        "爆裂終結": 60
+      },
+      "meanSeconds": 10.98750000000002,
+      "winRate": 1
+    },
+    {
+      "subject": "huangzhong",
+      "opponent": "sunce",
+      "games": 60,
+      "wins": 0,
+      "draws": 0,
+      "sideWins": [
+        0,
+        0
+      ],
+      "seconds": 743.7499999999962,
+      "maxHazards": 0,
+      "casts": 60,
+      "ends": {
+        "爆裂終結": 60
+      },
+      "meanSeconds": 12.39583333333327,
+      "winRate": 0
+    },
+    {
+      "subject": "huangzhong",
+      "opponent": "huangzhong",
+      "games": 60,
+      "wins": 30,
+      "draws": 0,
+      "sideWins": [
+        30,
+        0
+      ],
+      "seconds": 810.4999999999926,
+      "maxHazards": 0,
+      "casts": 120,
+      "ends": {
+        "爆裂終結": 60
+      },
+      "meanSeconds": 13.50833333333321,
+      "winRate": 0.5
+    }
+  ]
+}

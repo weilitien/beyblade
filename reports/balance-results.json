@@ -1,0 +1,1099 @@
+{
+  "seeds": 30,
+  "dt": 0.008333333333333333,
+  "policy": "Signature-first, seed-rotated common skills every 0.5s; matched launch quality; swapped sides; alternating decision order",
+  "records": [
+    {
+      "subject": "luxun",
+      "opponent": "dianwei",
+      "games": 60,
+      "wins": 0,
+      "draws": 0,
+      "sideWins": [
+        0,
+        0
+      ],
+      "seconds": 2436.1000000006516,
+      "maxHazards": 7,
+      "casts": 60,
+      "ends": {
+        "限時判定・剩餘生命比例": 16,
+        "出界落敗": 40,
+        "爆裂終結": 4
+      },
+      "meanSeconds": 40.601666666677524,
+      "winRate": 0
+    },
+    {
+      "subject": "luxun",
+      "opponent": "luxun",
+      "games": 60,
+      "wins": 22,
+      "draws": 16,
+      "sideWins": [
+        11,
+        11
+      ],
+      "seconds": 2266.1833333339946,
+      "maxHazards": 14,
+      "casts": 60,
+      "ends": {
+        "限時判定・剩餘生命比例": 16,
+        "出界落敗": 44
+      },
+      "meanSeconds": 37.76972222223324,
+      "winRate": 0.36666666666666664
+    },
+    {
+      "subject": "luxun",
+      "opponent": "lubu",
+      "games": 60,
+      "wins": 22,
+      "draws": 0,
+      "sideWins": [
+        15,
+        7
+      ],
+      "seconds": 3526.166666667739,
+      "maxHazards": 7,
+      "casts": 60,
+      "ends": {
+        "限時判定・剩餘生命比例": 26,
+        "出界落敗": 34
+      },
+      "meanSeconds": 58.769444444462316,
+      "winRate": 0.36666666666666664
+    },
+    {
+      "subject": "luxun",
+      "opponent": "guanyu",
+      "games": 60,
+      "wins": 24,
+      "draws": 0,
+      "sideWins": [
+        8,
+        16
+      ],
+      "seconds": 2408.800000000656,
+      "maxHazards": 7,
+      "casts": 60,
+      "ends": {
+        "限時判定・剩餘生命比例": 16,
+        "出界落敗": 44
+      },
+      "meanSeconds": 40.146666666677596,
+      "winRate": 0.4
+    },
+    {
+      "subject": "luxun",
+      "opponent": "zhangfei",
+      "games": 60,
+      "wins": 19,
+      "draws": 0,
+      "sideWins": [
+        8,
+        11
+      ],
+      "seconds": 490.85000000000014,
+      "maxHazards": 7,
+      "casts": 60,
+      "ends": {
+        "出界落敗": 60
+      },
+      "meanSeconds": 8.180833333333336,
+      "winRate": 0.31666666666666665
+    },
+    {
+      "subject": "luxun",
+      "opponent": "zhaoyun",
+      "games": 60,
+      "wins": 22,
+      "draws": 0,
+      "sideWins": [
+        15,
+        7
+      ],
+      "seconds": 2692.758333334118,
+      "maxHazards": 7,
+      "casts": 60,
+      "ends": {
+        "限時判定・剩餘生命比例": 19,
+        "出界落敗": 41
+      },
+      "meanSeconds": 44.879305555568635,
+      "winRate": 0.36666666666666664
+    },
+    {
+      "subject": "luxun",
+      "opponent": "zhugeliang",
+      "games": 60,
+      "wins": 18,
+      "draws": 0,
+      "sideWins": [
+        7,
+        11
+      ],
+      "seconds": 658.4166666666582,
+      "maxHazards": 7,
+      "casts": 60,
+      "ends": {
+        "出界落敗": 60
+      },
+      "meanSeconds": 10.973611111110971,
+      "winRate": 0.3
+    },
+    {
+      "subject": "luxun",
+      "opponent": "liubei",
+      "games": 60,
+      "wins": 4,
+      "draws": 0,
+      "sideWins": [
+        4,
+        0
+      ],
+      "seconds": 3214.3000000009024,
+      "maxHazards": 7,
+      "casts": 60,
+      "ends": {
+        "限時判定・剩餘生命比例": 22,
+        "出界落敗": 38
+      },
+      "meanSeconds": 53.57166666668171,
+      "winRate": 0.06666666666666667
+    },
+    {
+      "subject": "luxun",
+      "opponent": "caocao",
+      "games": 60,
+      "wins": 24,
+      "draws": 0,
+      "sideWins": [
+        16,
+        8
+      ],
+      "seconds": 2983.1000000009117,
+      "maxHazards": 7,
+      "casts": 60,
+      "ends": {
+        "限時判定・剩餘生命比例": 22,
+        "出界落敗": 38
+      },
+      "meanSeconds": 49.718333333348525,
+      "winRate": 0.4
+    },
+    {
+      "subject": "luxun",
+      "opponent": "simayi",
+      "games": 60,
+      "wins": 16,
+      "draws": 0,
+      "sideWins": [
+        4,
+        12
+      ],
+      "seconds": 817.2166666666518,
+      "maxHazards": 7,
+      "casts": 60,
+      "ends": {
+        "出界落敗": 60
+      },
+      "meanSeconds": 13.62027777777753,
+      "winRate": 0.26666666666666666
+    },
+    {
+      "subject": "luxun",
+      "opponent": "zhouyu",
+      "games": 60,
+      "wins": 24,
+      "draws": 0,
+      "sideWins": [
+        16,
+        8
+      ],
+      "seconds": 2435.491666667326,
+      "maxHazards": 8,
+      "casts": 60,
+      "ends": {
+        "限時判定・剩餘生命比例": 16,
+        "出界落敗": 44
+      },
+      "meanSeconds": 40.59152777778877,
+      "winRate": 0.4
+    },
+    {
+      "subject": "luxun",
+      "opponent": "diaochan",
+      "games": 60,
+      "wins": 49,
+      "draws": 0,
+      "sideWins": [
+        26,
+        23
+      ],
+      "seconds": 2266.391666667328,
+      "maxHazards": 7,
+      "casts": 60,
+      "ends": {
+        "限時判定・剩餘生命比例": 16,
+        "出界落敗": 44
+      },
+      "meanSeconds": 37.77319444445547,
+      "winRate": 0.8166666666666667
+    },
+    {
+      "subject": "luxun",
+      "opponent": "machao",
+      "games": 60,
+      "wins": 41,
+      "draws": 0,
+      "sideWins": [
+        19,
+        22
+      ],
+      "seconds": 1804.208333333782,
+      "maxHazards": 7,
+      "casts": 60,
+      "ends": {
+        "出界落敗": 49,
+        "限時判定・剩餘生命比例": 11
+      },
+      "meanSeconds": 30.07013888889637,
+      "winRate": 0.6833333333333333
+    },
+    {
+      "subject": "luxun",
+      "opponent": "pangde",
+      "games": 60,
+      "wins": 10,
+      "draws": 0,
+      "sideWins": [
+        3,
+        7
+      ],
+      "seconds": 2416.4250000006573,
+      "maxHazards": 7,
+      "casts": 60,
+      "ends": {
+        "限時判定・剩餘生命比例": 16,
+        "出界落敗": 40,
+        "爆裂終結": 4
+      },
+      "meanSeconds": 40.273750000010956,
+      "winRate": 0.16666666666666666
+    },
+    {
+      "subject": "luxun",
+      "opponent": "xiahou",
+      "games": 60,
+      "wins": 12,
+      "draws": 0,
+      "sideWins": [
+        4,
+        8
+      ],
+      "seconds": 2389.8750000006567,
+      "maxHazards": 7,
+      "casts": 60,
+      "ends": {
+        "限時判定・剩餘生命比例": 16,
+        "出界落敗": 44
+      },
+      "meanSeconds": 39.83125000001095,
+      "winRate": 0.2
+    },
+    {
+      "subject": "luxun",
+      "opponent": "ganning",
+      "games": 60,
+      "wins": 11,
+      "draws": 0,
+      "sideWins": [
+        0,
+        11
+      ],
+      "seconds": 1747.2166666671662,
+      "maxHazards": 7,
+      "casts": 60,
+      "ends": {
+        "限時判定・剩餘生命比例": 12,
+        "出界落敗": 48
+      },
+      "meanSeconds": 29.120277777786104,
+      "winRate": 0.18333333333333332
+    },
+    {
+      "subject": "luxun",
+      "opponent": "sunce",
+      "games": 60,
+      "wins": 13,
+      "draws": 0,
+      "sideWins": [
+        6,
+        7
+      ],
+      "seconds": 2342.641666667325,
+      "maxHazards": 7,
+      "casts": 60,
+      "ends": {
+        "限時判定・剩餘生命比例": 16,
+        "出界落敗": 44
+      },
+      "meanSeconds": 39.04402777778875,
+      "winRate": 0.21666666666666667
+    },
+    {
+      "subject": "luxun",
+      "opponent": "huangzhong",
+      "games": 60,
+      "wins": 14,
+      "draws": 0,
+      "sideWins": [
+        7,
+        7
+      ],
+      "seconds": 3306.116666667567,
+      "maxHazards": 7,
+      "casts": 60,
+      "ends": {
+        "限時判定・剩餘生命比例": 22,
+        "出界落敗": 30,
+        "爆裂終結": 8
+      },
+      "meanSeconds": 55.101944444459455,
+      "winRate": 0.23333333333333334
+    },
+    {
+      "subject": "dianwei",
+      "opponent": "dianwei",
+      "games": 60,
+      "wins": 4,
+      "draws": 52,
+      "sideWins": [
+        4,
+        0
+      ],
+      "seconds": 5657.366666667932,
+      "maxHazards": 0,
+      "casts": 60,
+      "ends": {
+        "限時判定・剩餘生命比例": 16,
+        "同歸於盡": 36,
+        "出界落敗": 8
+      },
+      "meanSeconds": 94.28944444446553,
+      "winRate": 0.06666666666666667
+    },
+    {
+      "subject": "dianwei",
+      "opponent": "luxun",
+      "games": 60,
+      "wins": 60,
+      "draws": 0,
+      "sideWins": [
+        30,
+        30
+      ],
+      "seconds": 2436.1000000006516,
+      "maxHazards": 7,
+      "casts": 60,
+      "ends": {
+        "限時判定・剩餘生命比例": 16,
+        "出界落敗": 40,
+        "爆裂終結": 4
+      },
+      "meanSeconds": 40.601666666677524,
+      "winRate": 1
+    },
+    {
+      "subject": "dianwei",
+      "opponent": "lubu",
+      "games": 60,
+      "wins": 52,
+      "draws": 0,
+      "sideWins": [
+        22,
+        30
+      ],
+      "seconds": 2761.416666667446,
+      "maxHazards": 0,
+      "casts": 60,
+      "ends": {
+        "限時判定・剩餘生命比例": 19,
+        "出界落敗": 33,
+        "爆裂終結": 8
+      },
+      "meanSeconds": 46.0236111111241,
+      "winRate": 0.8666666666666667
+    },
+    {
+      "subject": "dianwei",
+      "opponent": "guanyu",
+      "games": 60,
+      "wins": 44,
+      "draws": 0,
+      "sideWins": [
+        22,
+        22
+      ],
+      "seconds": 2899.6916666673146,
+      "maxHazards": 0,
+      "casts": 60,
+      "ends": {
+        "限時判定・剩餘生命比例": 16,
+        "出界落敗": 41,
+        "爆裂終結": 3
+      },
+      "meanSeconds": 48.32819444445524,
+      "winRate": 0.7333333333333333
+    },
+    {
+      "subject": "dianwei",
+      "opponent": "zhangfei",
+      "games": 60,
+      "wins": 8,
+      "draws": 4,
+      "sideWins": [
+        0,
+        8
+      ],
+      "seconds": 2399.316666666862,
+      "maxHazards": 0,
+      "casts": 60,
+      "ends": {
+        "爆裂終結": 11,
+        "出界落敗": 45,
+        "同歸於盡": 4
+      },
+      "meanSeconds": 39.988611111114366,
+      "winRate": 0.13333333333333333
+    },
+    {
+      "subject": "dianwei",
+      "opponent": "zhaoyun",
+      "games": 60,
+      "wins": 34,
+      "draws": 0,
+      "sideWins": [
+        19,
+        15
+      ],
+      "seconds": 2266.266666667327,
+      "maxHazards": 0,
+      "casts": 60,
+      "ends": {
+        "限時判定・剩餘生命比例": 16,
+        "出界落敗": 44
+      },
+      "meanSeconds": 37.77111111112212,
+      "winRate": 0.5666666666666667
+    },
+    {
+      "subject": "dianwei",
+      "opponent": "zhugeliang",
+      "games": 60,
+      "wins": 44,
+      "draws": 0,
+      "sideWins": [
+        26,
+        18
+      ],
+      "seconds": 1556.916666666614,
+      "maxHazards": 0,
+      "casts": 60,
+      "ends": {
+        "出界落敗": 49,
+        "爆裂終結": 11
+      },
+      "meanSeconds": 25.94861111111023,
+      "winRate": 0.7333333333333333
+    },
+    {
+      "subject": "dianwei",
+      "opponent": "liubei",
+      "games": 60,
+      "wins": 42,
+      "draws": 0,
+      "sideWins": [
+        26,
+        16
+      ],
+      "seconds": 2709.6083333339766,
+      "maxHazards": 0,
+      "casts": 60,
+      "ends": {
+        "限時判定・剩餘生命比例": 16,
+        "出界落敗": 44
+      },
+      "meanSeconds": 45.16013888889961,
+      "winRate": 0.7
+    },
+    {
+      "subject": "dianwei",
+      "opponent": "caocao",
+      "games": 60,
+      "wins": 47,
+      "draws": 0,
+      "sideWins": [
+        20,
+        27
+      ],
+      "seconds": 2989.016666667297,
+      "maxHazards": 0,
+      "casts": 60,
+      "ends": {
+        "限時判定・剩餘生命比例": 16,
+        "出界落敗": 40,
+        "爆裂終結": 4
+      },
+      "meanSeconds": 49.816944444454954,
+      "winRate": 0.7833333333333333
+    },
+    {
+      "subject": "dianwei",
+      "opponent": "simayi",
+      "games": 60,
+      "wins": 28,
+      "draws": 0,
+      "sideWins": [
+        14,
+        14
+      ],
+      "seconds": 1440.0833333333233,
+      "maxHazards": 0,
+      "casts": 60,
+      "ends": {
+        "出界落敗": 60
+      },
+      "meanSeconds": 24.00138888888872,
+      "winRate": 0.4666666666666667
+    },
+    {
+      "subject": "dianwei",
+      "opponent": "zhouyu",
+      "games": 60,
+      "wins": 46,
+      "draws": 0,
+      "sideWins": [
+        27,
+        19
+      ],
+      "seconds": 2327.266666667328,
+      "maxHazards": 1,
+      "casts": 60,
+      "ends": {
+        "限時判定・剩餘生命比例": 16,
+        "出界落敗": 44
+      },
+      "meanSeconds": 38.787777777788804,
+      "winRate": 0.7666666666666667
+    },
+    {
+      "subject": "dianwei",
+      "opponent": "diaochan",
+      "games": 60,
+      "wins": 53,
+      "draws": 0,
+      "sideWins": [
+        30,
+        23
+      ],
+      "seconds": 2367.4500000006597,
+      "maxHazards": 0,
+      "casts": 60,
+      "ends": {
+        "限時判定・剩餘生命比例": 16,
+        "出界落敗": 44
+      },
+      "meanSeconds": 39.457500000010995,
+      "winRate": 0.8833333333333333
+    },
+    {
+      "subject": "dianwei",
+      "opponent": "machao",
+      "games": 60,
+      "wins": 56,
+      "draws": 0,
+      "sideWins": [
+        26,
+        30
+      ],
+      "seconds": 1988.5250000003025,
+      "maxHazards": 0,
+      "casts": 60,
+      "ends": {
+        "出界落敗": 40,
+        "限時判定・剩餘生命比例": 8,
+        "爆裂終結": 12
+      },
+      "meanSeconds": 33.14208333333838,
+      "winRate": 0.9333333333333333
+    },
+    {
+      "subject": "dianwei",
+      "opponent": "pangde",
+      "games": 60,
+      "wins": 38,
+      "draws": 0,
+      "sideWins": [
+        19,
+        19
+      ],
+      "seconds": 2728.283333333975,
+      "maxHazards": 0,
+      "casts": 60,
+      "ends": {
+        "限時判定・剩餘生命比例": 16,
+        "出界落敗": 44
+      },
+      "meanSeconds": 45.47138888889958,
+      "winRate": 0.6333333333333333
+    },
+    {
+      "subject": "dianwei",
+      "opponent": "xiahou",
+      "games": 60,
+      "wins": 15,
+      "draws": 0,
+      "sideWins": [
+        7,
+        8
+      ],
+      "seconds": 3685.308333334179,
+      "maxHazards": 0,
+      "casts": 60,
+      "ends": {
+        "限時判定・剩餘生命比例": 16,
+        "出界落敗": 37,
+        "爆裂終結": 7
+      },
+      "meanSeconds": 61.421805555569655,
+      "winRate": 0.25
+    },
+    {
+      "subject": "dianwei",
+      "opponent": "ganning",
+      "games": 60,
+      "wins": 41,
+      "draws": 0,
+      "sideWins": [
+        19,
+        22
+      ],
+      "seconds": 1885.3250000004944,
+      "maxHazards": 0,
+      "casts": 60,
+      "ends": {
+        "限時判定・剩餘生命比例": 12,
+        "出界落敗": 44,
+        "爆裂終結": 4
+      },
+      "meanSeconds": 31.422083333341572,
+      "winRate": 0.6833333333333333
+    },
+    {
+      "subject": "dianwei",
+      "opponent": "sunce",
+      "games": 60,
+      "wins": 40,
+      "draws": 0,
+      "sideWins": [
+        22,
+        18
+      ],
+      "seconds": 2401.9750000006593,
+      "maxHazards": 0,
+      "casts": 60,
+      "ends": {
+        "限時判定・剩餘生命比例": 16,
+        "出界落敗": 44
+      },
+      "meanSeconds": 40.03291666667766,
+      "winRate": 0.6666666666666666
+    },
+    {
+      "subject": "dianwei",
+      "opponent": "huangzhong",
+      "games": 60,
+      "wins": 49,
+      "draws": 0,
+      "sideWins": [
+        23,
+        26
+      ],
+      "seconds": 2877.7750000006336,
+      "maxHazards": 0,
+      "casts": 60,
+      "ends": {
+        "限時判定・剩餘生命比例": 16,
+        "出界落敗": 40,
+        "爆裂終結": 4
+      },
+      "meanSeconds": 47.96291666667722,
+      "winRate": 0.8166666666666667
+    },
+    {
+      "subject": "huangzhong",
+      "opponent": "dianwei",
+      "games": 60,
+      "wins": 11,
+      "draws": 0,
+      "sideWins": [
+        4,
+        7
+      ],
+      "seconds": 2877.7750000006336,
+      "maxHazards": 0,
+      "casts": 60,
+      "ends": {
+        "限時判定・剩餘生命比例": 16,
+        "出界落敗": 40,
+        "爆裂終結": 4
+      },
+      "meanSeconds": 47.96291666667722,
+      "winRate": 0.18333333333333332
+    },
+    {
+      "subject": "huangzhong",
+      "opponent": "luxun",
+      "games": 60,
+      "wins": 46,
+      "draws": 0,
+      "sideWins": [
+        23,
+        23
+      ],
+      "seconds": 3306.116666667567,
+      "maxHazards": 7,
+      "casts": 60,
+      "ends": {
+        "限時判定・剩餘生命比例": 22,
+        "出界落敗": 30,
+        "爆裂終結": 8
+      },
+      "meanSeconds": 55.101944444459455,
+      "winRate": 0.7666666666666667
+    },
+    {
+      "subject": "huangzhong",
+      "opponent": "lubu",
+      "games": 60,
+      "wins": 16,
+      "draws": 0,
+      "sideWins": [
+        8,
+        8
+      ],
+      "seconds": 1259.0333333336623,
+      "maxHazards": 0,
+      "casts": 60,
+      "ends": {
+        "出界落敗": 52,
+        "限時判定・剩餘生命比例": 8
+      },
+      "meanSeconds": 20.983888888894374,
+      "winRate": 0.26666666666666666
+    },
+    {
+      "subject": "huangzhong",
+      "opponent": "guanyu",
+      "games": 60,
+      "wins": 27,
+      "draws": 0,
+      "sideWins": [
+        12,
+        15
+      ],
+      "seconds": 2519.666666667319,
+      "maxHazards": 0,
+      "casts": 60,
+      "ends": {
+        "限時判定・剩餘生命比例": 16,
+        "出界落敗": 44
+      },
+      "meanSeconds": 41.99444444445532,
+      "winRate": 0.45
+    },
+    {
+      "subject": "huangzhong",
+      "opponent": "zhangfei",
+      "games": 60,
+      "wins": 0,
+      "draws": 0,
+      "sideWins": [
+        0,
+        0
+      ],
+      "seconds": 2093.0749999999157,
+      "maxHazards": 0,
+      "casts": 60,
+      "ends": {
+        "出界落敗": 49,
+        "爆裂終結": 11
+      },
+      "meanSeconds": 34.884583333331925,
+      "winRate": 0
+    },
+    {
+      "subject": "huangzhong",
+      "opponent": "zhaoyun",
+      "games": 60,
+      "wins": 28,
+      "draws": 0,
+      "sideWins": [
+        14,
+        14
+      ],
+      "seconds": 2407.316666667323,
+      "maxHazards": 0,
+      "casts": 60,
+      "ends": {
+        "限時判定・剩餘生命比例": 16,
+        "出界落敗": 44
+      },
+      "meanSeconds": 40.12194444445538,
+      "winRate": 0.4666666666666667
+    },
+    {
+      "subject": "huangzhong",
+      "opponent": "zhugeliang",
+      "games": 60,
+      "wins": 45,
+      "draws": 0,
+      "sideWins": [
+        19,
+        26
+      ],
+      "seconds": 701.4333333333195,
+      "maxHazards": 0,
+      "casts": 60,
+      "ends": {
+        "出界落敗": 60
+      },
+      "meanSeconds": 11.690555555555326,
+      "winRate": 0.75
+    },
+    {
+      "subject": "huangzhong",
+      "opponent": "liubei",
+      "games": 60,
+      "wins": 45,
+      "draws": 0,
+      "sideWins": [
+        22,
+        23
+      ],
+      "seconds": 2008.825000000301,
+      "maxHazards": 0,
+      "casts": 60,
+      "ends": {
+        "出界落敗": 52,
+        "限時判定・剩餘生命比例": 8
+      },
+      "meanSeconds": 33.48041666667169,
+      "winRate": 0.75
+    },
+    {
+      "subject": "huangzhong",
+      "opponent": "caocao",
+      "games": 60,
+      "wins": 48,
+      "draws": 0,
+      "sideWins": [
+        30,
+        18
+      ],
+      "seconds": 2753.6000000006416,
+      "maxHazards": 0,
+      "casts": 60,
+      "ends": {
+        "限時判定・剩餘生命比例": 16,
+        "出界落敗": 44
+      },
+      "meanSeconds": 45.893333333344025,
+      "winRate": 0.8
+    },
+    {
+      "subject": "huangzhong",
+      "opponent": "simayi",
+      "games": 60,
+      "wins": 30,
+      "draws": 0,
+      "sideWins": [
+        19,
+        11
+      ],
+      "seconds": 2001.9083333336357,
+      "maxHazards": 0,
+      "casts": 60,
+      "ends": {
+        "出界落敗": 48,
+        "限時判定・剩餘生命比例": 8,
+        "爆裂終結": 4
+      },
+      "meanSeconds": 33.36513888889393,
+      "winRate": 0.5
+    },
+    {
+      "subject": "huangzhong",
+      "opponent": "zhouyu",
+      "games": 60,
+      "wins": 52,
+      "draws": 0,
+      "sideWins": [
+        26,
+        26
+      ],
+      "seconds": 2900.3083333339664,
+      "maxHazards": 1,
+      "casts": 60,
+      "ends": {
+        "限時判定・剩餘生命比例": 16,
+        "出界落敗": 40,
+        "爆裂終結": 4
+      },
+      "meanSeconds": 48.338472222232774,
+      "winRate": 0.8666666666666667
+    },
+    {
+      "subject": "huangzhong",
+      "opponent": "diaochan",
+      "games": 60,
+      "wins": 56,
+      "draws": 0,
+      "sideWins": [
+        26,
+        30
+      ],
+      "seconds": 2549.283333333988,
+      "maxHazards": 0,
+      "casts": 60,
+      "ends": {
+        "限時判定・剩餘生命比例": 16,
+        "出界落敗": 44
+      },
+      "meanSeconds": 42.48805555556647,
+      "winRate": 0.9333333333333333
+    },
+    {
+      "subject": "huangzhong",
+      "opponent": "machao",
+      "games": 60,
+      "wins": 60,
+      "draws": 0,
+      "sideWins": [
+        30,
+        30
+      ],
+      "seconds": 54.999999999999886,
+      "maxHazards": 0,
+      "casts": 60,
+      "ends": {
+        "出界落敗": 60
+      },
+      "meanSeconds": 0.9166666666666647,
+      "winRate": 1
+    },
+    {
+      "subject": "huangzhong",
+      "opponent": "pangde",
+      "games": 60,
+      "wins": 29,
+      "draws": 0,
+      "sideWins": [
+        22,
+        7
+      ],
+      "seconds": 2554.683333333984,
+      "maxHazards": 0,
+      "casts": 60,
+      "ends": {
+        "限時判定・剩餘生命比例": 16,
+        "出界落敗": 44
+      },
+      "meanSeconds": 42.5780555555664,
+      "winRate": 0.48333333333333334
+    },
+    {
+      "subject": "huangzhong",
+      "opponent": "xiahou",
+      "games": 60,
+      "wins": 18,
+      "draws": 0,
+      "sideWins": [
+        15,
+        3
+      ],
+      "seconds": 3181.25833333398,
+      "maxHazards": 0,
+      "casts": 60,
+      "ends": {
+        "限時判定・剩餘生命比例": 16,
+        "出界落敗": 40,
+        "爆裂終結": 4
+      },
+      "meanSeconds": 53.020972222233,
+      "winRate": 0.3
+    },
+    {
+      "subject": "huangzhong",
+      "opponent": "ganning",
+      "games": 60,
+      "wins": 37,
+      "draws": 0,
+      "sideWins": [
+        11,
+        26
+      ],
+      "seconds": 2071.2583333338216,
+      "maxHazards": 0,
+      "casts": 60,
+      "ends": {
+        "限時判定・剩餘生命比例": 12,
+        "出界落敗": 48
+      },
+      "meanSeconds": 34.52097222223036,
+      "winRate": 0.6166666666666667
+    },
+    {
+      "subject": "huangzhong",
+      "opponent": "sunce",
+      "games": 60,
+      "wins": 37,
+      "draws": 0,
+      "sideWins": [
+        15,
+        22
+      ],
+      "seconds": 1460.9083333336591,
+      "maxHazards": 0,
+      "casts": 60,
+      "ends": {
+        "出界落敗": 52,
+        "限時判定・剩餘生命比例": 8
+      },
+      "meanSeconds": 24.348472222227652,
+      "winRate": 0.6166666666666667
+    },
+    {
+      "subject": "huangzhong",
+      "opponent": "huangzhong",
+      "games": 60,
+      "wins": 30,
+      "draws": 0,
+      "sideWins": [
+        20,
+        10
+      ],
+      "seconds": 2624.5333333339768,
+      "maxHazards": 0,
+      "casts": 60,
+      "ends": {
+        "限時判定・剩餘生命比例": 16,
+        "出界落敗": 44
+      },
+      "meanSeconds": 43.74222222223295,
+      "winRate": 0.5
+    }
+  ]
+}

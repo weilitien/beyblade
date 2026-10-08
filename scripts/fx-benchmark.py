@@ -1,6 +1,7 @@
 """瀏覽器整合測試；請先在遊戲目錄啟動 localhost:8082。"""
 
 import json
+import sys
 import subprocess
 import tempfile
 import time
@@ -35,11 +36,13 @@ try:
     browser = BrowserClient(
         next(p["webSocketDebuggerUrl"] for p in pages if p["type"] == "page")
     )
+    browser.socket.settimeout(60)
+    browser.send("Page.bringToFront")
     browser.send("Runtime.enable")
     browser.send("Page.enable")
     browser.send(
         "Emulation.setDeviceMetricsOverride",
-        {"width": 1440, "height": 1100, "deviceScaleFactor": 1, "mobile": False},
+        {"width": 390, "height": 844, "deviceScaleFactor": 2, "mobile": True} if "--mobile" in sys.argv else {"width": 1440, "height": 1100, "deviceScaleFactor": 1, "mobile": False},
     )
     browser.send(
         "Page.addScriptToEvaluateOnNewDocument",
@@ -47,14 +50,16 @@ try:
             "source": "const make=AudioContext.prototype.createDynamicsCompressor;AudioContext.prototype.createDynamicsCompressor=function(){const node=make.call(this);window.meter=this.createAnalyser();node.connect(window.meter);return node;}"
         },
     )
-    browser.send("Page.addScriptToEvaluateOnNewDocument", {"source":"window.requestAnimationFrame=()=>0;"})
+    browser.send("Page.addScriptToEvaluateOnNewDocument", {"source":"window.benchmarkRAF=window.requestAnimationFrame.bind(window);window.requestAnimationFrame=()=>0;"})
     browser.send("Page.navigate", {"url": "http://127.0.0.1:8082/"})
     for _ in range(100):
         if browser.evaluate("Boolean(window.SoundFX&&window.SpinArena)"):
             break
         time.sleep(0.1)
-    result = browser.evaluate((Path(__file__).parent / 'cases' / 'fx-benchmark.js').read_text())
+    result = browser.evaluate((Path(__file__).parent / 'cases' / ('fire-benchmark.js' if '--fire' in sys.argv else 'fx-benchmark.js')).read_text())
     print(result, flush=True)
+    if '--fire' in sys.argv:
+        (Path(__file__).parent.parent / 'reports' / ('fire-performance-mobile.json' if '--mobile' in sys.argv else 'fire-performance.json')).write_text(json.dumps(result, indent=2) + '\n')
     assert not browser.errors, browser.errors
 finally:
     chrome.terminate()

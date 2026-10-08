@@ -1,6 +1,7 @@
 """瀏覽器整合測試；請先在遊戲目錄啟動 localhost:8082。"""
 
 import json
+import sys
 import subprocess
 import tempfile
 import time
@@ -234,6 +235,41 @@ try:
         host_browser.evaluate("for(let i=0;i<181;i++)SpinArena.simulate(1/120)")
         until(guest_browser, "SpinArena.game.phase === 'battle'")
     print("PASS: each player hears the correct ending exactly once", flush=True)
+
+    if '--fire' in sys.argv:
+        host_browser.evaluate("SpinArena.reset();SpinArena.select('luxun');SpinArena.setEnemy('luxun');SpinArena.game.start(.8,.8);SpinArena.game.aiEnabled=false;updateUI()")
+        until(guest_browser, "SpinArena.game.phase==='battle' && SpinArena.tops.every(a=>a.id==='luxun')")
+        measurements = []
+        for count in [0, 14, 40]:
+            host_browser.evaluate(f"""(() => {{
+              const g=SpinArena.game;
+              g.actors.forEach(a=>a.status.fireTrail=6);
+              g.hazards=Array.from({{length:{count}}},(_,i)=>({{owner:g.actors[i%2],kind:'trail',x:Math.cos(i)*2,z:Math.sin(i)*2,radius:.55,left:1.5,tick:0}}));
+              clearInterval(window.fireStamp);
+              window.fireStamp=setInterval(()=>g.quality=Date.now(),50);
+            }})()""")
+            until(guest_browser, f"SpinArena.game.hazards.length==={count}")
+            guest_browser.evaluate("""window.fireAges=[];window.fireGaps=[];window.fireLast=0;window.fireArrival=0;
+              window.firePoll=setInterval(()=>{const stamp=SpinArena.game.quality;
+                if(stamp>1e12 && stamp!==fireLast){const now=Date.now();fireAges.push(now-stamp);
+                  if(fireArrival)fireGaps.push(now-fireArrival);fireArrival=now;fireLast=stamp;}},10)""")
+            time.sleep(5)
+            result=guest_browser.evaluate("""(() => {
+              clearInterval(firePoll);
+              const summary=a=>{a.sort((x,y)=>x-y);return {samples:a.length,median:a[Math.floor(a.length*.5)],p95:a[Math.ceil(a.length*.95)-1],max:a.at(-1)}};
+              const ownership=SpinArena.game.hazards.map(f=>SignatureFX.hazardStyle(f).side);
+              return {ageMs:summary(fireAges),arrivalGapMs:summary(fireGaps),ownership,connected:RemoteRoom.connected};
+            })()""")
+            host_browser.evaluate("clearInterval(fireStamp)")
+            assert result['connected'] and result['ageMs']['samples'] >= 40, result
+            assert result['ownership']==[i%2 for i in range(count)], result
+            result['hazards']=count
+            result['snapshotBytes']=host_browser.evaluate("new TextEncoder().encode(JSON.stringify(captureNetwork())).length")
+            measurements.append(result)
+        (Path(__file__).parent.parent/'reports'/'fire-remote.json').write_text(json.dumps({
+            'note':'Two local Chrome tabs over actual WebRTC; synthetic stable double-Lu-Xun hazards; 5 seconds each, 50ms sender stamps, 10ms guest polling. Age includes capture cadence and polling, not Internet latency.',
+            'measurements':measurements},indent=2)+'\n')
+        print('PASS: double Lu Xun stress snapshots, ownership, and arrival measurements', measurements, flush=True)
 
     guest_browser.evaluate(
         (Path(__file__).parent / "cases" / "remote-smoke-1.js").read_text()
