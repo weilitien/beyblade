@@ -1,0 +1,118 @@
+{
+  "note": "Two local Chrome tabs over actual WebRTC; synthetic stable double-Lu-Xun hazards; 5 seconds each, 50ms sender stamps, 10ms guest polling. Age includes capture cadence and polling, not Internet latency.",
+  "measurements": [
+    {
+      "ageMs": {
+        "samples": 64,
+        "median": 28,
+        "p95": 31,
+        "max": 32
+      },
+      "arrivalGapMs": {
+        "samples": 63,
+        "median": 91,
+        "p95": 101,
+        "max": 101
+      },
+      "ownership": [],
+      "connected": true,
+      "hazards": 0,
+      "snapshotBytes": 2257,
+      "legacySnapshotBytes": 2257
+    },
+    {
+      "ageMs": {
+        "samples": 65,
+        "median": 14,
+        "p95": 24,
+        "max": 61
+      },
+      "arrivalGapMs": {
+        "samples": 64,
+        "median": 91,
+        "p95": 105,
+        "max": 110
+      },
+      "ownership": [
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1
+      ],
+      "connected": true,
+      "hazards": 14,
+      "snapshotBytes": 3729,
+      "legacySnapshotBytes": 14782
+    },
+    {
+      "ageMs": {
+        "samples": 66,
+        "median": 9,
+        "p95": 11,
+        "max": 12
+      },
+      "arrivalGapMs": {
+        "samples": 65,
+        "median": 89,
+        "p95": 109,
+        "max": 110
+      },
+      "ownership": [
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1
+      ],
+      "connected": true,
+      "hazards": 40,
+      "snapshotBytes": 6534,
+      "legacySnapshotBytes": 38114
+    }
+  ]
+}

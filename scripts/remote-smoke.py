@@ -265,8 +265,11 @@ try:
             assert result['ownership']==[i%2 for i in range(count)], result
             result['hazards']=count
             result['snapshotBytes']=host_browser.evaluate("new TextEncoder().encode(JSON.stringify(captureNetwork())).length")
+            result['legacySnapshotBytes']=host_browser.evaluate("(()=>{const s=captureNetwork();s.fields.hazards=s.fields.hazards.map(f=>({...f,owner:s.actors[f.owner]}));return new TextEncoder().encode(JSON.stringify(s)).length})()")
+            assert host_browser.evaluate("captureNetwork().fields.hazards.every(f=>f.owner===0||f.owner===1)")
+            assert guest_browser.evaluate("SpinArena.game.hazards.every(f=>f.owner===SpinArena.game.actors[f.owner.ai?1:0])")
             measurements.append(result)
-        (Path(__file__).parent.parent/'reports'/'fire-remote.json').write_text(json.dumps({
+        (Path(__file__).parent.parent/'reports'/'fire-remote-compact.json').write_text(json.dumps({
             'note':'Two local Chrome tabs over actual WebRTC; synthetic stable double-Lu-Xun hazards; 5 seconds each, 50ms sender stamps, 10ms guest polling. Age includes capture cadence and polling, not Internet latency.',
             'measurements':measurements},indent=2)+'\n')
         print('PASS: double Lu Xun stress snapshots, ownership, and arrival measurements', measurements, flush=True)

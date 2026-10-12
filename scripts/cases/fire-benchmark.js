@@ -26,7 +26,7 @@
    }
    const snapshot=captureNetwork();
    const bytes=new TextEncoder().encode(JSON.stringify(snapshot)).length;
-   const compact={...snapshot,fields:{...snapshot.fields,hazards:snapshot.fields.hazards.map(f=>({...f,owner:f.owner.ai?1:0}))}};
+   const compact=snapshot;
    const compactOwnerBytes=new TextEncoder().encode(JSON.stringify(compact)).length;
    cases.push({count,reduced,compactOwnerBytes,effectDrawAndReadback:stats(draw),fullSceneDrawAndReadback:stats(fullScene),serialize:stats(serialize),parseApply:stats(apply),snapshotBytes:bytes,estimatedBytesPerSecondAt20Hz:bytes*20});
  }

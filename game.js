@@ -1038,6 +1038,11 @@ const networkGameFields = [
 function captureNetwork() {
   const fields = {};
   for (const key of networkGameFields) fields[key] = game[key];
+  // Wire format contains a seat index, never a repeated actor object.
+  fields.hazards = game.hazards.map(({ owner, ...fire }) => ({
+    ...fire,
+    owner: owner.ai ? 1 : 0,
+  }));
   return {
     soundSequence,
     sounds: soundJournal.filter((e) => performance.now() - e.at < 1200),
@@ -1071,7 +1076,9 @@ function applyNetwork(s) {
     !Array.isArray(s.actors) ||
     s.actors.length !== 2 ||
     !s.fields ||
-    !Number.isSafeInteger(s.revision)
+    !Number.isSafeInteger(s.revision) ||
+    !Array.isArray(s.fields.hazards) ||
+    s.fields.hazards.some(f => !f || (f.owner !== 0 && f.owner !== 1))
   )
     return;
   const previousPhase = game.phase,
@@ -1091,6 +1098,7 @@ function applyNetwork(s) {
     id: i ? enemy : selected,
     ai: !!i,
   }));
+  game.hazards = s.fields.hazards.map(f => ({ ...f, owner: game.actors[f.owner] }));
   tops = game.actors;
   game.aiEnabled = false;
   launchQualities = s.launchQualities;

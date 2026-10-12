@@ -19,6 +19,12 @@
 
 公用房間服務或網路限制可能導致連線失敗。對稱 NAT、企業防火牆等環境可能需要 TURN 中繼；目前沒有配置自有 TURN 服務，也不保證所有網路均可互通。如需穩定商用部署，可在 `network-config.js` 設定自有 PeerServer 及短效 TURN 認證；不要把長效密碼提交到公開儲存庫。
 
+## 火痕快照格式
+
+遠端版本 `spin-arena-remote-9` 將火痕與周瑜火區的 owner 編碼為玩家編號 0／1，不再重複傳送完整角色。接收端建立本次角色狀態後，還原為對應角色參照；座標、範圍與剩餘時間原樣保留。非法歸屬編號會拒收整份快照，新舊連線版本不可混用。主機內部仍使用角色參照，單人玩法及傷害規則不變。
+
+`python3 scripts/remote-smoke.py --fire` 驗證雙陸遜、14／40片火痕的實際WebRTC同步，並把新格式與同一份狀態重建的舊格式大小寫入 `reports/fire-remote-compact.json`。舊版量測 `fire-remote.json` 保留供參考。
+
 ## 部署
 
 獨立儲存庫以此資料夾內容作為根目錄。`.github/workflows/pages.yml` 應採用 `deploy/pages.yml` 的內容。GitHub 儲存庫 Settings → Pages → Source 選 **GitHub Actions**；推送 main 後執行 101 項引擎檢查，再發布網站。不需 npm 安裝或後端主機。

@@ -9,6 +9,31 @@
   paint.fillStyle = '#09131f';
   paint.fillRect(0, 0, 1200, 1250);
   const ids = Object.keys(WarData.characters);
+  // Real wire round-trip: preserve live references without mutating host hazards.
+  SpinArena.reset();
+  const owners = SpinArena.game.actors;
+  SpinArena.game.hazards = [0, 1].map((side) => ({
+    owner: owners[side], kind: side ? 'trail' : undefined,
+    x: side, z: -side, radius: side ? 0.55 : 0.95, left: side ? 1 : 5, tick: 0.2,
+  }));
+  const wire = JSON.parse(JSON.stringify(captureNetwork()));
+  assert(wire.fields.hazards.every((f, side) => f.owner === side), 'Wire owners must be seat indices');
+  assert(SpinArena.game.hazards.every((f, side) => f.owner === owners[side]), 'Capture must not mutate host ownership');
+  applyNetwork(wire);
+  assert(SpinArena.game.hazards.every((f, side) => f.owner === SpinArena.game.actors[side]), 'Decoded owners must reference current actors');
+  assert(JSON.stringify(captureNetwork().fields.hazards) === JSON.stringify(wire.fields.hazards), 'Fire geometry and lifetime must round-trip unchanged');
+  const prior = JSON.stringify(captureNetwork());
+  for (const owner of [-1, 2, null, {}, '0']) {
+    const invalid = JSON.parse(JSON.stringify(wire));
+    invalid.fields.hazards[0].owner = owner;
+    invalid.revision++;
+    applyNetwork(invalid);
+    assert(JSON.stringify(captureNetwork()) === prior, 'Invalid owner must reject snapshot before mutation');
+  }
+  wire.fields.hazards = [];
+  applyNetwork(wire);
+  assert(SpinArena.game.hazards.length === 0, 'Empty snapshot clears expired fire');
+  SpinArena.reset();
   // Fire ownership survives JSON snapshots; both animation modes fade the actual pixels.
   for (const kind of ['trail', 'zone']) {
     const lifetime = kind === 'trail' ? 2 : 10;
