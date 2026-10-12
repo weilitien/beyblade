@@ -310,6 +310,108 @@ window.WarData = (() => {
       },
     ]),
   );
+  // Preserve design/source values separately from the active balance patch.
+  const originalStats = Object.fromEntries(Object.entries(characters).map(([id, c]) =>
+    [id, Object.fromEntries(['attack', 'defense', 'hp', 'mana', 'speed', 'stability', 'cost'].map(k => [k, c[k]]))]));
+  const balanceVersion = '2026-10-roster-1';
+  const balanceAdjustments = {
+  "dianwei": {
+    "attack": 70,
+    "defense": 56,
+    "hp": 1100,
+    "stability": 65
+  },
+  "xiahou": {
+    "attack": 68,
+    "defense": 60,
+    "hp": 1150,
+    "stability": 70
+  },
+  "zhaoyun": {
+    "attack": 68,
+    "defense": 44,
+    "stability": 54
+  },
+  "zhangfei": {
+    "attack": 70,
+    "defense": 78,
+    "hp": 1200,
+    "stability": 78
+  },
+  "pangde": {
+    "attack": 68,
+    "defense": 48,
+    "stability": 60
+  },
+  "simayi": {
+    "defense": 66,
+    "stability": 72
+  },
+  "sunce": {
+    "attack": 82,
+    "stability": 58
+  },
+  "lubu": {
+    "defense": 52,
+    "stability": 50
+  },
+  "caocao": {
+    "attack": 78,
+    "defense": 70,
+    "stability": 74,
+    "cost": 45
+  },
+  "zhouyu": {
+    "attack": 78,
+    "defense": 60,
+    "stability": 68,
+    "cost": 40
+  },
+  "ganning": {
+    "attack": 78,
+    "defense": 54,
+    "hp": 1000,
+    "stability": 62
+  },
+  "luxun": {
+    "attack": 80,
+    "defense": 66,
+    "hp": 1000,
+    "stability": 72,
+    "cost": 40
+  },
+  "machao": {
+    "defense": 62,
+    "hp": 1000,
+    "stability": 70,
+    "speed": 84
+  },
+  "zhugeliang": {
+    "attack": 80,
+    "defense": 68,
+    "hp": 1000,
+    "stability": 70
+  },
+  "diaochan": {
+    "attack": 82,
+    "defense": 66,
+    "hp": 1000,
+    "stability": 70,
+    "speed": 82,
+    "cost": 30
+  },
+  "liubei": {
+    "attack": 68
+  },
+  "guanyu": {
+    "attack": 80,
+    "defense": 64,
+    "stability": 78
+  }
+};
+  for (const [id, values] of Object.entries(balanceAdjustments)) {
+    Object.assign(characters[id], values, { balanceAdjusted: true });
+  }
   const common = {
     storm: {
       name: '螺旋風暴',
@@ -377,6 +479,9 @@ window.WarData = (() => {
   ];
   return {
     characters,
+    originalStats,
+    balanceAdjustments,
+    balanceVersion,
     common,
     rivals,
     source: '三國戰鬥陀螺 3D 遊戲設計文件.pdf（使用者提供，6 頁）',

@@ -34,11 +34,11 @@ window.runWarTests = () => {
     sunce: [90, 55, 1000, 100, 70, 60],
   };
   for (const [id, stats] of Object.entries(exact)) {
-    const c = WarData.characters[id];
+    const c = WarData.originalStats[id];
     assert(
       JSON.stringify([c.attack, c.defense, c.hp, c.mana, c.speed, c.stability]) ===
-        JSON.stringify(stats) && !c.provisional,
-      id + ' 採用文件原值',
+        JSON.stringify(stats),
+      id + ' 保留文件原值供追溯',
     );
   }
   assert(
@@ -51,7 +51,7 @@ window.runWarTests = () => {
   a.mana = 20;
   b.mana = 20;
   const dealt = g.hit(a, b, 1);
-  assert(near(dealt, (60 * 100) / 140), '基本攻擊套用公式');
+  assert(near(dealt, (a.c.attack * 100) / (100 + b.c.defense)), '基本攻擊套用公式');
   assert(a.mana === 23 && b.mana === 26, '命中與受擊魔法回復不同');
   g = duel();
   [a, b] = g.actors;
@@ -60,7 +60,7 @@ window.runWarTests = () => {
   g = duel();
   [a, b] = g.actors;
   cast(g, 'storm');
-  assert(near(g.attack(a), 78) && a.mana === 50, '螺旋風暴30%攻擊');
+  assert(near(g.attack(a), a.c.attack * 1.3) && a.mana === 50, '螺旋風暴30%攻擊');
   advance(g, 8.01);
   assert(g.has(a, 'weak') && !g.has(a, 'storm'), '風暴結束進入虛弱');
   g = duel();
@@ -118,7 +118,7 @@ window.runWarTests = () => {
   cast(g);
   const bhp = b.hp;
   advance(g, 2.01);
-  assert(near(bhp - b.hp, (85 * 2 * 100) / (100 + b.c.defense * 0.7)), '青龍忽略30%防禦');
+  assert(near(bhp - b.hp, (a.c.attack * 2 * 100) / (100 + b.c.defense * 0.7)), '青龍忽略30%防禦');
   g = duel('zhangfei', 'machao');
   [a, b] = g.actors;
   cast(g, 'signature', 1);
@@ -155,7 +155,7 @@ window.runWarTests = () => {
   g = duel('caocao', 'zhugeliang');
   [a, b] = g.actors;
   cast(g);
-  assert(a.mana === 70 && b.mana === 80 && b.sealed, '曹操偷魔與封招');
+  assert(a.mana === 100 - a.c.cost + 20 && b.mana === 80 && b.sealed, '曹操偷魔與封招');
   const mana = b.mana;
   assert(!cast(g, 'signature', 1).ok && !b.sealed && b.mana === mana, '封鎖下一招不扣費');
   g = duel('simayi');
@@ -209,8 +209,8 @@ window.runWarTests = () => {
   assert(
     !g.has(a, 'reverse') &&
       !g.has(a, 'root') &&
-      near(a.hp, a.maxHp - 40) &&
-      near(g.attack(a), 105),
+      near(a.hp, a.maxHp - 100 + a.maxHp * 0.05) &&
+      near(g.attack(a), a.c.attack * 1.4),
     '夏侯惇清負面補5%並加攻40%',
   );
   g = duel('ganning');
@@ -225,7 +225,7 @@ window.runWarTests = () => {
   g = duel('sunce');
   [a, b] = g.actors;
   assert(
-    near(g.hit(a, b, 1), (90 * 1.2 * 100) / (100 + b.c.defense)),
+    near(g.hit(a, b, 1), (a.c.attack * 1.2 * 100) / (100 + b.c.defense)),
     '孫策首次命中+20%',
   );
   g = duel('sunce');
@@ -363,7 +363,7 @@ window.runWarTests = () => {
   g = duel('luxun');
   [a,b] = g.actors;
   cast(g);
-  assert(a.mana === 55 && a.status.fireTrail === 6, '陸遜消耗45魔法且持續6秒');
+  assert(a.mana === 60 && a.status.fireTrail === 6, '陸遜消耗40魔法且持續6秒');
   a.x=-2; a.z=0; b.x=2; b.z=0;
   a.fireTrailPoint={x:-2,z:0}; a.vx=a.vz=0;
   g.tick(0.01);

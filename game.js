@@ -117,7 +117,7 @@ function renderLoadout() {
     b.dataset.character = c.id;
     b.setAttribute('aria-pressed', String(c.id === selected));
     b.disabled = !canSelect() || (playMode === 'online' && RemoteRoom.role === 'guest');
-    b.innerHTML = `<span>${c.name}</span><small>${c.faction} · ${c.provisional ? '暫定' : '文件值'}</small>`;
+    b.innerHTML = `<span>${c.name}</span><small>${c.faction} · ${c.balanceAdjusted ? '平衡值' : c.provisional ? '暫定' : '文件值'}</small>`;
     b.onclick = () => {
       if (!canSelect()) return;
       selected = c.id;
@@ -141,7 +141,9 @@ function renderLoadout() {
   ]
     .map(([n, v]) => `<div><span>${n}</span><b>${v}</b></div>`)
     .join('');
-  $('stat-provenance').textContent = c.provisional
+  $('stat-provenance').textContent = c.balanceAdjusted
+    ? '平衡調整值｜2026-10 第一輪；原始數值保留於資料檔'
+    : c.provisional
     ? '暫定平衡值｜文件僅定義角色定位'
     : '文件原始值｜六項數值依第 2 頁實作';
   $('play-mode').value = playMode;

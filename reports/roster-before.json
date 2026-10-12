@@ -1,0 +1,1491 @@
+{
+  "seeds": 4,
+  "offset": 0,
+  "step": 0.008333333333333333,
+  "policies": [
+    "mixed",
+    "signature"
+  ],
+  "stats": {
+    "dianwei": {
+      "attack": 86,
+      "defense": 72,
+      "hp": 1150,
+      "speed": 45,
+      "stability": 85,
+      "cost": 40
+    },
+    "luxun": {
+      "attack": 68,
+      "defense": 46,
+      "hp": 950,
+      "speed": 82,
+      "stability": 52,
+      "cost": 45
+    },
+    "lubu": {
+      "attack": 98,
+      "defense": 38,
+      "hp": 1000,
+      "speed": 78,
+      "stability": 30,
+      "cost": 60
+    },
+    "guanyu": {
+      "attack": 85,
+      "defense": 68,
+      "hp": 1100,
+      "speed": 60,
+      "stability": 82,
+      "cost": 40
+    },
+    "zhangfei": {
+      "attack": 78,
+      "defense": 90,
+      "hp": 1250,
+      "speed": 38,
+      "stability": 88,
+      "cost": 30
+    },
+    "zhaoyun": {
+      "attack": 76,
+      "defense": 56,
+      "hp": 950,
+      "speed": 96,
+      "stability": 67,
+      "cost": 40
+    },
+    "zhugeliang": {
+      "attack": 40,
+      "defense": 38,
+      "hp": 800,
+      "speed": 55,
+      "stability": 45,
+      "cost": 100
+    },
+    "liubei": {
+      "attack": 60,
+      "defense": 64,
+      "hp": 1100,
+      "speed": 57,
+      "stability": 70,
+      "cost": 55
+    },
+    "caocao": {
+      "attack": 70,
+      "defense": 65,
+      "hp": 1050,
+      "speed": 65,
+      "stability": 68,
+      "cost": 50
+    },
+    "simayi": {
+      "attack": 58,
+      "defense": 72,
+      "hp": 1100,
+      "speed": 48,
+      "stability": 78,
+      "cost": 35
+    },
+    "zhouyu": {
+      "attack": 75,
+      "defense": 48,
+      "hp": 950,
+      "speed": 72,
+      "stability": 55,
+      "cost": 45
+    },
+    "diaochan": {
+      "attack": 55,
+      "defense": 40,
+      "hp": 850,
+      "speed": 88,
+      "stability": 48,
+      "cost": 40
+    },
+    "machao": {
+      "attack": 88,
+      "defense": 45,
+      "hp": 900,
+      "speed": 92,
+      "stability": 50,
+      "cost": 45
+    },
+    "pangde": {
+      "attack": 80,
+      "defense": 60,
+      "hp": 1000,
+      "speed": 55,
+      "stability": 75,
+      "cost": 35
+    },
+    "xiahou": {
+      "attack": 75,
+      "defense": 78,
+      "hp": 1200,
+      "speed": 45,
+      "stability": 85,
+      "cost": 30
+    },
+    "ganning": {
+      "attack": 72,
+      "defense": 42,
+      "hp": 900,
+      "speed": 85,
+      "stability": 45,
+      "cost": 50
+    },
+    "sunce": {
+      "attack": 90,
+      "defense": 55,
+      "hp": 1000,
+      "speed": 70,
+      "stability": 60,
+      "cost": 55
+    },
+    "huangzhong": {
+      "attack": 92,
+      "defense": 48,
+      "hp": 950,
+      "speed": 52,
+      "stability": 65,
+      "cost": 45
+    }
+  },
+  "results": {
+    "dianwei": {
+      "games": 272,
+      "points": 232.5,
+      "wins": 232,
+      "draws": 1,
+      "sidePoints": [
+        116,
+        116.5
+      ],
+      "policies": {
+        "mixed": {
+          "games": 136,
+          "points": 96.5,
+          "score": 0.7095588235294118
+        },
+        "signature": {
+          "games": 136,
+          "points": 136,
+          "score": 1
+        }
+      },
+      "score": 0.8547794117647058
+    },
+    "luxun": {
+      "games": 272,
+      "points": 74,
+      "wins": 74,
+      "draws": 0,
+      "sidePoints": [
+        40,
+        34
+      ],
+      "policies": {
+        "mixed": {
+          "games": 136,
+          "points": 42,
+          "score": 0.3088235294117647
+        },
+        "signature": {
+          "games": 136,
+          "points": 32,
+          "score": 0.23529411764705882
+        }
+      },
+      "score": 0.27205882352941174
+    },
+    "lubu": {
+      "games": 272,
+      "points": 109,
+      "wins": 109,
+      "draws": 0,
+      "sidePoints": [
+        54,
+        55
+      ],
+      "policies": {
+        "mixed": {
+          "games": 136,
+          "points": 61,
+          "score": 0.4485294117647059
+        },
+        "signature": {
+          "games": 136,
+          "points": 48,
+          "score": 0.35294117647058826
+        }
+      },
+      "score": 0.4007352941176471
+    },
+    "guanyu": {
+      "games": 272,
+      "points": 147,
+      "wins": 147,
+      "draws": 0,
+      "sidePoints": [
+        73,
+        74
+      ],
+      "policies": {
+        "mixed": {
+          "games": 136,
+          "points": 67,
+          "score": 0.49264705882352944
+        },
+        "signature": {
+          "games": 136,
+          "points": 80,
+          "score": 0.5882352941176471
+        }
+      },
+      "score": 0.5404411764705882
+    },
+    "zhangfei": {
+      "games": 272,
+      "points": 203.5,
+      "wins": 201,
+      "draws": 5,
+      "sidePoints": [
+        100.5,
+        103
+      ],
+      "policies": {
+        "mixed": {
+          "games": 136,
+          "points": 105.5,
+          "score": 0.7757352941176471
+        },
+        "signature": {
+          "games": 136,
+          "points": 98,
+          "score": 0.7205882352941176
+        }
+      },
+      "score": 0.7481617647058824
+    },
+    "zhaoyun": {
+      "games": 272,
+      "points": 204.5,
+      "wins": 204,
+      "draws": 1,
+      "sidePoints": [
+        102,
+        102.5
+      ],
+      "policies": {
+        "mixed": {
+          "games": 136,
+          "points": 76.5,
+          "score": 0.5625
+        },
+        "signature": {
+          "games": 136,
+          "points": 128,
+          "score": 0.9411764705882353
+        }
+      },
+      "score": 0.7518382352941176
+    },
+    "zhugeliang": {
+      "games": 272,
+      "points": 71,
+      "wins": 71,
+      "draws": 0,
+      "sidePoints": [
+        35,
+        36
+      ],
+      "policies": {
+        "mixed": {
+          "games": 136,
+          "points": 71,
+          "score": 0.5220588235294118
+        },
+        "signature": {
+          "games": 136,
+          "points": 0,
+          "score": 0
+        }
+      },
+      "score": 0.2610294117647059
+    },
+    "liubei": {
+      "games": 272,
+      "points": 129,
+      "wins": 125,
+      "draws": 8,
+      "sidePoints": [
+        65,
+        64
+      ],
+      "policies": {
+        "mixed": {
+          "games": 136,
+          "points": 85,
+          "score": 0.625
+        },
+        "signature": {
+          "games": 136,
+          "points": 44,
+          "score": 0.3235294117647059
+        }
+      },
+      "score": 0.4742647058823529
+    },
+    "caocao": {
+      "games": 272,
+      "points": 108,
+      "wins": 108,
+      "draws": 0,
+      "sidePoints": [
+        54,
+        54
+      ],
+      "policies": {
+        "mixed": {
+          "games": 136,
+          "points": 48,
+          "score": 0.35294117647058826
+        },
+        "signature": {
+          "games": 136,
+          "points": 60,
+          "score": 0.4411764705882353
+        }
+      },
+      "score": 0.39705882352941174
+    },
+    "simayi": {
+      "games": 272,
+      "points": 164,
+      "wins": 164,
+      "draws": 0,
+      "sidePoints": [
+        81,
+        83
+      ],
+      "policies": {
+        "mixed": {
+          "games": 136,
+          "points": 92,
+          "score": 0.6764705882352942
+        },
+        "signature": {
+          "games": 136,
+          "points": 72,
+          "score": 0.5294117647058824
+        }
+      },
+      "score": 0.6029411764705882
+    },
+    "zhouyu": {
+      "games": 272,
+      "points": 108,
+      "wins": 104,
+      "draws": 8,
+      "sidePoints": [
+        56,
+        52
+      ],
+      "policies": {
+        "mixed": {
+          "games": 136,
+          "points": 48,
+          "score": 0.35294117647058826
+        },
+        "signature": {
+          "games": 136,
+          "points": 60,
+          "score": 0.4411764705882353
+        }
+      },
+      "score": 0.39705882352941174
+    },
+    "diaochan": {
+      "games": 272,
+      "points": 20,
+      "wins": 20,
+      "draws": 0,
+      "sidePoints": [
+        10,
+        10
+      ],
+      "policies": {
+        "mixed": {
+          "games": 136,
+          "points": 12,
+          "score": 0.08823529411764706
+        },
+        "signature": {
+          "games": 136,
+          "points": 8,
+          "score": 0.058823529411764705
+        }
+      },
+      "score": 0.07352941176470588
+    },
+    "machao": {
+      "games": 272,
+      "points": 72,
+      "wins": 72,
+      "draws": 0,
+      "sidePoints": [
+        37,
+        35
+      ],
+      "policies": {
+        "mixed": {
+          "games": 136,
+          "points": 24,
+          "score": 0.17647058823529413
+        },
+        "signature": {
+          "games": 136,
+          "points": 48,
+          "score": 0.35294117647058826
+        }
+      },
+      "score": 0.2647058823529412
+    },
+    "pangde": {
+      "games": 272,
+      "points": 199,
+      "wins": 199,
+      "draws": 0,
+      "sidePoints": [
+        99,
+        100
+      ],
+      "policies": {
+        "mixed": {
+          "games": 136,
+          "points": 79,
+          "score": 0.5808823529411765
+        },
+        "signature": {
+          "games": 136,
+          "points": 120,
+          "score": 0.8823529411764706
+        }
+      },
+      "score": 0.7316176470588235
+    },
+    "xiahou": {
+      "games": 272,
+      "points": 211.5,
+      "wins": 209,
+      "draws": 5,
+      "sidePoints": [
+        106.5,
+        105
+      ],
+      "policies": {
+        "mixed": {
+          "games": 136,
+          "points": 101.5,
+          "score": 0.7463235294117647
+        },
+        "signature": {
+          "games": 136,
+          "points": 110,
+          "score": 0.8088235294117647
+        }
+      },
+      "score": 0.7775735294117647
+    },
+    "ganning": {
+      "games": 272,
+      "points": 85,
+      "wins": 84,
+      "draws": 2,
+      "sidePoints": [
+        39.5,
+        45.5
+      ],
+      "policies": {
+        "mixed": {
+          "games": 136,
+          "points": 61,
+          "score": 0.4485294117647059
+        },
+        "signature": {
+          "games": 136,
+          "points": 24,
+          "score": 0.17647058823529413
+        }
+      },
+      "score": 0.3125
+    },
+    "sunce": {
+      "games": 272,
+      "points": 159,
+      "wins": 159,
+      "draws": 0,
+      "sidePoints": [
+        77,
+        82
+      ],
+      "policies": {
+        "mixed": {
+          "games": 136,
+          "points": 83,
+          "score": 0.6102941176470589
+        },
+        "signature": {
+          "games": 136,
+          "points": 76,
+          "score": 0.5588235294117647
+        }
+      },
+      "score": 0.5845588235294118
+    },
+    "huangzhong": {
+      "games": 272,
+      "points": 151,
+      "wins": 151,
+      "draws": 0,
+      "sidePoints": [
+        76,
+        75
+      ],
+      "policies": {
+        "mixed": {
+          "games": 136,
+          "points": 71,
+          "score": 0.5220588235294118
+        },
+        "signature": {
+          "games": 136,
+          "points": 80,
+          "score": 0.5882352941176471
+        }
+      },
+      "score": 0.5551470588235294
+    }
+  },
+  "pairs": [
+    {
+      "a": "dianwei",
+      "b": "luxun",
+      "games": 16,
+      "points": 16
+    },
+    {
+      "a": "dianwei",
+      "b": "lubu",
+      "games": 16,
+      "points": 15
+    },
+    {
+      "a": "dianwei",
+      "b": "guanyu",
+      "games": 16,
+      "points": 16
+    },
+    {
+      "a": "dianwei",
+      "b": "zhangfei",
+      "games": 16,
+      "points": 8.5
+    },
+    {
+      "a": "dianwei",
+      "b": "zhaoyun",
+      "games": 16,
+      "points": 12
+    },
+    {
+      "a": "dianwei",
+      "b": "zhugeliang",
+      "games": 16,
+      "points": 13
+    },
+    {
+      "a": "dianwei",
+      "b": "liubei",
+      "games": 16,
+      "points": 14
+    },
+    {
+      "a": "dianwei",
+      "b": "caocao",
+      "games": 16,
+      "points": 16
+    },
+    {
+      "a": "dianwei",
+      "b": "simayi",
+      "games": 16,
+      "points": 10
+    },
+    {
+      "a": "dianwei",
+      "b": "zhouyu",
+      "games": 16,
+      "points": 15
+    },
+    {
+      "a": "dianwei",
+      "b": "diaochan",
+      "games": 16,
+      "points": 16
+    },
+    {
+      "a": "dianwei",
+      "b": "machao",
+      "games": 16,
+      "points": 16
+    },
+    {
+      "a": "dianwei",
+      "b": "pangde",
+      "games": 16,
+      "points": 14
+    },
+    {
+      "a": "dianwei",
+      "b": "xiahou",
+      "games": 16,
+      "points": 10
+    },
+    {
+      "a": "dianwei",
+      "b": "ganning",
+      "games": 16,
+      "points": 14
+    },
+    {
+      "a": "dianwei",
+      "b": "sunce",
+      "games": 16,
+      "points": 11
+    },
+    {
+      "a": "dianwei",
+      "b": "huangzhong",
+      "games": 16,
+      "points": 16
+    },
+    {
+      "a": "luxun",
+      "b": "lubu",
+      "games": 16,
+      "points": 2
+    },
+    {
+      "a": "luxun",
+      "b": "guanyu",
+      "games": 16,
+      "points": 5
+    },
+    {
+      "a": "luxun",
+      "b": "zhangfei",
+      "games": 16,
+      "points": 2
+    },
+    {
+      "a": "luxun",
+      "b": "zhaoyun",
+      "games": 16,
+      "points": 1
+    },
+    {
+      "a": "luxun",
+      "b": "zhugeliang",
+      "games": 16,
+      "points": 9
+    },
+    {
+      "a": "luxun",
+      "b": "liubei",
+      "games": 16,
+      "points": 1
+    },
+    {
+      "a": "luxun",
+      "b": "caocao",
+      "games": 16,
+      "points": 4
+    },
+    {
+      "a": "luxun",
+      "b": "simayi",
+      "games": 16,
+      "points": 11
+    },
+    {
+      "a": "luxun",
+      "b": "zhouyu",
+      "games": 16,
+      "points": 5
+    },
+    {
+      "a": "luxun",
+      "b": "diaochan",
+      "games": 16,
+      "points": 16
+    },
+    {
+      "a": "luxun",
+      "b": "machao",
+      "games": 16,
+      "points": 6
+    },
+    {
+      "a": "luxun",
+      "b": "pangde",
+      "games": 16,
+      "points": 0
+    },
+    {
+      "a": "luxun",
+      "b": "xiahou",
+      "games": 16,
+      "points": 2
+    },
+    {
+      "a": "luxun",
+      "b": "ganning",
+      "games": 16,
+      "points": 8
+    },
+    {
+      "a": "luxun",
+      "b": "sunce",
+      "games": 16,
+      "points": 0
+    },
+    {
+      "a": "luxun",
+      "b": "huangzhong",
+      "games": 16,
+      "points": 2
+    },
+    {
+      "a": "lubu",
+      "b": "guanyu",
+      "games": 16,
+      "points": 2
+    },
+    {
+      "a": "lubu",
+      "b": "zhangfei",
+      "games": 16,
+      "points": 1
+    },
+    {
+      "a": "lubu",
+      "b": "zhaoyun",
+      "games": 16,
+      "points": 2
+    },
+    {
+      "a": "lubu",
+      "b": "zhugeliang",
+      "games": 16,
+      "points": 14
+    },
+    {
+      "a": "lubu",
+      "b": "liubei",
+      "games": 16,
+      "points": 1
+    },
+    {
+      "a": "lubu",
+      "b": "caocao",
+      "games": 16,
+      "points": 3
+    },
+    {
+      "a": "lubu",
+      "b": "simayi",
+      "games": 16,
+      "points": 6
+    },
+    {
+      "a": "lubu",
+      "b": "zhouyu",
+      "games": 16,
+      "points": 4
+    },
+    {
+      "a": "lubu",
+      "b": "diaochan",
+      "games": 16,
+      "points": 16
+    },
+    {
+      "a": "lubu",
+      "b": "machao",
+      "games": 16,
+      "points": 16
+    },
+    {
+      "a": "lubu",
+      "b": "pangde",
+      "games": 16,
+      "points": 0
+    },
+    {
+      "a": "lubu",
+      "b": "xiahou",
+      "games": 16,
+      "points": 0
+    },
+    {
+      "a": "lubu",
+      "b": "ganning",
+      "games": 16,
+      "points": 13
+    },
+    {
+      "a": "lubu",
+      "b": "sunce",
+      "games": 16,
+      "points": 2
+    },
+    {
+      "a": "lubu",
+      "b": "huangzhong",
+      "games": 16,
+      "points": 14
+    },
+    {
+      "a": "guanyu",
+      "b": "zhangfei",
+      "games": 16,
+      "points": 3
+    },
+    {
+      "a": "guanyu",
+      "b": "zhaoyun",
+      "games": 16,
+      "points": 1
+    },
+    {
+      "a": "guanyu",
+      "b": "zhugeliang",
+      "games": 16,
+      "points": 12
+    },
+    {
+      "a": "guanyu",
+      "b": "liubei",
+      "games": 16,
+      "points": 11
+    },
+    {
+      "a": "guanyu",
+      "b": "caocao",
+      "games": 16,
+      "points": 15
+    },
+    {
+      "a": "guanyu",
+      "b": "simayi",
+      "games": 16,
+      "points": 5
+    },
+    {
+      "a": "guanyu",
+      "b": "zhouyu",
+      "games": 16,
+      "points": 15
+    },
+    {
+      "a": "guanyu",
+      "b": "diaochan",
+      "games": 16,
+      "points": 16
+    },
+    {
+      "a": "guanyu",
+      "b": "machao",
+      "games": 16,
+      "points": 16
+    },
+    {
+      "a": "guanyu",
+      "b": "pangde",
+      "games": 16,
+      "points": 3
+    },
+    {
+      "a": "guanyu",
+      "b": "xiahou",
+      "games": 16,
+      "points": 0
+    },
+    {
+      "a": "guanyu",
+      "b": "ganning",
+      "games": 16,
+      "points": 11
+    },
+    {
+      "a": "guanyu",
+      "b": "sunce",
+      "games": 16,
+      "points": 12
+    },
+    {
+      "a": "guanyu",
+      "b": "huangzhong",
+      "games": 16,
+      "points": 2
+    },
+    {
+      "a": "zhangfei",
+      "b": "zhaoyun",
+      "games": 16,
+      "points": 6
+    },
+    {
+      "a": "zhangfei",
+      "b": "zhugeliang",
+      "games": 16,
+      "points": 15
+    },
+    {
+      "a": "zhangfei",
+      "b": "liubei",
+      "games": 16,
+      "points": 14
+    },
+    {
+      "a": "zhangfei",
+      "b": "caocao",
+      "games": 16,
+      "points": 16
+    },
+    {
+      "a": "zhangfei",
+      "b": "simayi",
+      "games": 16,
+      "points": 6
+    },
+    {
+      "a": "zhangfei",
+      "b": "zhouyu",
+      "games": 16,
+      "points": 15
+    },
+    {
+      "a": "zhangfei",
+      "b": "diaochan",
+      "games": 16,
+      "points": 14
+    },
+    {
+      "a": "zhangfei",
+      "b": "machao",
+      "games": 16,
+      "points": 14
+    },
+    {
+      "a": "zhangfei",
+      "b": "pangde",
+      "games": 16,
+      "points": 3
+    },
+    {
+      "a": "zhangfei",
+      "b": "xiahou",
+      "games": 16,
+      "points": 7
+    },
+    {
+      "a": "zhangfei",
+      "b": "ganning",
+      "games": 16,
+      "points": 14
+    },
+    {
+      "a": "zhangfei",
+      "b": "sunce",
+      "games": 16,
+      "points": 14
+    },
+    {
+      "a": "zhangfei",
+      "b": "huangzhong",
+      "games": 16,
+      "points": 16
+    },
+    {
+      "a": "zhaoyun",
+      "b": "zhugeliang",
+      "games": 16,
+      "points": 10
+    },
+    {
+      "a": "zhaoyun",
+      "b": "liubei",
+      "games": 16,
+      "points": 13
+    },
+    {
+      "a": "zhaoyun",
+      "b": "caocao",
+      "games": 16,
+      "points": 10
+    },
+    {
+      "a": "zhaoyun",
+      "b": "simayi",
+      "games": 16,
+      "points": 10
+    },
+    {
+      "a": "zhaoyun",
+      "b": "zhouyu",
+      "games": 16,
+      "points": 15
+    },
+    {
+      "a": "zhaoyun",
+      "b": "diaochan",
+      "games": 16,
+      "points": 16
+    },
+    {
+      "a": "zhaoyun",
+      "b": "machao",
+      "games": 16,
+      "points": 13
+    },
+    {
+      "a": "zhaoyun",
+      "b": "pangde",
+      "games": 16,
+      "points": 12
+    },
+    {
+      "a": "zhaoyun",
+      "b": "xiahou",
+      "games": 16,
+      "points": 12
+    },
+    {
+      "a": "zhaoyun",
+      "b": "ganning",
+      "games": 16,
+      "points": 9.5
+    },
+    {
+      "a": "zhaoyun",
+      "b": "sunce",
+      "games": 16,
+      "points": 12
+    },
+    {
+      "a": "zhaoyun",
+      "b": "huangzhong",
+      "games": 16,
+      "points": 14
+    },
+    {
+      "a": "zhugeliang",
+      "b": "liubei",
+      "games": 16,
+      "points": 2
+    },
+    {
+      "a": "zhugeliang",
+      "b": "caocao",
+      "games": 16,
+      "points": 5
+    },
+    {
+      "a": "zhugeliang",
+      "b": "simayi",
+      "games": 16,
+      "points": 1
+    },
+    {
+      "a": "zhugeliang",
+      "b": "zhouyu",
+      "games": 16,
+      "points": 6
+    },
+    {
+      "a": "zhugeliang",
+      "b": "diaochan",
+      "games": 16,
+      "points": 6
+    },
+    {
+      "a": "zhugeliang",
+      "b": "machao",
+      "games": 16,
+      "points": 7
+    },
+    {
+      "a": "zhugeliang",
+      "b": "pangde",
+      "games": 16,
+      "points": 5
+    },
+    {
+      "a": "zhugeliang",
+      "b": "xiahou",
+      "games": 16,
+      "points": 2
+    },
+    {
+      "a": "zhugeliang",
+      "b": "ganning",
+      "games": 16,
+      "points": 7
+    },
+    {
+      "a": "zhugeliang",
+      "b": "sunce",
+      "games": 16,
+      "points": 4
+    },
+    {
+      "a": "zhugeliang",
+      "b": "huangzhong",
+      "games": 16,
+      "points": 3
+    },
+    {
+      "a": "liubei",
+      "b": "caocao",
+      "games": 16,
+      "points": 8
+    },
+    {
+      "a": "liubei",
+      "b": "simayi",
+      "games": 16,
+      "points": 2
+    },
+    {
+      "a": "liubei",
+      "b": "zhouyu",
+      "games": 16,
+      "points": 11
+    },
+    {
+      "a": "liubei",
+      "b": "diaochan",
+      "games": 16,
+      "points": 16
+    },
+    {
+      "a": "liubei",
+      "b": "machao",
+      "games": 16,
+      "points": 7
+    },
+    {
+      "a": "liubei",
+      "b": "pangde",
+      "games": 16,
+      "points": 4
+    },
+    {
+      "a": "liubei",
+      "b": "xiahou",
+      "games": 16,
+      "points": 4
+    },
+    {
+      "a": "liubei",
+      "b": "ganning",
+      "games": 16,
+      "points": 16
+    },
+    {
+      "a": "liubei",
+      "b": "sunce",
+      "games": 16,
+      "points": 2
+    },
+    {
+      "a": "liubei",
+      "b": "huangzhong",
+      "games": 16,
+      "points": 3
+    },
+    {
+      "a": "caocao",
+      "b": "simayi",
+      "games": 16,
+      "points": 12
+    },
+    {
+      "a": "caocao",
+      "b": "zhouyu",
+      "games": 16,
+      "points": 2
+    },
+    {
+      "a": "caocao",
+      "b": "diaochan",
+      "games": 16,
+      "points": 14
+    },
+    {
+      "a": "caocao",
+      "b": "machao",
+      "games": 16,
+      "points": 10
+    },
+    {
+      "a": "caocao",
+      "b": "pangde",
+      "games": 16,
+      "points": 4
+    },
+    {
+      "a": "caocao",
+      "b": "xiahou",
+      "games": 16,
+      "points": 0
+    },
+    {
+      "a": "caocao",
+      "b": "ganning",
+      "games": 16,
+      "points": 11
+    },
+    {
+      "a": "caocao",
+      "b": "sunce",
+      "games": 16,
+      "points": 3
+    },
+    {
+      "a": "caocao",
+      "b": "huangzhong",
+      "games": 16,
+      "points": 1
+    },
+    {
+      "a": "simayi",
+      "b": "zhouyu",
+      "games": 16,
+      "points": 8
+    },
+    {
+      "a": "simayi",
+      "b": "diaochan",
+      "games": 16,
+      "points": 15
+    },
+    {
+      "a": "simayi",
+      "b": "machao",
+      "games": 16,
+      "points": 16
+    },
+    {
+      "a": "simayi",
+      "b": "pangde",
+      "games": 16,
+      "points": 7
+    },
+    {
+      "a": "simayi",
+      "b": "xiahou",
+      "games": 16,
+      "points": 5
+    },
+    {
+      "a": "simayi",
+      "b": "ganning",
+      "games": 16,
+      "points": 16
+    },
+    {
+      "a": "simayi",
+      "b": "sunce",
+      "games": 16,
+      "points": 13
+    },
+    {
+      "a": "simayi",
+      "b": "huangzhong",
+      "games": 16,
+      "points": 3
+    },
+    {
+      "a": "zhouyu",
+      "b": "diaochan",
+      "games": 16,
+      "points": 16
+    },
+    {
+      "a": "zhouyu",
+      "b": "machao",
+      "games": 16,
+      "points": 8
+    },
+    {
+      "a": "zhouyu",
+      "b": "pangde",
+      "games": 16,
+      "points": 3
+    },
+    {
+      "a": "zhouyu",
+      "b": "xiahou",
+      "games": 16,
+      "points": 0
+    },
+    {
+      "a": "zhouyu",
+      "b": "ganning",
+      "games": 16,
+      "points": 13
+    },
+    {
+      "a": "zhouyu",
+      "b": "sunce",
+      "games": 16,
+      "points": 2
+    },
+    {
+      "a": "zhouyu",
+      "b": "huangzhong",
+      "games": 16,
+      "points": 2
+    },
+    {
+      "a": "diaochan",
+      "b": "machao",
+      "games": 16,
+      "points": 3
+    },
+    {
+      "a": "diaochan",
+      "b": "pangde",
+      "games": 16,
+      "points": 0
+    },
+    {
+      "a": "diaochan",
+      "b": "xiahou",
+      "games": 16,
+      "points": 0
+    },
+    {
+      "a": "diaochan",
+      "b": "ganning",
+      "games": 16,
+      "points": 1
+    },
+    {
+      "a": "diaochan",
+      "b": "sunce",
+      "games": 16,
+      "points": 1
+    },
+    {
+      "a": "diaochan",
+      "b": "huangzhong",
+      "games": 16,
+      "points": 0
+    },
+    {
+      "a": "machao",
+      "b": "pangde",
+      "games": 16,
+      "points": 2
+    },
+    {
+      "a": "machao",
+      "b": "xiahou",
+      "games": 16,
+      "points": 3
+    },
+    {
+      "a": "machao",
+      "b": "ganning",
+      "games": 16,
+      "points": 5
+    },
+    {
+      "a": "machao",
+      "b": "sunce",
+      "games": 16,
+      "points": 2
+    },
+    {
+      "a": "machao",
+      "b": "huangzhong",
+      "games": 16,
+      "points": 0
+    },
+    {
+      "a": "pangde",
+      "b": "xiahou",
+      "games": 16,
+      "points": 10
+    },
+    {
+      "a": "pangde",
+      "b": "ganning",
+      "games": 16,
+      "points": 13
+    },
+    {
+      "a": "pangde",
+      "b": "sunce",
+      "games": 16,
+      "points": 11
+    },
+    {
+      "a": "pangde",
+      "b": "huangzhong",
+      "games": 16,
+      "points": 14
+    },
+    {
+      "a": "xiahou",
+      "b": "ganning",
+      "games": 16,
+      "points": 14.5
+    },
+    {
+      "a": "xiahou",
+      "b": "sunce",
+      "games": 16,
+      "points": 13
+    },
+    {
+      "a": "xiahou",
+      "b": "huangzhong",
+      "games": 16,
+      "points": 15
+    },
+    {
+      "a": "ganning",
+      "b": "sunce",
+      "games": 16,
+      "points": 8
+    },
+    {
+      "a": "ganning",
+      "b": "huangzhong",
+      "games": 16,
+      "points": 3
+    },
+    {
+      "a": "sunce",
+      "b": "huangzhong",
+      "games": 16,
+      "points": 13
+    }
+  ]
+}
