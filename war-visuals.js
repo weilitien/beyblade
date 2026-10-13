@@ -152,6 +152,8 @@ function topMesh(t) {
 function draw() {
   ctx.clearRect(0, 0, width, height);
   ctx.save();
+  const emphasis = SignatureFX.emphasis(signatureEffects, reduced.matches);
+  ctx.translate(emphasis.x, emphasis.y);
   if (shake > 0.1 && !reduced.matches && game.phase !== 'paused')
     ctx.translate((Math.random() - 0.5) * shake, (Math.random() - 0.5) * shake);
   stadium();
@@ -165,6 +167,10 @@ function draw() {
     ctx.fill();
   }
   ctx.globalAlpha = 1;
+  if (emphasis.dim > 0) {
+    ctx.fillStyle = `rgba(3, 8, 18, ${emphasis.dim})`;
+    ctx.fillRect(0, 0, width, height);
+  }
   for (const t of [...tops].sort((a, b) => a.z - b.z)) topMesh(t);
   SignatureFX.draw(
     ctx,

@@ -7,6 +7,7 @@
     SignatureFX.prepare(id, character.color);
   const results = {};
   for (const [name, ids] of [
+    ['showcase', ['guanyu', 'guanyu', 'lubu', 'lubu', 'huangzhong', 'huangzhong']],
     ['duel', ['guanyu', 'diaochan']],
     ['busy', ['zhugeliang', 'zhouyu', 'zhaoyun', 'lubu', 'simayi', 'sunce']],
   ]) {
@@ -17,10 +18,10 @@
       z: 0,
       tx: 0,
       tz: 0,
-      life: 0.7,
-      max: 0.95,
+      life: name === 'showcase' && i % 2 ? 0.3 : 0.7,
+      max: name === 'showcase' && i % 2 ? 0.42 : 0.95,
       color: WarData.characters[id].color,
-      phase: 'release',
+      phase: name === 'showcase' && i % 2 ? 'impact' : 'release',
       charges: 3,
     }));
     const samples = [];

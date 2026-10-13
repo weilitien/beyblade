@@ -544,6 +544,10 @@ function sparks(x, z, color, count = 16) {
 function processEvents() {
   for (const e of game.drainEvents()) {
     if (e.type === 'hit') {
+      if (['guanyu', 'lubu', 'huangzhong'].includes(e.kind) && e.damage > 0) {
+        signatureEffects.push(SignatureFX.create(e.attacker, e.actor, 'impact'));
+        signatureEffects = signatureEffects.slice(-16);
+      }
       sparks(e.actor.x, e.actor.z, e.actor.color, 10);
       floaters.push({
         x: e.actor.x,
@@ -570,7 +574,7 @@ function processEvents() {
     }
     if (e.type === 'interrupt')
       signatureEffects = signatureEffects.filter(
-        (effect) => effect.owner !== (e.actor.ai ? 1 : 0) || effect.phase === 'release',
+        (effect) => effect.owner !== (e.actor.ai ? 1 : 0) || ['release', 'impact'].includes(effect.phase),
       );
     if (e.type === 'skill') {
       bannerLife = 1.25;

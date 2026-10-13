@@ -110,11 +110,26 @@ window.SignatureFX = (() => {
       tx: target.x,
       tz: target.z,
       phase,
-      life: 0.95,
-      max: 0.95,
+      life: phase === 'impact' ? 0.42 : 0.95,
+      max: phase === 'impact' ? 0.42 : 0.95,
       color: actor.color,
       charges: actor.evades,
     };
+  }
+  function emphasis(effects, reduced) {
+    let dim = 0, kick = 0, age = 0;
+    if (reduced) return { dim, x: 0, y: 0 };
+    for (const e of effects) {
+      if (!['guanyu', 'lubu', 'huangzhong'].includes(e.id)) continue;
+      const elapsed = e.max - e.life;
+      if (e.phase === 'release')
+        dim = Math.max(dim, 0.23 * Math.sin(Math.PI * Math.min(1, elapsed / 0.45)));
+      if (e.phase === 'impact') {
+        const strength = (e.id === 'lubu' ? 5 : 7) * Math.max(0, 1 - elapsed / 0.22);
+        if (strength > kick) { kick = strength; age = elapsed; }
+      }
+    }
+    return { dim, x: Math.sin(age * 100) * kick, y: Math.cos(age * 85) * kick * 0.6 };
   }
   // Filled energy volumes and tapered trails, computed from shared time (no random state).
   function cinematic(ctx, effect, radius, target, time, reduced) {
@@ -214,11 +229,11 @@ window.SignatureFX = (() => {
         shards(12, true);
         break;
       case 'lubu':
-        for (let i = 0; i < 3; i++) crescent(-0.6 + i * 0.55 + age * 0.8, 1.2 + i * 0.25);
+        for (let i = 0; i < 3; i++) crescent(-0.6 + i * 0.55 + age * 0.8, (effect.phase === 'release' ? 1.65 : 1.2) + i * 0.25);
         shards(16);
         break;
       case 'guanyu':
-        crescent(-0.5 + age * 1.2, effect.phase === 'release' ? 2.3 : 1.25, 0.9);
+        crescent(-0.5 + age * 1.2, effect.phase === 'release' ? 2.9 : 1.25, 0.9);
         crescent(-0.65 + age * 1.2, effect.phase === 'release' ? 1.95 : 1.05, 0.9);
         if (effect.phase === 'release') beam();
         shards(14);
@@ -341,6 +356,7 @@ window.SignatureFX = (() => {
         ring(1.3, 0, 12);
         crescent(Math.PI / 2, 1.4, 0.9);
         if (effect.phase === 'release') {
+          beam(-radius * 0.13, '#efc36c');
           beam();
           shards(18);
         } else shards(8, 1.1);
@@ -412,6 +428,34 @@ window.SignatureFX = (() => {
     for (const effect of [...effects, ...sustained]) {
       const { id, phase } = effect;
       if (!themes[id]) continue;
+      if (phase === 'impact') {
+        const p = project(effect.tx, 0.4, effect.tz);
+        const progress = Math.max(0, Math.min(1, 1 - effect.life / effect.max));
+        const r = scale * (reduced ? 0.75 : 0.35 + progress * 1.6);
+        ctx.save();
+        ctx.translate(...p);
+        ctx.globalAlpha = (1 - progress) * (reduced ? 0.45 : 0.85);
+        ctx.strokeStyle = effect.color;
+        ctx.lineWidth = reduced ? 2 : 4 * (1 - progress) + 1;
+        ctx.beginPath();
+        ctx.ellipse(0, 0, r, r * 0.6, 0, 0, TAU);
+        ctx.stroke();
+        if (!reduced) {
+          ctx.globalCompositeOperation = 'lighter';
+          const flash = scale * (0.65 + progress * 0.5);
+          ctx.drawImage(texture(effect.color), -flash, -flash, flash * 2, flash * 2);
+          ctx.strokeStyle = '#fff4d4';
+          ctx.beginPath();
+          for (let i = 0; i < 8; i++) {
+            const angle = i * TAU / 8;
+            ctx.moveTo(Math.cos(angle) * r * 0.7, Math.sin(angle) * r * 0.45);
+            ctx.lineTo(Math.cos(angle) * r * 1.25, Math.sin(angle) * r * 0.85);
+          }
+          ctx.stroke();
+        }
+        ctx.restore();
+        continue;
+      }
       const origin = project(effect.x, 0.38, effect.z);
       const target = project(effect.tx, 0.38, effect.tz);
       const progress = 1 - effect.life / effect.max;
@@ -697,5 +741,5 @@ window.SignatureFX = (() => {
       ctx.restore();
     }
   }
-  return { themes, create, draw, prepare, hazardStyle };
+  return { themes, create, draw, prepare, hazardStyle, emphasis };
 })();

@@ -359,7 +359,7 @@ window.WarBattle = class WarBattle {
     if (b.id === 'xiahou' && dealt >= 65) b.mana = Math.min(100, b.mana + 5);
     b.integrity = Math.max(0, b.integrity - dealt / (5 + b.c.stability * 0.05));
     if (this.has(b, 'store')) b.stored += dealt;
-    this.event('hit', { actor: b, attacker: a, damage: dealt });
+    this.event('hit', { actor: b, attacker: a, damage: dealt, kind: options.kind });
     if (options.knockback) this.knock(a, b, options.knockback);
     if (this.has(b, 'reflect') && !options.noReflect) {
       delete b.status.reflect;
@@ -493,7 +493,7 @@ window.WarBattle = class WarBattle {
           delete a.status.runup;
           if (kind === 'guanyu') {
             this.event('signature-release', { actor: a });
-            this.hit(a, b, 2, { ignoreDefense: 0.3, knockback: 1 });
+            this.hit(a, b, 2, { ignoreDefense: 0.3, knockback: 1, kind: 'guanyu' });
           } else if (kind === 'huangzhong') {
             const dx = b.x - a.x,
               dz = b.z - a.z;
@@ -501,7 +501,7 @@ window.WarBattle = class WarBattle {
             const across = Math.abs(dx * shot.dz - dz * shot.dx);
             this.event('arrow', { actor: a, x: a.x + shot.dx * 7, z: a.z + shot.dz * 7 });
             if (along >= 0 && along <= 7 && across <= 0.55)
-              this.hit(a, b, 2.4, { ignoreDefense: 0.2, knockback: 1.2 });
+              this.hit(a, b, 2.4, { ignoreDefense: 0.2, knockback: 1.2, kind: 'huangzhong' });
             else {
               this.event('miss', { actor: a });
               this.logEvent('百步穿楊落空！');

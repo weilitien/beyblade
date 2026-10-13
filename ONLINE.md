@@ -21,7 +21,7 @@
 
 ## 火痕快照格式
 
-遠端版本 `spin-arena-remote-9` 將火痕與周瑜火區的 owner 編碼為玩家編號 0／1，不再重複傳送完整角色。接收端建立本次角色狀態後，還原為對應角色參照；座標、範圍與剩餘時間原樣保留。非法歸屬編號會拒收整份快照，新舊連線版本不可混用。主機內部仍使用角色參照，單人玩法及傷害規則不變。
+遠端版本 `spin-arena-remote-10` 將火痕與周瑜火區的 owner 編碼為玩家編號 0／1，不再重複傳送完整角色。接收端建立本次角色狀態後，還原為對應角色參照；座標、範圍與剩餘時間原樣保留。非法歸屬編號會拒收整份快照，新舊連線版本不可混用。主機內部仍使用角色參照，單人玩法及傷害規則不變。
 
 `python3 scripts/remote-smoke.py --fire` 驗證雙陸遜、14／40片火痕的實際WebRTC同步，並把新格式與同一份狀態重建的舊格式大小寫入 `reports/fire-remote-compact.json`。舊版量測 `fire-remote.json` 保留供參考。
 
@@ -37,3 +37,5 @@
 `python3 scripts/remote-smoke.py`：macOS Chrome 的真實雙分頁 WebRTC 整合測試，需要本機 8082 伺服器、可存取公用 PeerServer 的網路，以及 `/private/tmp` 寫入權限。測試包含選將、雙方發射、P2 出招、魔法一致、雙方暫停／繼續與斷線停止。
 
 參考：[PeerJS 官方入門](https://peerjs.com/client/getting-started)、[GitHub Pages 官方部署文件](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages)。
+
+版本 10 同步大絕命中特效；關羽、呂布、黃忠的命中圈與震屏由特效剩餘時間驅動，低動態模式停用震屏與背景壓暗。

@@ -2,12 +2,38 @@
   const assert = (condition, message) => {
     if (!condition) throw new Error(message);
   };
+  for (const id of ['guanyu', 'lubu', 'huangzhong']) {
+    SpinArena.reset(); SpinArena.select(id); SpinArena.game.start(); SpinArena.simulate(0);
+    const g=SpinArena.game, [a,b]=g.actors; g.aiEnabled=false;
+    a.x=-2;a.z=0;b.x=2;b.z=0;
+    SpinArena.useSkill('signature');
+    assert(!captureNetwork().signatureEffects.some(e=>e.phase==='impact'), 'Activation is not a hit');
+    if(a.cast) a.cast.left=0.001;
+    g.tick(0.01);
+    if(id==='lubu') {a.x=-.3;b.x=.3;a.z=b.z=0;a.vx=2;b.vx=-2;g.collisionCooldown=0;g.collide();}
+    processEvents();
+    const effects=captureNetwork().signatureEffects;
+    assert(effects.some(e=>e.id===id && e.phase==='impact'), id+' successful ultimate needs an impact');
+    assert(SignatureFX.emphasis(effects,true).dim===0 && SignatureFX.emphasis(effects,true).y===0, 'Reduced motion disables stage shake and dimming');
+    assert(JSON.stringify(SignatureFX.emphasis(effects,false))===JSON.stringify(SignatureFX.emphasis(JSON.parse(JSON.stringify(effects)),false)), 'Remote stage emphasis must be deterministic');
+    SpinArena.draw();
+  }
+  SpinArena.reset();SpinArena.select('huangzhong');SpinArena.game.start();SpinArena.simulate(0);
+  {
+    const g=SpinArena.game,[a,b]=g.actors;g.aiEnabled=false;
+    a.x=-2;a.z=0;b.x=2;b.z=0;SpinArena.useSkill('signature');
+    b.z=2;a.cast.left=.001;g.tick(.01);processEvents();
+    assert(!captureNetwork().signatureEffects.some(e=>e.phase==='impact'), 'Missed arrow must not create impact');
+    g.hit(a,b);processEvents();
+    assert(!captureNetwork().signatureEffects.some(e=>e.phase==='impact'), 'Ordinary hit must not create ultimate impact');
+  }
+  SpinArena.reset();
   const sheet = document.createElement('canvas');
   sheet.width = 1200;
-  sheet.height = 1250;
+  sheet.height = 1500;
   const paint = sheet.getContext('2d');
   paint.fillStyle = '#09131f';
-  paint.fillRect(0, 0, 1200, 1250);
+  paint.fillRect(0, 0, 1200, 1500);
   const ids = Object.keys(WarData.characters);
   // Real wire round-trip: preserve live references without mutating host hazards.
   SpinArena.reset();
@@ -159,6 +185,17 @@
     0,
     true,
   );
+  SpinArena.reset();
+  ['guanyu','lubu','huangzhong'].forEach((id,index)=> {
+    SpinArena.select(id);
+    const [a,b]=SpinArena.game.actors;
+    const release={...SignatureFX.create(a,b,'release'),x:-1,z:0,tx:1,tz:0,life:.7};
+    const impact={...SignatureFX.create(a,b,'impact'),x:-1,z:0,tx:1,tz:0,life:.3};
+    paint.save();paint.translate(index*400,1250);
+    SignatureFX.draw(paint,(x,y,z)=>[160+x*55,110+z*30],65,[],[release,impact],.25,false);
+    paint.fillStyle=a.color;paint.font='18px system-ui';
+    paint.fillText(a.c.name+' · RELEASE + IMPACT',16,230);paint.restore();
+  });
   SpinArena.reset();
   document.body.replaceChildren(sheet);
   sheet.style.width = '1200px';
