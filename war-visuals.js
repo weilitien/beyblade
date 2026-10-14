@@ -139,7 +139,7 @@ function topMesh(t) {
     ctx.stroke();
     ctx.restore();
     const center = project(t.x, y + 0.65, t.z);
-    ctx.font = '600 8px system-ui';
+    ctx.font = '600 10px system-ui';
     ctx.textAlign = 'center';
     ctx.fillStyle = t.color;
     ctx.fillText(t.c.name, center[0], center[1] - 9);
