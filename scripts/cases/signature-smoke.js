@@ -13,6 +13,7 @@
     if(id==='lubu') {a.x=-.3;b.x=.3;a.z=b.z=0;a.vx=2;b.vx=-2;g.collisionCooldown=0;g.collide();}
     processEvents();
     const effects=captureNetwork().signatureEffects;
+    assert(captureNetwork().sounds.some(e=>e.kind==='signature-hit' && e.data.character===id), id+' needs synchronized hit sound');
     assert(effects.some(e=>e.id===id && e.phase==='impact'), id+' successful ultimate needs an impact');
     assert(SignatureFX.emphasis(effects,true).dim===0 && SignatureFX.emphasis(effects,true).y===0, 'Reduced motion disables stage shake and dimming');
     assert(JSON.stringify(SignatureFX.emphasis(effects,false))===JSON.stringify(SignatureFX.emphasis(JSON.parse(JSON.stringify(effects)),false)), 'Remote stage emphasis must be deterministic');
@@ -23,6 +24,8 @@
     const g=SpinArena.game,[a,b]=g.actors;g.aiEnabled=false;
     a.x=-2;a.z=0;b.x=2;b.z=0;SpinArena.useSkill('signature');
     b.z=2;a.cast.left=.001;g.tick(.01);processEvents();
+    assert(!captureNetwork().sounds.some(e=>e.kind==='signature-hit'), 'Missed arrow must not create hit sound');
+    assert(captureNetwork().sounds.some(e=>e.kind==='arrow'), 'Missed arrow still needs release sound');
     assert(!captureNetwork().signatureEffects.some(e=>e.phase==='impact'), 'Missed arrow must not create impact');
     g.hit(a,b);processEvents();
     assert(!captureNetwork().signatureEffects.some(e=>e.phase==='impact'), 'Ordinary hit must not create ultimate impact');

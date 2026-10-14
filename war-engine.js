@@ -519,7 +519,7 @@ window.WarBattle = class WarBattle {
           seq.remaining--;
           seq.timer = 0.65;
           if (seq.kind === 'lubu') {
-            this.event('signature-release', { actor: a });
+            this.event('signature-release', { actor: a, final: seq.remaining === 0 });
             this.dash(a, 0.8, 5.5, 1.2, 'lubu');
           } else {
             this.hit(a, b, 0.75, { retaliation: true });

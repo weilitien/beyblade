@@ -558,7 +558,11 @@ function processEvents() {
         max: 1,
       });
       shake = 3;
-      cue('hit', { damage: e.damage, x: e.actor.x });
+      cue(
+        ['guanyu', 'lubu', 'huangzhong'].includes(e.kind) && e.damage > 0
+          ? 'signature-hit' : 'hit',
+        { damage: e.damage, character: e.kind, x: e.actor.x },
+      );
     }
     if (
       e.type === 'signature-release' ||
@@ -572,6 +576,8 @@ function processEvents() {
       );
       signatureEffects = signatureEffects.slice(-16);
     }
+    if (e.type === 'signature-release' && ['guanyu', 'lubu'].includes(e.actor.id))
+      cue('signature-release', { character: e.actor.id, final: e.final, x: e.actor.x });
     if (e.type === 'interrupt')
       signatureEffects = signatureEffects.filter(
         (effect) => effect.owner !== (e.actor.ai ? 1 : 0) || ['release', 'impact'].includes(effect.phase),

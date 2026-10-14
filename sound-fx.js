@@ -10,6 +10,7 @@ window.SoundFX = (() => {
     lastHit = -Infinity,
     skillFocusUntil = 0;
   const voices = new Set();
+  let lastSignatureHit = -Infinity;
   const signatures = {
     dianwei: { notes: [82, 110, 82, 165], wave: 'triangle', step: 0.1, noise: 500 },
     luxun: { notes: [330, 440, 660, 880], wave: 'sine', step: 0.09, noise: 1800 },
@@ -61,6 +62,7 @@ window.SoundFX = (() => {
       } catch {}
     }
     voices.clear();
+    lastSignatureHit = -Infinity;
     ((lastHit = -Infinity), (skillFocusUntil = 0));
   }
   async function setEnabled(value) {
@@ -83,7 +85,7 @@ window.SoundFX = (() => {
     if (master) master.gain.setTargetAtTime(volume * 0.65, context.currentTime, 0.025);
   }
   // 所有音源共用短起音、自然衰減；結束或靜音時會釋放節點。
-  function voice(source, nodes, gain, pan, start, duration, level) {
+  function voice(source, nodes, gain, pan, start, duration, level, attack = 0.006) {
     if (voices.size >= 64) return;
     const envelope = context.createGain(),
       panner = context.createStereoPanner();
@@ -93,7 +95,7 @@ window.SoundFX = (() => {
     envelope.connect(panner);
     panner.connect(master);
     envelope.gain.setValueAtTime(0.0001, start);
-    envelope.gain.exponentialRampToValueAtTime(Math.max(0.0002, level), start + 0.006);
+    envelope.gain.exponentialRampToValueAtTime(Math.max(0.0002, level), start + Math.min(attack, duration * 0.8));
     envelope.gain.exponentialRampToValueAtTime(0.0001, start + duration);
     voices.add(source);
     source.onended = () => {
@@ -111,6 +113,7 @@ window.SoundFX = (() => {
     wave = 'sine',
     delay = 0,
     pan = 0,
+    attack = 0.006,
   ) {
     if (voices.size >= 64) return;
     const at = context.currentTime + delay,
@@ -127,8 +130,8 @@ window.SoundFX = (() => {
       filter.type = 'lowpass';
       filter.frequency.value = 2400;
       filter.Q.value = 0.5;
-      voice(oscillator, [filter], filter, pan, at, duration, level);
-    } else voice(oscillator, [], null, pan, at, duration, level);
+      voice(oscillator, [filter], filter, pan, at, duration, level, attack);
+    } else voice(oscillator, [], null, pan, at, duration, level, attack);
   }
   function noise(
     startFrequency,
@@ -223,18 +226,14 @@ window.SoundFX = (() => {
         break;
       case 'huangzhong': // 弓臂拉緊；釋放聲由真正射出的事件觸發。
         noise(280, 1400, 0.75, 0.09, 0, pan);
-        tone(120, 240, 0.8, 0.055, 'triangle', 0, pan);
+        tone(120, 240, 0.8, 0.055, 'triangle', 0, pan, 0.55);
         break;
-      case 'lubu': // 三段重斬
-        [0, 0.16, 0.34].forEach((delay, index) => {
-          slash(delay, index % 2 ? -0.55 : 0.55, 0.7);
-          impact(0.75, delay + 0.1, pan);
-        });
+      case 'lubu': // 起手蓄勢；每段斬擊由實際出招事件觸發。
+        tone(85, 125, 0.22, 0.10, 'triangle', 0, pan);
         break;
-      case 'guanyu': // 蓄勢、一道長斬、金屬尾音
-        tone(75, 310, 0.3, 0.14, 'triangle', 0, pan);
-        slash(0.2, pan, 1.3);
-        tone(1480, 1380, 0.65, 0.09, 'sine', 0.36, pan);
+      case 'guanyu': // 只蓄勢，不預播出刀或命中。
+        tone(65, 150, 0.55, 0.10, 'triangle', 0, pan, 0.4);
+        noise(180, 850, 0.55, 0.08, 0, pan);
         break;
       case 'zhangfei': // 低頻怒吼與震波
         tone(105, 39, 0.62, 0.18, 'sawtooth', 0, pan);
@@ -362,6 +361,29 @@ window.SoundFX = (() => {
     if (!enabled || !context || context.state !== 'running' || document.hidden) return;
     const pan = Math.max(-0.8, Math.min(0.8, (data.x || 0) / 4));
     switch (kind) {
+      case 'signature-release':
+        skillFocusUntil = context.currentTime + 0.4;
+        if (data.character === 'guanyu') {
+          slash(0, pan, 1.35);
+          noise(320, 100, 0.3, 0.12, 0, pan);
+        } else if (data.character === 'lubu') {
+          slash(0, pan, data.final ? 1.3 : 0.85);
+          tone(data.final ? 110 : 160, 65, 0.18, 0.07, 'triangle', 0, pan);
+        }
+        break;
+      case 'signature-hit': {
+        if (context.currentTime - lastSignatureHit < 0.065) return;
+        lastSignatureHit = lastHit = context.currentTime;
+        skillFocusUntil = context.currentTime + 0.35;
+        if (data.character === 'huangzhong') {
+          noise(3400, 1200, 0.065, 0.19, 0, pan);
+          metal(0.10, 0, pan, 1.3, 0.23);
+          tone(125, 48, 0.17, 0.13, 'sine', 0, pan);
+        } else {
+          impact(data.character === 'guanyu' ? 1.15 : 0.9, 0, pan);
+        }
+        break;
+      }
       case 'hit': {
         const damage = Number.isFinite(data.damage) ? Math.max(0, data.damage) : 35;
         const gap = context.currentTime - lastHit;
